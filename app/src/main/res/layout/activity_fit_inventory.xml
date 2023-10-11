@@ -1,0 +1,134 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/palette3"
+    android:orientation="vertical"
+    tools:context=".FitInventoryActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginTop="10dp" >
+
+	    <Button
+	        android:id="@+id/bt_fecha"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+            android:layout_margin="0.5dp"
+            android:layout_weight="1"
+	        android:background="@drawable/palette7press"
+	        android:text="@string/fecha"
+	        style="?android:attr/borderlessButtonStyle"
+	        android:textColor="#ffffff" />
+		<Button
+		        android:id="@+id/bt_hora"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+	            android:layout_margin="0.5dp"
+	            android:layout_weight="1"
+		        android:background="@drawable/palette7press"
+		        style="?android:attr/borderlessButtonStyle"
+		        android:text="@string/hora"
+		        android:textColor="#ffffff" />
+    </LinearLayout>		    
+    <Button
+        android:id="@+id/bt_proveedor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/palette7press"
+        android:layout_margin="0.5dp"
+        android:layout_gravity="top"
+        android:textColor="#ffffff" 
+        android:text="@string/proveedor" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top" >
+
+        <Button
+            android:id="@+id/bt_marca"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0.5dp"
+            android:layout_weight="1"
+	        android:textColor="#ffffff" 
+	        style="?android:attr/borderlessButtonStyle"
+	        android:background="@drawable/palette7press"
+            android:text="@string/marca" />
+
+        <Button
+            android:id="@+id/bt_referencia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+	        android:layout_margin="0.5dp"
+	        android:background="@drawable/palette7press"
+	        style="?android:attr/borderlessButtonStyle"
+            android:textColor="#ffffff" 
+            android:layout_weight="1"
+            android:text="@string/referencia" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_bodega"
+        android:layout_width="match_parent"
+        android:layout_margin="0.5dp"
+        android:textColor="#ffffff" 
+        android:layout_height="wrap_content"
+        android:background="@drawable/palette7press"
+        android:text="@string/bodega" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <EditText
+            android:id="@+id/et_desde"
+            android:layout_width="134dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/desde"
+            android:inputType="number" >
+
+        </EditText>
+
+        <EditText
+            android:id="@+id/et_hasta"
+            android:layout_width="102dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/hasta"
+            android:inputType="number" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_consultar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/palette7press"
+        android:drawableLeft="@drawable/ic_action_search"
+        android:gravity="left|center_vertical"
+        android:padding="10dp"
+        android:text="@string/consultar_recolectores"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/bt_limpiar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/palette7press"
+        android:drawableLeft="@drawable/ic_action_documentw"
+        android:gravity="left|center_vertical"
+        android:padding="10dp"
+        android:text="@string/limpiar_formulario"
+        android:textColor="#ffffff" />
+    
+</LinearLayout>

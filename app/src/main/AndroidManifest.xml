@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- <uses-permission android:name="android.permission.CAMERA" /> -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <application
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:usesCleartextTraffic="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.EmakuMovil"
+        tools:targetApi="31">
+
+        <service android:name="com.example.emakumovil.widgets.ventas.BroadCastWidgetService" />
+        <service
+            android:name="com.example.emakumovil.widgets.ventas.ResolutionWidgetAlarmService"
+            android:enabled="true" />
+
+        <receiver
+            android:name="com.example.emakumovil.widgets.ventas.ResolutionWidgetAlarmReceiver"
+            android:label="@string/widget_resoluciones"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.example.emakumovil.widgets.ventas.ID_RESOLUTION" />
+                <action android:name="com.example.emakumovil.widgets.ventas.UPDATE_RESOLUTION" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/resolucion_facturacion_widget" />
+        </receiver>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.EmakuMovil">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.MenuActivity"
+            android:label="@string/title_activity_menu" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.inventario.UploadPhotoActivity"
+            android:label="@string/title_activity_upload_photo"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.arqueo.QueryCashActivity"
+            android:label="@string/title_activity_query_cash" >
+        </activity>
+        <!--<activity
+            android:name="com.example.emakumovil.modules.arqueo.ViewCashDataActivity"
+            android:label="@string/title_activity_view_cash_data" >
+        </activity>-->
+        <activity
+            android:name="com.example.emakumovil.modules.arqueo.DetailCashActivity"
+            android:label="@string/title_activity_detail_cash" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.arqueo.DetailDocumentsActivity"
+            android:label="@string/title_activity_detail_documents" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.arqueo.DaySalesActivity"
+            android:label="@string/title_activity_day_sales" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.arqueo.UserDayActivity"
+            android:label="@string/title_activity_user_day" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.arqueo.DetailDayDocumentsActivity"
+            android:label="@string/title_activity_detail_day_documents" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.inventario.MasterProductActivity"
+            android:label="@string/title_activity_master_product" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.inventario.FitInventoryActivity"
+            android:label="@string/title_activity_fit_inventory" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.components.SelectedDataDialog"
+            android:label="@string/title_activity_selected_data_dialog" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.inventario.ListFitInventoryActivity"
+            android:label="@string/title_activity_list_fit_inventory" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.inventario.SearchCollectorActivity"
+            android:label="@string/title_activity_search_collector" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.cartera.CarteraCxPActivity"
+            android:label="@string/title_activity_cartera_cx_p" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.cartera.ListCarteraActivity"
+            android:label="@string/title_activity_list_cartera" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.documents.AnnulDocument"
+            android:label="@string/title_activity_annul_document" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.inventario.ScanningBarcodeActivity"
+            android:label="@string/title_activity_scanning_barcode" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.documents.DocumentDetailActivity"
+            android:label="@string/title_activity_document_detail" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.arqueo.ChangeCashActivity"
+            android:label="@string/title_activity_change_cash" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.cartera.InformesCarteraActivity"
+            android:label="@string/title_activity_informes_cartera" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.cartera.InformesCXPActivity"
+            android:label="@string/title_activity_informes_cxp" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.compras.PurchasingTemplateActivity"
+            android:label="@string/title_activity_template_with_barcode" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.components.SearchPersonActivity"
+            android:label="@string/title_activity_search_person" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.compras.PurchasingActivity"
+            android:label="@string/title_activity_purchasing" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.terceros.PersonsActivity"
+            android:label="@string/title_activity_persons" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.ventas.TRMActivity"
+            android:label="@string/title_activity_trm" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.widgets.ventas.ResolutionChooseWidgetActivity"
+            android:label="@string/config_widget_resoluciones" >
+        </activity>
+        <activity
+            android:name="com.example.emakumovil.modules.ventas.ChangeResolutionActivity"
+            android:label="@string/changeresolution"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        
+
+    </application>
+
+</manifest>

@@ -1,0 +1,138 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/palette3"
+    android:orientation="vertical"
+    tools:context=".FitInventoryActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginTop="1dp" >
+
+	    <Button
+	        android:id="@+id/bt_desde"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+            android:layout_margin="0.5dp"
+            android:layout_weight="1"
+	        android:background="@drawable/palette7press"
+	        android:text="@string/desde"
+	        android:textColor="#ffffff" />
+		<Button
+		        android:id="@+id/bt_hasta"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+	            android:layout_margin="0.5dp"
+	            android:layout_weight="1"
+		        android:background="@drawable/palette7press"
+		        android:text="@string/hasta"
+		        android:textColor="#ffffff" />
+    </LinearLayout>		    
+    <Button
+        android:id="@+id/bt_tercero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/palette7press"
+        android:layout_margin="0.5dp"
+        android:layout_gravity="top"
+        android:textColor="#ffffff" 
+        android:text="@string/tercero" />
+            <TextView
+                android:id="@+id/tv_informes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/palette5"
+                android:gravity="center"
+                android:text="@string/informes"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+<ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/bt_chistorico"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_action_documentw"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:minHeight="58dp"
+                android:text="@string/chistorico"
+                android:textColor="#ffffff" />
+            <Button
+                android:id="@+id/bt_cpendiente"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_action_documentw"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:minHeight="58dp"
+                android:text="@string/cpendiente"
+                android:textColor="#ffffff" />
+            <Button
+                android:id="@+id/bt_cpendienter"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_action_documentw"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:minHeight="58dp"
+                android:text="@string/cpendienter"
+                android:textColor="#ffffff" />
+            <Button
+                android:id="@+id/bt_cvencida"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_action_documentw"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:minHeight="58dp"
+                android:text="@string/cvencida"
+                android:textColor="#ffffff" />
+            <Button
+                android:id="@+id/bt_cvencidar"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_action_documentw"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:minHeight="58dp"
+                android:text="@string/cvencidar"
+                android:textColor="#ffffff" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="0.5dp"
+                android:background="@drawable/palette4" >
+
+            </FrameLayout>
+            </LinearLayout>
+        </ScrollView>
+
+</LinearLayout>

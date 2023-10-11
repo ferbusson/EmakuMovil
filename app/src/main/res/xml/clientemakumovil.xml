@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <language>es_CO</language>
+  <log>Por Omision</log>
+  <cash>CA001</cash>
+  <lookAndFeel>default</lookAndFeel>
+
+<company>
+     <name>grama</name>
+     <jarFile>grama.jar</jarFile>
+     <directory>grama</directory>
+     <host>10.8.8.1</host>
+     <serverport>9117</serverport>
+</company>
+  
+</configuration>
+
+

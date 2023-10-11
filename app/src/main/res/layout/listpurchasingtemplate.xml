@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/palette6press"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:contentDescription="@string/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_action_barcode_1h" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_barcode"
+                android:layout_width="wrap_content"
+		        android:textIsSelectable="true"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/tv_descripcion"
+		        android:textIsSelectable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+        <LinearLayout
+	        android:baselineAligned="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.39"
+                android:orientation="vertical" >
+
+                
+
+                <TextView
+                    android:id="@+id/tv_vcant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:gravity="right"
+                    android:text="@string/cero"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.39"
+                android:orientation="vertical" >
+
+                
+
+                <TextView
+                    android:id="@+id/tv_vcosto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:gravity="right"
+                    android:text="@string/cero"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.39"
+                android:orientation="vertical" >
+
+                
+                <TextView
+                    android:id="@+id/tv_viva"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:gravity="right"
+                    android:text="@string/cero"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.39"
+                android:orientation="vertical" >
+
+                
+                <TextView
+                    android:id="@+id/tv_vpdescuento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="right"
+                    android:text="@string/cero"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.39"
+                android:orientation="vertical" >
+
+                
+                <TextView
+                    android:id="@+id/tv_vneto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="right"
+                    android:text="@string/cero"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.39"
+                android:orientation="vertical" >
+
+                
+                <TextView
+                    android:id="@+id/tv_vdescuento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="right"
+                    android:text="@string/cero"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.39"
+                android:orientation="vertical" >
+
+                
+                <TextView
+                    android:id="@+id/tv_vtiva"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="right"
+                    android:text="@string/cero"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.39"
+                android:orientation="vertical" >
+
+                
+                <TextView
+                    android:id="@+id/tv_vtotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="right"
+                    android:text="@string/cero"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+        </LinearLayout>
+
+</LinearLayout>

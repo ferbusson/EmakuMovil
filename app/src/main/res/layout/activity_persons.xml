@@ -1,0 +1,983 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/palette4" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/palette5" >
+
+            <EditText
+                android:id="@+id/et_id_char"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="@string/identificacion"
+                android:includeFontPadding="true"
+                android:maxLength="14"
+                android:singleLine="true" >
+
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:id="@+id/tv_guion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="@string/guion" />
+
+            <TextView
+                android:id="@+id/tv_dv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/ib_buscar_tercero"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.1"
+                android:background="@drawable/palette9press"
+                android:contentDescription="@string/image"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:src="@drawable/ic_action_search" />
+
+            <ImageButton
+                android:id="@+id/ib_guardar_tercero"
+                android:layout_width="64dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.1"
+                android:background="@drawable/palette9press"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:src="@drawable/ic_action_exportw" />
+
+            <ImageButton
+                android:id="@+id/ib_modificar_tercero"
+                android:layout_width="64dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.1"
+                android:background="@drawable/palette9press"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:src="@drawable/ic_action_exportw"
+                android:visibility="gone" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <ScrollView
+        android:id="@+id/sv_terceros"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_general"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/palette5"
+                android:paddingLeft="5dp"
+                android:text="@string/info_general"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/bt_tipo_tercero"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/tipo_tercero"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/bt_clasificacion"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/clasificacion"
+                android:textColor="#ffffff" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <EditText
+                    android:id="@+id/et_ganap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/ganap"
+                    android:inputType="number" />
+
+                <ImageButton
+                    android:id="@+id/ib_barcode"
+                    android:layout_width="64dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="0.1"
+                    android:background="@drawable/palette7press"
+                    android:contentDescription="TODO"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:src="@drawable/ic_action_barcode_1w" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_primern"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/primern"
+                android:inputType="text"
+                android:maxLength="30"
+                android:singleLine="true"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/et_segundon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/segundon"
+                android:inputType="text"
+                android:maxLength="30"
+                android:singleLine="true"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/et_primera"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/primera"
+                android:inputType="text"
+                android:maxLength="30"
+                android:singleLine="true"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/et_segundoa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/segundoa"
+                android:inputType="text"
+                android:maxLength="30"
+                android:singleLine="true"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/et_razon_social"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/razon_social"
+                android:inputType="text"
+                android:maxLength="100"
+                android:singleLine="true"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_correo_electronico"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/palette5"
+                android:paddingLeft="5dp"
+                android:text="@string/correo_electronico"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/et_correo_electronico"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/correo_electronico"
+                android:inputType="text"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/et_correo_electronico_dos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/correo_electronico"
+                android:inputType="text"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/et_correo_electronico_tres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/correo_electronico"
+                android:inputType="text"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/et_correo_electronico_cuatro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/correo_electronico"
+                android:inputType="text"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/et_correo_electronico_cinco"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/correo_electronico"
+                android:inputType="text"
+                android:singleLine="true" />
+
+            <TextView
+                android:id="@+id/tv_info_direccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/palette5"
+                android:paddingLeft="5dp"
+                android:text="@string/info_direccion"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <!-- Direccion 1 -->
+
+            <LinearLayout
+                android:id="@+id/ly_direccion1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/bt_departamento"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/palette7press"
+                    android:hint="@string/regimen"
+                    android:text="@string/departamento"
+                    android:textColor="#ffffff" />
+
+                <Button
+                    android:id="@+id/bt_ciudad"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/palette7press"
+                    android:hint="@string/regimen"
+                    android:text="@string/ciudad"
+                    android:textColor="#ffffff" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_direccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/direccion"
+                android:inputType="text"
+                android:singleLine="true" />
+            <!-- Fin direccion uno -->
+
+
+            <!-- Direccion 2 -->
+
+            <LinearLayout
+                android:id="@+id/ly_direccion2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" >
+
+                <Button
+                    android:id="@+id/bt_departamento_dos"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/palette7press"
+                    android:hint="@string/departamento_dos"
+                    android:text="@string/departamento_dos"
+                    android:textColor="#ffffff" />
+
+                <Button
+                    android:id="@+id/bt_ciudad_dos"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/palette7press"
+                    android:hint="@string/ciudad_dos"
+                    android:text="@string/ciudad_dos"
+                    android:textColor="#ffffff" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_direccion_dos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/direccion_dos"
+                android:inputType="text"
+                android:singleLine="true"
+                android:visibility="gone" />
+
+            <!-- Fin direccion dos -->
+
+
+            <!-- Direccion 3 -->
+
+            <LinearLayout
+                android:id="@+id/ly_direccion3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" >
+
+                <Button
+                    android:id="@+id/bt_departamento_tres"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/palette7press"
+                    android:hint="@string/departamento_tres"
+                    android:text="@string/departamento_tres"
+                    android:textColor="#ffffff" />
+
+                <Button
+                    android:id="@+id/bt_ciudad_tres"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/palette7press"
+                    android:hint="@string/ciudad_tres"
+                    android:text="@string/ciudad_tres"
+                    android:textColor="#ffffff" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_direccion_tres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/direccion_tres"
+                android:inputType="text"
+                android:singleLine="true"
+                android:visibility="gone" />
+
+            <!-- Fin direccion tres -->
+
+
+            <!-- Inicio telefono 1 -->
+
+            <TextView
+                android:id="@+id/tv_info_telefono"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/palette5"
+                android:paddingLeft="5dp"
+                android:text="@string/info_telefono"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <LinearLayout
+                android:id="@+id/ly_telefono1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/bt_tipo_tel"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/palette7press"
+                    android:hint="@string/tipo_tel"
+                    android:text="@string/tipo_tel"
+                    android:textColor="#ffffff" />
+
+                <EditText
+                    android:id="@+id/et_numero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:ems="10"
+                    android:hint="@string/numero"
+                    android:inputType="text"
+                    android:maxLength="15"
+                    android:singleLine="true" />
+
+            </LinearLayout>
+            <!-- Fin telefono 1 -->
+
+
+            <!-- Inicio telefono 2 -->
+
+            <TextView
+                android:id="@+id/tv_info_telefono_dos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/palette5"
+                android:paddingLeft="5dp"
+                android:text="@string/info_telefono_dos"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/ly_telefono2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" >
+
+                <Button
+                    android:id="@+id/bt_tipo_tel_dos"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/palette7press"
+                    android:hint="@string/tipo_tel_dos"
+                    android:text="@string/tipo_tel_dos"
+                    android:textColor="#ffffff" />
+
+                <EditText
+                    android:id="@+id/et_numero_dos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/numero_dos"
+                    android:inputType="text"
+                    android:singleLine="true" />
+            </LinearLayout>
+            <!-- Fin telefono 2 -->
+
+
+            <!-- Inicio telefono 3 -->
+
+            <TextView
+                android:id="@+id/tv_info_telefono_tres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/palette5"
+                android:paddingLeft="5dp"
+                android:text="@string/info_telefono_tres"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/ly_telefono3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" >
+
+                <Button
+                    android:id="@+id/bt_tipo_tel_tres"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/palette7press"
+                    android:hint="@string/tipo_tel_tres"
+                    android:text="@string/tipo_tel_tres"
+                    android:textColor="#ffffff" />
+
+                <EditText
+                    android:id="@+id/et_numero_tres"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/numero_tres"
+                    android:inputType="text"
+                    android:singleLine="true" />
+            </LinearLayout>
+            <!-- Fin telefono 3 -->
+
+            <TextView
+                android:id="@+id/tv_info_contable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/palette5"
+                android:paddingLeft="5dp"
+                android:text="@string/info_contable"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/bt_regimen"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:hint="@string/regimen"
+                android:text="@string/regimen"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/bt_actividad"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/actividad"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/tv_info_comercial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/palette5"
+                android:paddingLeft="5dp"
+                android:text="@string/info_comercial"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/bt_lista_precios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:background="@drawable/palette7press"
+                android:hint="@string/lista_precios"
+                android:text="@string/lista_precios"
+                android:textColor="#ffffff" />
+
+            <EditText
+                android:id="@+id/et_dias_credito"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/dias_credito"
+                android:inputType="number"
+                android:maxLength="2"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/et_cupom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/cupom"
+                android:inputType="number"
+                android:maxLength="7"
+                android:singleLine="true" />
+
+            <Button
+                android:id="@+id/bt_estado"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/estado_tercero"
+                android:textColor="#ffffff" />
+
+            <!-- Informacion Bancaria -->
+
+            <TextView
+                android:id="@+id/tv_info_bancaria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/palette5"
+                android:paddingLeft="5dp"
+                android:text="@string/info_bancaria"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/et_descripcion_banco"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/descripcion_banco"
+                android:inputType="text"
+                android:maxLength="50"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/et_numero_cuenta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/numero_cuenta"
+                android:inputType="number"
+                android:maxLength="20"
+                android:singleLine="true" />
+
+            <Button
+                android:id="@+id/bt_tipo_cuenta"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/tipo_cuenta"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/bt_banco"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/banco_tercero"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/bt_departamento_banco"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/departamento_banco"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/bt_ciudad_banco"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/ciudad_banco"
+                android:textColor="#ffffff" />
+
+            <EditText
+                android:id="@+id/et_descripcion_banco_dos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/descripcion_banco_dos"
+                android:inputType="text"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/et_numero_cuenta_dos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/numero_cuenta_dos"
+                android:inputType="number"
+                android:singleLine="true" />
+
+            <Button
+                android:id="@+id/bt_tipo_cuenta_dos"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/tipo_cuenta_dos"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/bt_banco_dos"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/banco_tercero_dos"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/bt_departamento_banco_dos"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/departamento_banco_dos"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/bt_ciudad_banco_dos"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/ciudad_banco_dos"
+                android:textColor="#ffffff" />
+
+            <EditText
+                android:id="@+id/et_descripcion_banco_tres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/descripcion_banco_tres"
+                android:inputType="text"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/et_numero_cuenta_tres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/numero_cuenta_tres"
+                android:inputType="number"
+                android:singleLine="true" />
+
+            <Button
+                android:id="@+id/bt_tipo_cuenta_tres"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/tipo_cuenta_tres"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/bt_banco_tres"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/banco_tercero_tres"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/bt_departamento_banco_tres"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/departamento_banco_tres"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/bt_ciudad_banco_tres"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/ciudad_banco_tres"
+                android:textColor="#ffffff" />
+
+            <!-- Fin Informacion Bancaria -->
+
+
+            <!-- Asociacion de marcas -->
+
+            <TextView
+                android:id="@+id/tv_info_aso_marcas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/palette5"
+                android:paddingLeft="5dp"
+                android:text="@string/info_aso_marcas"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/bt_marcas"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/marcas"
+                android:textColor="#ffffff"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/bt_marcas_dos"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/marcas_dos"
+                android:textColor="#ffffff"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/bt_marcas_tres"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/marcas_tres"
+                android:textColor="#ffffff"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/bt_marcas_cuatro"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/marcas_tres"
+                android:textColor="#ffffff"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/bt_marcas_cinco"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/marcas_tres"
+                android:textColor="#ffffff"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/bt_marcas_seis"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/marcas_tres"
+                android:textColor="#ffffff"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/bt_marcas_siete"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/marcas_tres"
+                android:textColor="#ffffff"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/bt_marcas_ocho"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/marcas_tres"
+                android:textColor="#ffffff"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/bt_marcas_nueve"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/marcas_tres"
+                android:textColor="#ffffff"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/bt_marcas_diez"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:text="@string/marcas_tres"
+                android:textColor="#ffffff"
+                android:visibility="gone" />
+
+            <!-- Fina Asociacion de marcas -->
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

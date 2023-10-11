@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/palette3"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/palette5"
+        android:gravity="center_horizontal"
+        android:text="@string/modificar_cantidad"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+        <LinearLayout
+            android:id="@+id/LinerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/palette3" >
+
+	        <TextView
+	            android:id="@+id/tv_cantidad"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+                android:layout_weight="10"
+	            android:layout_marginLeft="10dp"
+	            android:text="@string/cantidad"
+	            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <EditText
+                android:id="@+id/et_cantidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="10"
+                android:gravity="right"
+                android:inputType="numberDecimal" />
+
+        </LinearLayout>
+
+</LinearLayout>

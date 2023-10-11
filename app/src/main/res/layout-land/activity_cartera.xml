@@ -1,0 +1,51 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CarteraActivity" >
+
+    <EditText
+        android:id="@+id/tercero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/informe"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:ems="10"
+        android:hint="@string/tercero" />
+
+    <EditText
+        android:id="@+id/desde"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:hint="@string/desde"
+        android:inputType="date" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/hasta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tercero"
+        android:layout_alignLeft="@+id/tercero"
+        android:layout_marginBottom="37dp"
+        android:ems="10"
+        android:hint="@string/hasta"
+        android:inputType="date" />
+
+    <Button
+        android:id="@+id/informe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/desde"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
+        android:drawableTop="@drawable/pdf" />
+
+</RelativeLayout>

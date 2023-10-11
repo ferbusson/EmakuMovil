@@ -1,0 +1,72 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/palette2"
+    android:orientation="vertical"
+    tools:context=".QueryCashActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/palette2"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/bt_desde"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/palette7press"
+            android:text="@string/desde"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/bt_hasta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/palette7press"
+            android:text="@string/hasta"
+            android:textColor="#ffffff" />
+        
+        <ImageButton
+            android:id="@+id/bt_aceptaraq"
+            android:layout_width="42dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:layout_weight="0.16"
+            android:background="@drawable/palette7press"
+            android:paddingBottom="8dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="8dp"
+            android:src="@drawable/ic_action_search" />
+        
+    </LinearLayout>
+
+	<TextView
+	    android:id="@+id/tv_info_arqueo"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center_vertical"
+	    android:layout_marginBottom="2dp"
+	    android:layout_marginTop="2dp"
+	    android:background="@drawable/palette5"
+	    android:gravity="center_horizontal|center_vertical"
+	    android:minHeight="35dp"
+	    android:text="@string/info_arqueo"
+	    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ListView
+        android:id="@+id/lv_arqueo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/palette2" >
+    </ListView>
+
+</LinearLayout>

@@ -1,0 +1,387 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/palette2"
+    android:orientation="vertical"
+    tools:context=".MenuActivity" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:background="@drawable/palette2"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+		    android:layout_height="1261dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_caja"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/palette5"
+                android:gravity="center"
+                android:text="@string/caja"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/caja"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1.64"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_action_monitor"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:minHeight="58dp"
+                android:text="@string/arqueo"
+                android:visibility="gone" 
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/bt_ventas"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_action_inbox"
+                android:drawablePadding="5dp"
+                android:minHeight="58dp"
+                android:gravity="left|center_vertical"
+                android:text="@string/ventas"
+                android:visibility="gone" 
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/tv_mterceros"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/palette5"
+                android:gravity="center"
+                android:text="@string/terceros"
+                android:visibility="gone" 
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <Button
+                android:id="@+id/bt_ntercero"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_action_list_2"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:minHeight="58dp"
+                android:visibility="gone" 
+                android:text="@string/atercero"
+                android:textColor="#ffffff" />
+            <TextView
+                android:id="@+id/tv_trm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/palette5"
+                android:gravity="center"
+                android:text="@string/trm"
+                android:visibility="gone" 
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <Button
+                android:id="@+id/bt_atrm"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_action_list_2"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:minHeight="58dp"
+                android:visibility="gone" 
+                android:text="@string/atrm"
+                android:textColor="#ffffff" />
+            
+            <TextView
+                android:id="@+id/tv_productos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/palette5"
+                android:gravity="center"
+                android:text="@string/productos"
+                android:visibility="gone" 
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+            <Button
+                android:id="@+id/imagenes"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_action_camera"
+                android:drawablePadding="5dp"
+                android:minHeight="58dp"
+                android:gravity="left|center_vertical"
+                android:text="@string/imagenes"
+                android:visibility="gone" 
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/bt_maestro"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_action_bike"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:minHeight="58dp"
+                android:text="@string/maestro_productos"
+                android:visibility="gone" 
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/tv_ventas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/palette5"
+                android:gravity="center"
+                android:text="@string/tventas"
+                android:visibility="gone" 
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+            <Button
+                android:id="@+id/bt_resolucion_facturacion"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_action_list_2"
+                android:drawablePadding="5dp"
+                android:minHeight="58dp"
+                android:gravity="left|center_vertical"
+                android:text="@string/resolucion_facturacion"
+                android:visibility="gone" 
+                android:textColor="#ffffff" />
+            <TextView
+                android:id="@+id/tv_compras"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/palette5"
+                android:gravity="center"
+                android:text="@string/compras"
+                android:visibility="gone" 
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <Button
+                android:id="@+id/bt_compra"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_action_list_2"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:minHeight="58dp"
+                android:visibility="gone" 
+                android:text="@string/ccompra"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/bt_plantilla_con_barra"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_excel"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:minHeight="58dp"
+                android:visibility="gone" 
+                android:text="@string/plantilla_con_barra"
+                android:textColor="#ffffff" />
+            
+            <Button
+                android:id="@+id/bt_plantilla_sin_barra"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_excel"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:minHeight="58dp"
+                android:visibility="gone" 
+                android:text="@string/plantilla_sin_barra"
+                android:textColor="#ffffff" />
+            
+            <TextView
+                android:id="@+id/tv_inventarios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/palette5"
+                android:gravity="center"
+                android:text="@string/inventarios"
+                android:visibility="gone" 
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+            <Button
+                android:id="@+id/bt_ajustes"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_action_dropbox"
+                android:drawablePadding="5dp"
+                android:minHeight="58dp"
+                android:gravity="left|center_vertical"
+                android:text="@string/ajustes"
+                android:visibility="gone" 
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/bt_recolectores"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_action_barcode_1w"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:minHeight="58dp"
+                android:text="@string/recolectores"
+                android:visibility="gone" 
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/bt_consultar_recolectores"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_action_search"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:minHeight="58dp"
+                android:text="@string/consultar_recolectores"
+                android:visibility="gone" 
+                android:textColor="#ffffff" />
+            
+            <TextView
+                android:id="@+id/tv_cartera"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/palette5"
+                android:gravity="center"
+                android:text="@string/cartera"
+                android:visibility="gone" 
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+            <Button
+                android:id="@+id/bt_abono_cartera"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:minHeight="58dp"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_action_business"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:text="@string/abono_cartera"
+                android:visibility="gone" 
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/bt_informes_cartera"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_action_documentw"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:minHeight="58dp"
+                android:text="@string/informes_cartera"
+                android:visibility="gone" 
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/tv_cxp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/palette5"
+                android:gravity="center"
+                android:text="@string/cxp"
+                android:visibility="gone" 
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <Button
+                android:id="@+id/bt_abono_cxp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_action_business"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:minHeight="58dp"
+                android:text="@string/abono_cxp"
+                android:visibility="gone" 
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/bt_informes_cxp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_action_documentw"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:minHeight="58dp"
+                android:text="@string/informes_cxp"
+                android:visibility="gone" 
+                android:textColor="#ffffff" />
+            <TextView
+                android:id="@+id/tv_documentos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/palette5"
+                android:gravity="center"
+                android:text="@string/documentos"
+                android:visibility="gone" 
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <Button
+                android:id="@+id/bt_anular_documentos"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/palette7press"
+                android:drawableLeft="@drawable/ic_action_cut"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:minHeight="58dp"
+                android:text="@string/anular_documentos"
+                android:visibility="gone" 
+                android:textColor="#ffffff" />
+            
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
