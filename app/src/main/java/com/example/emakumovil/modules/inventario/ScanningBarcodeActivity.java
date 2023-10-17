@@ -44,8 +44,8 @@ import com.example.emakumovil.components.DialogClickListener;
 import com.example.emakumovil.components.FieldsDDV;
 import com.example.emakumovil.components.GlobalData;
 import com.example.emakumovil.components.SearchQuery;
-import com.example.emakumovil.comunications.SocketConnector;
-import com.example.emakumovil.comunications.SocketWriter;
+import com.example.emakumovil.communications.SocketConnector;
+import com.example.emakumovil.communications.SocketWriter;
 import com.example.emakumovil.control.ClientHeaderValidator;
 import com.example.emakumovil.control.SuccessEvent;
 import com.example.emakumovil.control.SuccessListener;
@@ -95,7 +95,7 @@ public class ScanningBarcodeActivity extends Activity implements OnKeyListener, 
 
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-		wl = pm.newWakeLock(SCREEN_DIM_WAKE_LOCK, "My Tag");
+		//wl = pm.newWakeLock(SCREEN_DIM_WAKE_LOCK, "Alarm");
 		wl.acquire();
 	}
 
@@ -181,7 +181,7 @@ public class ScanningBarcodeActivity extends Activity implements OnKeyListener, 
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-	 
+	 /*
 	    switch (item.getItemId()) {
 	        case R.id.it_modificar_cantidad:
 	        	modificarCantidad(selectedItemClick);
@@ -191,7 +191,8 @@ public class ScanningBarcodeActivity extends Activity implements OnKeyListener, 
 	            return true;
 	        default:
 	        	return false;
-	    }
+	    }*/
+		return false;
 	}
 
 	private void modificarCantidad(int position) {

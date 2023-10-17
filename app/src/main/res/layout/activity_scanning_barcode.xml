@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/palette2"
     android:orientation="vertical"
-    tools:context=".DetailDocuments" >
+    tools:context=".modules.documents.DocumentDetailActivity" >
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -3,12 +3,11 @@ package com.example.emakumovil.transactions;
 import java.nio.channels.SocketChannel;
 import java.util.Hashtable;
 
-import org.jdom.Document;
 import org.jdom2.Document;
 import org.jdom2.Element;
 
-import com.example.emakumovil.comunications.SocketConnector;
-import com.example.emakumovil.comunications.SocketWriter;
+import com.example.emakumovil.communications.SocketConnector;
+import com.example.emakumovil.communications.SocketWriter;
 
 /**
  * STResultSet.java Creado el 30-ago-2004
@@ -54,7 +53,6 @@ public class TransactionServerResultSet {
     /**
      * Este metodo es invocado en caso de que la consulta solicitada no se encuentre en
      * cache.
-     * @param key identifica si la solicituid de esta clase es de JMClient o de JMAdmin
      * @param doc envia la peticion de una transaccion o una solicitud de un query
      * @return returna la transaccion o query solicitado.
      * @throws TransactionServerException

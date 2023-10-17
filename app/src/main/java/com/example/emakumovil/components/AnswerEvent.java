@@ -2,7 +2,7 @@ package com.example.emakumovil.components;
 
 import java.util.EventObject;
 
-import org.jdom.Document;
+import org.jdom2.Document;
 
 /**
  * AnswerEvent.java Creado el 14-abr-2005
@@ -40,7 +40,7 @@ public class AnswerEvent extends EventObject {
     	return sqlCode;
     }
     
-    public Document getDocument() {
+    public org.jdom2.Document getDocument() {
     	return document;
     }
 }

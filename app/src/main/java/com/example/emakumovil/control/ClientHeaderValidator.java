@@ -8,10 +8,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Vector;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.output.XMLOutputter;
-import org.jdom.output.Format;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.output.XMLOutputter;
+import org.jdom2.output.Format;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -66,7 +66,6 @@ public class ClientHeaderValidator implements  ArrivedPackageListener {
      * Este metodo se encarga de revisar toda las raices de los documentos que
      * llegan al servidor de transacciones.
      * 
-     * @param doc
      *            Documento a validar
      */
 

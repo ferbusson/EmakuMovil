@@ -2,7 +2,7 @@ package com.example.emakumovil.components;
 
 import java.util.EventObject;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * DialogClickEvent.java Creado el Jueves Santo 28-Mar-2013

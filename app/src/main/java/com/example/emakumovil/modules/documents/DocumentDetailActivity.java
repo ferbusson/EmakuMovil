@@ -35,8 +35,8 @@ import com.example.emakumovil.components.AnswerListener;
 import com.example.emakumovil.components.FieldsDDV;
 import com.example.emakumovil.components.GlobalData;
 import com.example.emakumovil.components.SearchQuery;
-import com.example.emakumovil.comunications.SocketConnector;
-import com.example.emakumovil.comunications.SocketWriter;
+import com.example.emakumovil.communications.SocketConnector;
+import com.example.emakumovil.communications.SocketWriter;
 
 public class DocumentDetailActivity extends Activity implements OnClickListener, AnswerListener {
 

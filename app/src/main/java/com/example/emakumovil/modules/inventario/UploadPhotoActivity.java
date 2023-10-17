@@ -52,8 +52,8 @@ import com.example.emakumovil.components.DialogClickEvent;
 import com.example.emakumovil.components.DialogClickListener;
 import com.example.emakumovil.components.GlobalData;
 import com.example.emakumovil.components.SelectedDataDialog;
-import com.example.emakumovil.comunications.SocketConnector;
-import com.example.emakumovil.comunications.SocketWriter;
+import com.example.emakumovil.communications.SocketConnector;
+import com.example.emakumovil.communications.SocketWriter;
 import com.example.emakumovil.misc.utils.ZipHandler;
 import com.example.emakumovil.transactions.TransactionServerException;
 import com.example.emakumovil.transactions.TransactionServerResultSet;
@@ -172,7 +172,7 @@ public class UploadPhotoActivity extends Activity implements OnClickListener, An
 
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-		wl = pm.newWakeLock(SCREEN_DIM_WAKE_LOCK, "My Tag");
+		//wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "BusSnoozeAlarm");
 		wl.acquire();
 	}
 

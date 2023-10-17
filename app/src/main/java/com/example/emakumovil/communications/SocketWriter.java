@@ -5,8 +5,8 @@ import com.example.emakumovil.misc.settings.ConfigFileHandler;
 import com.example.emakumovil.misc.settings.ConfigFileNotLoadException;
 
 
-import org.jdom.Document;
-import org.jdom.output.XMLOutputter;
+import org.jdom2.Document;
+import org.jdom2.output.XMLOutputter;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

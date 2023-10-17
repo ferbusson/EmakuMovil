@@ -33,8 +33,8 @@ import com.example.emakumovil.components.DialogClickListener;
 import com.example.emakumovil.components.SearchDataDialog;
 import com.example.emakumovil.components.SearchQuery;
 import com.example.emakumovil.components.SelectedDataDialog;
-import com.example.emakumovil.comunications.SocketConnector;
-import com.example.emakumovil.comunications.SocketWriter;
+import com.example.emakumovil.communications.SocketConnector;
+import com.example.emakumovil.communications.SocketWriter;
 
 public class PersonsActivity extends Activity implements OnClickListener, DialogClickListener, AnswerListener, OnFocusChangeListener {
 

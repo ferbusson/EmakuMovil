@@ -28,7 +28,7 @@ import com.example.emakumovil.R;
 import com.example.emakumovil.components.AnswerEvent;
 import com.example.emakumovil.components.AnswerListener;
 import com.example.emakumovil.components.SearchQuery;
-import com.example.emakumovil.comunications.SocketConnector;
+import com.example.emakumovil.communications.SocketConnector;
 import com.example.emakumovil.misc.settings.ConfigFileHandler;
 import com.example.emakumovil.modules.ventas.ChangeResolutionActivity;
 

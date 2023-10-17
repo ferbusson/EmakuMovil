@@ -2,7 +2,7 @@ package com.example.emakumovil.components;
 
 import java.util.Vector;
 
-import org.jdom.Document;
+import org.jdom2.Document;
 
 import android.util.Log;
 

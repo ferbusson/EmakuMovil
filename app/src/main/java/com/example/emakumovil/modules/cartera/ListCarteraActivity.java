@@ -43,8 +43,8 @@ import com.example.emakumovil.components.DialogClickListener;
 import com.example.emakumovil.components.GlobalData;
 import com.example.emakumovil.components.ProgressDialogManager;
 import com.example.emakumovil.components.SearchQuery;
-import com.example.emakumovil.comunications.SocketConnector;
-import com.example.emakumovil.comunications.SocketWriter;
+import com.example.emakumovil.communications.SocketConnector;
+import com.example.emakumovil.communications.SocketWriter;
 import com.example.emakumovil.control.ClientHeaderValidator;
 import com.example.emakumovil.control.SuccessEvent;
 import com.example.emakumovil.control.SuccessListener;
@@ -176,6 +176,7 @@ public class ListCarteraActivity extends Activity implements AnswerListener, OnC
 	@Override
 	public void arriveAnswerEvent(AnswerEvent e) {
 		// TODO Auto-generated method stub
+
 		Document doc = e.getDocument();
 		final Element rootNode = doc.getRootElement();
 		this.runOnUiThread(new Runnable() {
@@ -510,10 +511,12 @@ public class ListCarteraActivity extends Activity implements AnswerListener, OnC
 	  
 	}
 
+	/*
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 	 
 	    switch (item.getItemId()) {
+
 	        case R.id.it_abono_parcial:
 	        	FieldsCartera cartera = GlobalData.items.get(selectedItemClick);
 	        	String sdocumento = cartera.getDocumento();
@@ -551,7 +554,7 @@ public class ListCarteraActivity extends Activity implements AnswerListener, OnC
 	        	return false;
 	    }
 	}
-
+*/
 	private void paymentOnAccount(double abono_total,double pdesc1,double pdesc2,double pdesc3) {
 		
 		System.out.println("Valor Abono "+abono_total);

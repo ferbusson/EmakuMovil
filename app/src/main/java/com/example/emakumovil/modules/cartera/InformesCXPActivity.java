@@ -18,8 +18,8 @@ import com.example.emakumovil.components.DatePickerFragment;
 import com.example.emakumovil.components.DialogClickEvent;
 import com.example.emakumovil.components.DialogClickListener;
 import com.example.emakumovil.components.SearchDataDialog;
-import com.example.emakumovil.comunications.SocketConnector;
-import com.example.emakumovil.comunications.SocketWriter;
+import com.example.emakumovil.communications.SocketConnector;
+import com.example.emakumovil.communications.SocketWriter;
 
 public class InformesCXPActivity extends Activity implements OnClickListener, DialogClickListener {
 

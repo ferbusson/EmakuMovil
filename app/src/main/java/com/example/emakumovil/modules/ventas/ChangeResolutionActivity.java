@@ -16,8 +16,8 @@ import com.example.emakumovil.components.DatePickerFragment;
 import com.example.emakumovil.components.DialogClickEvent;
 import com.example.emakumovil.components.DialogClickListener;
 import com.example.emakumovil.components.SearchQuery;
-import com.example.emakumovil.comunications.SocketConnector;
-import com.example.emakumovil.comunications.SocketWriter;
+import com.example.emakumovil.communications.SocketConnector;
+import com.example.emakumovil.communications.SocketWriter;
 import com.example.emakumovil.control.ClientHeaderValidator;
 
 import android.os.Bundle;

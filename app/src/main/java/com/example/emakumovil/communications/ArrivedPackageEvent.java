@@ -2,7 +2,7 @@ package com.example.emakumovil.communications;
 
 import java.util.EventObject;
 
-import org.jdom.Document;
+import org.jdom2.Document;
 
 public class ArrivedPackageEvent extends EventObject {
 
@@ -17,7 +17,7 @@ public class ArrivedPackageEvent extends EventObject {
 		this.doc=doc;
 	}
 
-	public Document getDoc() {
+	public org.jdom2.Document getDoc() {
 		return doc;
 	}
 

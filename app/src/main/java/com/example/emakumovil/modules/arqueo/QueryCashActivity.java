@@ -324,7 +324,7 @@ public class QueryCashActivity extends Activity implements OnClickListener,
 
  	@Override
  	public boolean onContextItemSelected(MenuItem item) {
- 	 
+ 	 /*
  	    switch (item.getItemId()) {
  	        case R.id.it_modificar_arqueo:
  			   	 Intent i = new Intent(this, ChangeCashActivity.class );
@@ -339,7 +339,8 @@ public class QueryCashActivity extends Activity implements OnClickListener,
  			     return true;
  	        default:
  	        	return false;
- 	    }
+ 	    }*/
+		return false;
  	}
 
 	@Override

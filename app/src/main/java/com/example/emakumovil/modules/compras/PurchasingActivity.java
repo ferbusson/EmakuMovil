@@ -10,9 +10,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import org.jdom.Attribute;
-import org.jdom.Document;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
 
 import android.app.Activity;
 import android.content.Context;

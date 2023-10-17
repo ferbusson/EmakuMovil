@@ -4,8 +4,8 @@ package com.example.emakumovil.components;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jdom.Document;
-import org.jdom.Element;
+import org.jdom2.Document;
+import org.jdom2.Element;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
