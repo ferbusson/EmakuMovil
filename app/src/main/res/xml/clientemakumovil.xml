@@ -7,9 +7,9 @@
 
 <company>
      <name>grama</name>
-     <jarFile>grama.jar</jarFile>
-     <directory>grama</directory>
-     <host>10.8.8.1</host>
+     <jarFile>coccoa.jar</jarFile>
+     <directory>coccoa</directory>
+     <host>161.35.229.194</host>
      <serverport>9117</serverport>
 </company>
   

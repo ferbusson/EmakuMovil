@@ -1,5 +1,7 @@
 package com.example.emakumovil.communications;
 
+import static java.sql.DriverManager.println;
+
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
@@ -139,6 +141,7 @@ public class SocketConnector extends Thread {
                         
                         if (clave.isReadable()) {
                         	packageXML.work(socket);
+                            System.out.println("en socketConnector...");
                         } else if(clave.isValid()){
                             socket.close();
                             socket=null;

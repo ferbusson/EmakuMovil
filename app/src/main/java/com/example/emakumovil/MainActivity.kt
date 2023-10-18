@@ -49,6 +49,7 @@ class MainActivity : androidx.activity.ComponentActivity() {
     private var ETpassword: EditText? = null
     private var Bingresar: Button? = null
     private var packageXML: PackageToXML? = null
+
     fun isOnline(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -86,7 +87,7 @@ class MainActivity : androidx.activity.ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (Build.VERSION.SDK_INT > 9) {
+        if (Build.VERSION.SDK_INT > 24) {
             val policy = ThreadPolicy.Builder()
                 .permitAll().build()
             StrictMode.setThreadPolicy(policy)
@@ -98,19 +99,38 @@ class MainActivity : androidx.activity.ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                 ) {
+                    /*
+                     * CLAVES TEMPORALES
+                     */
+                    /*ETempresa?.setText("coccoa")
+                    ETusuario?.setText("emaku")
+                    ETpassword?.setText("perla2010")*/
 
-                    setContentView(R.layout.activity_main);
+                    setContentView(R.layout.activity_main)
 
-                    Bingresar = findViewById(R.id.ingresar);
-                    ETempresa =  findViewById(R.id.empresa);
-                    ETusuario =  findViewById(R.id.login);
-                    ETpassword = findViewById(R.id.password);
+                    Bingresar = findViewById(R.id.ingresar)
+                    ETempresa =  findViewById(R.id.empresa)
+                    ETusuario =  findViewById(R.id.login)
+                    ETpassword = findViewById(R.id.password)
 
                     if (isOnline(applicationContext)){
                         NotificationText("We are Online!")
                     try {
                         ConfigFileHandler.loadSettings()
+                        System.out.println("Archivo cargado")
                         Log.d("EMAKU", "Archivo cargado")
+
+                        //Bingresar!!.setOnClickListener( this)
+                        System.out.println("Entrando a packageXML...")
+                        packageXML = PackageToXML()
+                        System.out.println("...sali de packageXML")
+                        System.out.println("Entrando a HeadersValidator...")
+                        val headers = HeadersValidator(this)
+                        System.out.println("...sali de HeadersValidator")
+                        System.out.println("Entrando a addArrivePackageListener...")
+                        packageXML!!.addArrivePackageListener(headers)
+                        System.out.println("...saliendo de addArrivePackageListener")
+
                     } catch (e: ConfigFileNotLoadException) {
                         // TODO Auto-generated catch block
                         Log.d("EMAKU", "No se pudo cargar el archivo de empresas")
@@ -125,17 +145,6 @@ class MainActivity : androidx.activity.ComponentActivity() {
             }
         }
 
-        /*
-		 * CLAVES TEMPORALES
-		 */
-        ETempresa?.setText("coccoa")
-        ETusuario?.setText("emaku")
-        ETpassword?.setText("perla2010")
-
-        //Bingresar!!.setOnClickListener(this)
-        packageXML = PackageToXML()
-        val headers = HeadersValidator(this)
-        packageXML!!.addArrivePackageListener(headers)
     }
 
     fun onClick(v: View?) {
