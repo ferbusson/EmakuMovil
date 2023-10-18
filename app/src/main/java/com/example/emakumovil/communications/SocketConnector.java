@@ -41,6 +41,9 @@ public class SocketConnector extends Thread {
     private static String database ;
     private static String user;
     private static String password;
+    private static String ip;
+
+    private static String mac;
     
     public static String getDatabase() {
 		return database;
@@ -54,7 +57,6 @@ public class SocketConnector extends Thread {
 	public static String getPassword() {
 		return password;
 	}
-
 	public static void setPassword(String password) {
 		SocketConnector.password = password;
 	}
@@ -67,6 +69,15 @@ public class SocketConnector extends Thread {
 		SocketConnector.user = user;
 	}
 
+    public static String getIp() {
+        return ip;
+    }
+    public static void setIp(String ip) { SocketConnector.ip = ip; }
+
+    public static String getMac() {
+        return mac;
+    }
+    public static void setMac(String mac) { SocketConnector.mac = mac; }
 
 	/**
      * Este constructor inicializa el hilo de conexion al

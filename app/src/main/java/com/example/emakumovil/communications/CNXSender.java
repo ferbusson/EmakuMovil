@@ -31,18 +31,19 @@ import org.jdom2.output.XMLOutputter;
 public class CNXSender {
     
     /**
-     *  Este metodo recibe los argumentos necesarios para crear el paquete CNX
-     * 
-     * @param bd contiene el nombre de la base de datos a la que el cliente se conectara
-     * @param login contiene el login del cliente
+     * Este metodo recibe los argumentos necesarios para crear el paquete CNX
+     *
+     * @param bd       contiene el nombre de la base de datos a la que el cliente se conectara
+     * @param login    contiene el login del cliente
      * @param password contiene el password del cliente
+     * @param ip contiene la ip del cliente
      * @return Retorna el paquete CNX en formato XML @see org.jdom.Document
      */
-    public static Document getPackage(String bd,String login,String password) {
-    	return getPackage("MCNX",bd,login,password);
+    public static Document getPackage(String bd, String login, String password, String ip, String mac) {
+    	return getPackage("MCNX",bd,login,password,ip,mac);
     }
     
-    public static Document getPackage(String pack,String bd, String login, String password ){
+    public static Document getPackage(String pack,String bd, String login, String password, String ip, String mac){
         
     	Element rootNode = new Element(pack);
         Document doc = new Document(rootNode);
@@ -50,6 +51,8 @@ public class CNXSender {
         rootNode.addContent(new Element("db").setText(bd));
         rootNode.addContent(new Element("login").setText(login));
         rootNode.addContent(new Element("password").setText(password));
+        rootNode.addContent(new Element("ip").setText(ip));
+        rootNode.addContent(new Element("mac").setText(mac));
         
         XMLOutputter out = new XMLOutputter();
         out.setFormat(Format.getPrettyFormat());
@@ -59,8 +62,6 @@ public class CNXSender {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
-        
         return doc;
     }
     

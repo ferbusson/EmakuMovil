@@ -284,11 +284,17 @@ public class SocketWriter {
 					System.out.println("database: "+SocketConnector.getDatabase());
 					System.out.println("user: "+SocketConnector.getUser());
 					System.out.println("passwd: "+SocketConnector.getPassword());
+					System.out.println("ip: "+SocketConnector.getIp());
+					System.out.println("mac: "+SocketConnector.getMac());
+
 					SocketWriter.writing(socket,
 					                    CNXSender.getPackage("MCNX",
 					                            SocketConnector.getDatabase(),
 					                            SocketConnector.getUser(),
-					                            SocketConnector.getPassword()));
+					                            SocketConnector.getPassword(),
+												SocketConnector.getIp(),
+												SocketConnector.getMac()
+										));
 					System.out.println("reescribiendo...");
 				}
 				else {

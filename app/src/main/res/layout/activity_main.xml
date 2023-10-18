@@ -53,7 +53,8 @@
         android:layout_gravity="center"
         android:layout_marginBottom="40dp"
         android:layout_marginTop="40dp"
-        android:text="@string/ingresar" />
+        android:text="@string/ingresar"
+        android:onClick="onClick" />
 
     <FrameLayout
         android:layout_width="match_parent"
