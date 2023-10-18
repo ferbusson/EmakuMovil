@@ -14,6 +14,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="63dp"
         android:background="#ffffff"
+        android:minHeight="48dp"
         android:ems="10"
         android:hint="@string/empresa"
         android:singleLine="true" >
@@ -28,6 +29,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:background="#ffffff"
+        android:minHeight="48dp"
         android:ems="10"
         android:hint="@string/usuario"
         android:singleLine="true" />
@@ -39,6 +41,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:background="#ffffff"
+        android:minHeight="48dp"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword" />

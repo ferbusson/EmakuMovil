@@ -3,9 +3,14 @@ package com.example.emakumovil
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
 import android.util.Log
-import androidx.activity.ComponentActivity
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -17,13 +22,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.emakumovil.communications.PackageToXML
+import com.example.emakumovil.control.HeadersValidator
 import com.example.emakumovil.misc.settings.ConfigFileHandler
 import com.example.emakumovil.misc.settings.ConfigFileNotLoadException
 import com.example.emakumovil.ui.theme.EmakuMovilTheme
 
 
-class MainActivity : ComponentActivity() {
+class MainActivity : androidx.activity.ComponentActivity() {
 
+    private var ETempresa: EditText? = null
+    private var ETusuario: EditText? = null
+    private var ETpassword: EditText? = null
+    private var Bingresar: Button? = null
+    private var packageXML: PackageToXML? = null
     fun isOnline(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -45,10 +57,26 @@ class MainActivity : ComponentActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (Build.VERSION.SDK_INT > 9) {
+            val policy = ThreadPolicy.Builder()
+                .permitAll().build()
+            StrictMode.setThreadPolicy(policy)
+        }
         setContent {
             EmakuMovilTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background
+                ) {
+
+                    setContentView(R.layout.activity_main);
+
+                    Bingresar = findViewById(R.id.ingresar);
+                    ETempresa =  findViewById(R.id.empresa);
+                    ETusuario =  findViewById(R.id.login);
+                    ETpassword = findViewById(R.id.password);
+
                     if (isOnline(applicationContext)){
                         NotificationText("We are Online!")
                     try {
@@ -59,13 +87,24 @@ class MainActivity : ComponentActivity() {
                         Log.d("EMAKU", "No se pudo cargar el archivo de empresas")
                     }
                 }
-                    else
+                    else {
                         NotificationText("No network connection!")
+                        Toast.makeText(this, R.string.actualizar, Toast.LENGTH_LONG).show();
+                        //Bingresar.isActivated(false);
+                    }
                 }
             }
         }
+        //Bingresar!!.setOnClickListener(this)
+        packageXML = PackageToXML()
+        val headers = HeadersValidator(this)
+        packageXML!!.addArrivePackageListener(headers)
     }
+
+
 }
+
+
 
 @Composable
 fun NotificationText(name: String, modifier: Modifier = Modifier) {

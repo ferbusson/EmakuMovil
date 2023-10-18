@@ -99,10 +99,10 @@
             android:name="com.example.emakumovil.modules.inventario.FitInventoryActivity"
             android:label="@string/title_activity_fit_inventory" >
         </activity>
-        <activity
+        <!--<activity
             android:name="com.example.emakumovil.components.SelectedDataDialog"
             android:label="@string/title_activity_selected_data_dialog" >
-        </activity>
+        </activity>-->
         <activity
             android:name="com.example.emakumovil.modules.inventario.ListFitInventoryActivity"
             android:label="@string/title_activity_list_fit_inventory" >
