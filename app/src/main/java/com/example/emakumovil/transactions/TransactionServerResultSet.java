@@ -8,6 +8,7 @@ import org.jdom2.Element;
 
 import com.example.emakumovil.communications.SocketConnector;
 import com.example.emakumovil.communications.SocketWriter;
+import com.example.emakumovil.misc.settings.ConfigFileHandler;
 
 /**
  * STResultSet.java Creado el 30-ago-2004
@@ -99,6 +100,7 @@ public class TransactionServerResultSet {
         else {
 	        Document doc = new Document();
 	        doc.setRootElement(new Element("QUERY"));
+            doc.getRootElement().addContent(new Element("jwt").setText(ConfigFileHandler.getJWT()));
 	        doc.getRootElement().addContent(new Element("sql").setText(codigo));
 	        
 	        if( args != null ) {

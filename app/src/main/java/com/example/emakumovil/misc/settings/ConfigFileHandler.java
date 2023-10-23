@@ -43,6 +43,7 @@ public class ConfigFileHandler  extends Activity {
     private static SAXBuilder builder;
     private static Document doc;
     private static Element root;
+    private static String JWT;
     private static String language;
     private static String logMode;
     private static String jarDirectory;
@@ -265,7 +266,13 @@ public class ConfigFileHandler  extends Activity {
         return currentCompany;
     }
 
+    public static String getJWT() {
+        return JWT;
+    }
 
+    public static void setJWT(String jwt) {
+        ConfigFileHandler.JWT = jwt;
+    }
 
 }
 

@@ -1,25 +1,27 @@
 package com.example.emakumovil.control;
 
-import java.io.IOException;
-
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
-
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.emakumovil.MainActivity;
 import com.example.emakumovil.MenuActivity;
-
 import com.example.emakumovil.communications.ArrivedPackageEvent;
 import com.example.emakumovil.communications.ArrivedPackageListener;
 import com.example.emakumovil.communications.PingPackage;
 import com.example.emakumovil.communications.SocketConnector;
 import com.example.emakumovil.misc.parameters.EmakuParametersStructure;
 import com.example.emakumovil.misc.settings.ConfigFileHandler;
+
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
+
+import java.io.IOException;
+import java.security.SignatureException;
+
+
 
 /**
  * ClientHeaderValidator.java Creado el 22-jul-2004
@@ -52,8 +54,7 @@ public class HeadersValidator implements ArrivedPackageListener {
     /**
      * Este metodo se encarga de revisar toda las raices de los documentos que
      * llegan al servidor de transacciones.
-     * 
-     * @param doc
+     *
      *            Documento a validar
      */
 
@@ -91,6 +92,18 @@ public class HeadersValidator implements ArrivedPackageListener {
 			        /*
 			         * Cargando configuración dependiendo de la empresa ...
 			         */
+
+					String jwt = root.getChildText("jwt");
+					String company = root.getChildText("companyName");
+					String companyID = root.getChildText("companyID");
+					String userName = root.getChildText("userName");
+					String host = root.getChildText("host");
+
+					if (jwt!=null) {
+						System.out.println("tengo el jwt");
+						ConfigFileHandler.setJWT(jwt);
+					}
+
 			        String dataBase = EmakuParametersStructure.getParameter("dataBase");
 			        ConfigFileHandler.loadJarFile(dataBase);
 
@@ -160,4 +173,5 @@ public class HeadersValidator implements ArrivedPackageListener {
         });
     	Log.d("EMAKU","EMAKU: error: "+root.getChild("errorMsg").getText());
     }
+
 }

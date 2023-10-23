@@ -16,6 +16,7 @@
         android:background="#ffffff"
         android:minHeight="48dp"
         android:ems="10"
+        android:text="coccoa"
         android:hint="@string/empresa"
         android:singleLine="true" >
 
@@ -31,6 +32,7 @@
         android:background="#ffffff"
         android:minHeight="48dp"
         android:ems="10"
+        android:text="emaku"
         android:hint="@string/usuario"
         android:singleLine="true" />
 
@@ -43,6 +45,7 @@
         android:background="#ffffff"
         android:minHeight="48dp"
         android:ems="10"
+        android:text="perla2010"
         android:hint="@string/password"
         android:inputType="textPassword" />
 
