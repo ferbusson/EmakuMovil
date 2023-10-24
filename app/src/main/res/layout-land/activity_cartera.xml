@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CarteraActivity" >
+    tools:context=".modules.cartera.InformesCarteraActivity"
+    tools:ignore="MissingDefaultResource">
 
     <EditText
         android:id="@+id/tercero"
@@ -12,6 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="24dp"
         android:ems="10"
+        android:minHeight="48dp"
         android:hint="@string/tercero" />
 
     <EditText
@@ -22,6 +24,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:ems="10"
+        android:minHeight="48dp"
         android:hint="@string/desde"
         android:inputType="date" >
 
@@ -36,6 +39,7 @@
         android:layout_alignLeft="@+id/tercero"
         android:layout_marginBottom="37dp"
         android:ems="10"
+        android:minHeight="48dp"
         android:hint="@string/hasta"
         android:inputType="date" />
 
@@ -44,6 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/desde"
+        android:contentDescription="@string/contentDescGenerarRepoCartera"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="36dp"
         android:drawableTop="@drawable/pdf" />

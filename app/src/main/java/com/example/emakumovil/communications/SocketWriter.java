@@ -143,17 +143,6 @@ public class SocketWriter {
 	            				}
 	            			}
 	            		}
-/*	            			if (!lastBuf.equals(buf)) {
-	            				cont ++;
-	            				System.out.println("Se reintentara por "+cont+" vez la impresion de: "+lastBuf.remaining()+" datos");
-	            				try {
-	            					Thread.sleep(100);
-	            				}
-	            				catch(InterruptedException e) {
-	            					e.printStackTrace();
-	            				}
-	            			} 
-*/	            		
 	            }
 	            if (buf.remaining()>0) {
 	            	System.out.println("Se cancelo escritura por problemas con el socket y se cerrara");

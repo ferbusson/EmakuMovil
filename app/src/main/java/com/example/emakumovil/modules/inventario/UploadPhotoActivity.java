@@ -173,7 +173,7 @@ public class UploadPhotoActivity extends Activity implements OnClickListener, An
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		//wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "BusSnoozeAlarm");
-		wl.acquire();
+		//wl.acquire();
 	}
 
 	@Override
@@ -283,7 +283,7 @@ public class UploadPhotoActivity extends Activity implements OnClickListener, An
 					nameImage[4] = "MT"+String.valueOf(System.currentTimeMillis())+ ".jpg";
 				}
 
-				nameImage[selectedImage] = "MT"+String.valueOf(System.currentTimeMillis())+ ".jpg";
+				nameImage[selectedImage] = "MT" + String.valueOf(System.currentTimeMillis()) + ".jpg";
 
 		        intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, Uri.fromFile(Environment.getExternalStoragePublicDirectory(
 	    	            Environment.DIRECTORY_PICTURES+File.separator+nameImage[selectedImage])));

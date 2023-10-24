@@ -65,11 +65,8 @@ public class ConfigFileHandler  extends Activity {
             companies = new ArrayList<Element>();
             builder = new SAXBuilder();
             String path = "http://198.211.126.206/.qhatu/clientEmakuMovil.conf"; /// Pendiente por configurar por dominio
-            System.out.println("path: "+path);
             URL url = new URL(path);
-            System.out.println("cargando url "+url);
             doc = builder.build(url);
-            System.out.println("cargando archivo en doc");
             root = doc.getRootElement();
             List<Element> configList = root.getChildren();
             Iterator<Element> i = configList.iterator();
@@ -84,7 +81,6 @@ public class ConfigFileHandler  extends Activity {
             while (i.hasNext()) {
                 Element data = (Element) i.next();
                 String name = data.getName();
-                System.out.println("name: "+name);
                 if (name.equals("language")) {
                     language = data.getValue();
                     //parameters.add("language");
@@ -147,19 +143,15 @@ public class ConfigFileHandler  extends Activity {
             String name = config.getName();
             String value = config.getValue();
             if (name.equals("name")) {
-                System.out.println("name "+value.trim());
                 key = value.trim();
             }
             else if (name.equals("host")) {
-                System.out.println("host "+value);
                 hostConnection.setHost(value);
             } else if (name.equals("serverport")) {
-                System.out.println("serverport "+Integer.parseInt(value));
                 hostConnection.setPort(Integer.parseInt(value));
             }
         }
         if (key!=null) {
-            System.out.println("Entering HTHostConnections ... ");
             HTHostConnections.put(key,hostConnection);
         }
     }
@@ -167,7 +159,6 @@ public class ConfigFileHandler  extends Activity {
     public static void loadJarFile(String nameCompany) {
         Iterator<Element> i = root.getChildren("company").iterator();
         boolean isCompany = false;
-        System.out.println("Inside loadJarFile ... ");
         while (i.hasNext() && !isCompany) {
             Element data = (Element) i.next();
             Iterator<Element> j = data.getChildren().iterator();
@@ -176,15 +167,12 @@ public class ConfigFileHandler  extends Activity {
                 String name = config.getName();
                 String value = config.getValue();
                 if (name.equals("name") && value.trim().equals(nameCompany.trim())) {
-                    System.out.println("name isCompany ... ");
                     isCompany = true;
                 }
                 else if (name.equals("jarFile")) {
-                    System.out.println("jarFile ... ");
                     jarFile = value;
                 }
                 else if (name.equals("directory")) {
-                    System.out.println("directory ... ");
                     jarDirectory = value;
                 }
             }

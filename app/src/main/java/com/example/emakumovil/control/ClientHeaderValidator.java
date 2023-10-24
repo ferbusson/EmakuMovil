@@ -20,13 +20,18 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.core.content.FileProvider;
+
 import com.example.emakumovil.MainActivity;
 import com.example.emakumovil.communications.ArrivedPackageEvent;
 import com.example.emakumovil.communications.ArrivedPackageListener;
 import com.example.emakumovil.communications.PingPackage;
 import com.example.emakumovil.misc.utils.ZipHandler;
+import com.example.emakumovil.modules.cartera.InformesCarteraActivity;
 import com.example.emakumovil.transactions.Cache;
 import com.example.emakumovil.transactions.TransactionServerResultSet;
+
+import firebase.com.protolitewrapper.BuildConfig;
 
 
 /**
@@ -168,10 +173,13 @@ public class ClientHeaderValidator implements  ArrivedPackageListener {
 							ows.close(); 
 							Log.d("EMAKU","EMAKU: Informe guardado");
 							
-							Uri pathPDF = Uri.fromFile(file); 
+							//Uri pathPDF = Uri.fromFile(file);
+                            Uri pathPDF = FileProvider.getUriForFile(main.getApplicationContext(), BuildConfig.APPLICATION_ID,file);
+                            System.out.println("pathPDF " + pathPDF);
 			                Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
 			                pdfIntent.setDataAndType(pathPDF, "application/pdf");
 			                pdfIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            pdfIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
 			                try
 			                {

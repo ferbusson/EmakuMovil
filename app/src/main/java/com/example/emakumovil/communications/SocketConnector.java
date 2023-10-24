@@ -141,7 +141,6 @@ public class SocketConnector extends Thread {
                         
                         if (clave.isReadable()) {
                         	packageXML.work(socket);
-                            System.out.println("en socketConnector...");
                         } else if(clave.isValid()){
                             socket.close();
                             socket=null;

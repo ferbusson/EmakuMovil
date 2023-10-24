@@ -402,5 +402,9 @@
     <string name="actualizar">Actualizar</string>
     <string name="title_activity_resolution_choose_widget">ResolutionChooseWidgetActivity</string>
     <string name="title_activity_change_resolution">ChangeResolutionActivity</string>
+    <string name="contentDescTerceroCartera">Digite la identificación del tercero a consultar</string>
+    <string name="contentDescFechaIniCartera">Seleccione la fecha inicial</string>
+    <string name="contentDescFechaFinCartera">Seleccione la fecha final del reporte</string>
+    <string name="contentDescGenerarRepoCartera">Haga clic para generar el reporte</string>
 
 </resources>

@@ -51,24 +51,19 @@ public class PackageToXML {
 
         buf = ByteBuffer.allocateDirect(8192);
         int numRead = 1;
-        System.out.println("pase por buf: " + buf.toString());
 
         while (numRead > 0) {
-            System.out.println("entre al while numRead>0 valor: " + numRead);
             buf.rewind();
 
             numRead = socket.read(buf);
 
-            System.out.println("bufferOut antes de entrar: " + bufferOut.toString("UTF-8"));
             buf.rewind();
                 for (int i = 0; i < numRead; i++) {
-                System.out.println(String.format("estoy en el for numRead: " +  numRead));
                 int character = buf.get(i);
                 if (character != 12) {
                     if (character!=0) {
                             if(character == 7) i = i+3;
                             else {
-                                System.out.println(String.format("Escribiendo bufferOut.write...: " + character));
                                 bufferOut.write(character);
                             }
                     }
@@ -76,11 +71,9 @@ public class PackageToXML {
                 else {
                     ByteArrayInputStream bufferIn = null;
                     builder = new SAXBuilder();
-                    System.out.println("alimentando el bufferIn desde bufferOut: " + bufferOut.toString("UTF-8"));
                     bufferIn = new ByteArrayInputStream(bufferOut.toByteArray());
                     try {
-                        System.out.println("bufferIn: " + bufferIn.toString());
-						doc = builder.build(bufferIn);
+                    	doc = builder.build(bufferIn);
 					} catch (JDOMException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
