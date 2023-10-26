@@ -1,11 +1,14 @@
 package com.example.emakumovil.control;
 
+import static androidx.core.content.FileProvider.getUriForFile;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Objects;
 import java.util.Vector;
 
 import org.jdom2.Document;
@@ -23,6 +26,7 @@ import android.widget.Toast;
 import androidx.core.content.FileProvider;
 
 import com.example.emakumovil.MainActivity;
+import com.example.emakumovil.R;
 import com.example.emakumovil.communications.ArrivedPackageEvent;
 import com.example.emakumovil.communications.ArrivedPackageListener;
 import com.example.emakumovil.communications.PingPackage;
@@ -174,7 +178,8 @@ public class ClientHeaderValidator implements  ArrivedPackageListener {
 							Log.d("EMAKU","EMAKU: Informe guardado");
 							
 							//Uri pathPDF = Uri.fromFile(file);
-                            Uri pathPDF = FileProvider.getUriForFile(main.getApplicationContext(), BuildConfig.APPLICATION_ID,file);
+                            Uri pathPDF = FileProvider.getUriForFile(Objects.requireNonNull(main.getApplicationContext()),
+                                    "com.example.emakumovil.provider",file);
                             System.out.println("pathPDF " + pathPDF);
 			                Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
 			                pdfIntent.setDataAndType(pathPDF, "application/pdf");
