@@ -99,7 +99,43 @@
 
         </LinearLayout>
 
-    <!-- Linea Buscar Tercero -->
+    <ScrollView
+        android:id="@+id/sv_puntos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+
+
+            <EditText
+                android:id="@+id/et_codigo_punto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Codigo Punto"
+                android:inputType="text"
+                android:maxLength="30"
+                android:singleLine="true"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/et_descripcion_punto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Descripcion Punto"
+                android:inputType="text"
+                android:maxLength="30"
+                android:singleLine="true"
+                android:visibility="gone" />
+        </LinearLayout>
+    </ScrollView>
+
+            <!-- Linea Buscar Tercero -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

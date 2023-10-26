@@ -25,7 +25,7 @@ import com.example.emakumovil.modules.inventario.UploadPhotoActivity;
 import com.example.emakumovil.modules.terceros.PersonsActivity;
 import com.example.emakumovil.modules.ventas.ChangeResolutionActivity;
 import com.example.emakumovil.modules.ventas.TRMActivity;
-import com.example.emakumovil.modules.ventas.TikectActivity;
+import com.example.emakumovil.modules.ventas.TiqueteActivity;
 
 public class MenuActivity extends Activity implements OnClickListener {
 
@@ -408,7 +408,7 @@ public class MenuActivity extends Activity implements OnClickListener {
             Intent i = new Intent(this, ChangeResolutionActivity.class );
             this.startActivity(i);
         } else if (arg0.getId() == R.id.bt_venta_tiquetes) {
-            Intent i = new Intent(this, TikectActivity.class);
+            Intent i = new Intent(this, TiqueteActivity.class);
             this.startActivity(i);
         }
 

@@ -179,7 +179,7 @@
             android:label="@string/config_widget_resoluciones" >
         </activity>
         <activity
-            android:name="com.example.emakumovil.modules.ventas.TikectActivity"
+            android:name="com.example.emakumovil.modules.ventas.TiqueteActivity"
             android:label="Venta de tiquetes" >
         </activity>
         <activity

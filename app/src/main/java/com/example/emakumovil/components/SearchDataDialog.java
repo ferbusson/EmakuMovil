@@ -143,7 +143,7 @@ public class SearchDataDialog extends DialogFragment implements OnClickListener,
 		Document doc = e.getDocument();
 		System.out.println("llego una query");
 		if (e.getSqlCode().equals("MVSEL0010") || e.getSqlCode().equals("MVSEL0035") || e.getSqlCode().equals("MVSEL0048")
-				|| query.equals("MVSEL0061")) {
+				|| query.equals("MVSEL0061") ) {
 			final Element rootNode = doc.getRootElement();
 			getActivity().runOnUiThread(new Runnable() {
 				public void run() {
@@ -160,6 +160,25 @@ public class SearchDataDialog extends DialogFragment implements OnClickListener,
 						String id2 = ((Element) Lcol.get(5)).getText();
 						String id3 = ((Element) Lcol.get(6)).getText();
 						items.add(new recordsData(id,codigo,descripcion,descripcion2,descripcion3,id2,id3));
+					}
+					LVrecords.setAdapter(new RecordsDataAdapter(
+							getActivity(), R.layout.recordsearch,
+							items));
+				}
+			});
+		} else if (e.getSqlCode().equals("MVSEL0081")) {
+			final Element rootNode = doc.getRootElement();
+			getActivity().runOnUiThread(new Runnable() {
+				public void run() {
+					List<Element> listRows = rootNode.getChildren("row");
+					items.clear();
+					for (int i = 0; i < listRows.size(); i++) {
+						Element Erow = (Element) listRows.get(i);
+						List<Element> Lcol = Erow.getChildren();
+						String id = ((Element) Lcol.get(0)).getText();
+						String codigo = ((Element) Lcol.get(1)).getText();
+
+						items.add(new recordsData(id,codigo,null));
 					}
 					LVrecords.setAdapter(new RecordsDataAdapter(
 							getActivity(), R.layout.recordsearch,
@@ -201,7 +220,7 @@ public class SearchDataDialog extends DialogFragment implements OnClickListener,
 			recordsData recData = items.get(position);
 			if (recData != null) {
 				if (query.equals("MVSEL0010") || query.equals("MVSEL0035") || query.equals("MVSEL0048")
-						|| query.equals("MVSEL0061")) {
+						|| query.equals("MVSEL0061")  || query.equals("MVSEL0081") ) {
 					v = inflater.inflate(R.layout.recordsearch, null);
 					TextView tv_descripcion1 = (TextView) v
 							.findViewById(R.id.tv_descripcion1);

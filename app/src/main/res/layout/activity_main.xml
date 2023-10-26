@@ -16,7 +16,7 @@
         android:background="#ffffff"
         android:minHeight="48dp"
         android:ems="10"
-        android:text="coccoa"
+        android:text="transsandona"
         android:hint="@string/empresa"
         android:singleLine="true" >
 
