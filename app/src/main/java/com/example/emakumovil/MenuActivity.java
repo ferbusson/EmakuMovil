@@ -25,6 +25,7 @@ import com.example.emakumovil.modules.inventario.UploadPhotoActivity;
 import com.example.emakumovil.modules.terceros.PersonsActivity;
 import com.example.emakumovil.modules.ventas.ChangeResolutionActivity;
 import com.example.emakumovil.modules.ventas.TRMActivity;
+import com.example.emakumovil.modules.ventas.TikectActivity;
 
 public class MenuActivity extends Activity implements OnClickListener {
 
@@ -71,7 +72,11 @@ public class MenuActivity extends Activity implements OnClickListener {
 
     private TextView tv_ventas;
     private Button bt_resolucion_facturacion;
-    private static final String RESOLUCION = 		"MVTR00020";
+
+    private Button bt_venta_tiquetes;
+    private static final String RESOLUCION = "MVTR00020";
+
+    private static final String TIQUETES = "MVTR00020";
 
     /*
      * COMPRAS
@@ -219,6 +224,12 @@ public class MenuActivity extends Activity implements OnClickListener {
             bt_resolucion_facturacion = (Button)findViewById(R.id.bt_resolucion_facturacion);
             bt_resolucion_facturacion.setVisibility(View.VISIBLE);
             bt_resolucion_facturacion.setOnClickListener(this);
+        }
+
+        if (ACPHandler.isContenedTransaction(TIQUETES)){
+            bt_venta_tiquetes = (Button)findViewById(R.id.bt_venta_tiquetes);
+            bt_venta_tiquetes.setVisibility(View.VISIBLE);
+            bt_venta_tiquetes.setOnClickListener(this);
         }
 
         /*
@@ -395,6 +406,9 @@ public class MenuActivity extends Activity implements OnClickListener {
 
         else if (arg0.getId()==R.id.bt_resolucion_facturacion) {
             Intent i = new Intent(this, ChangeResolutionActivity.class );
+            this.startActivity(i);
+        } else if (arg0.getId() == R.id.bt_venta_tiquetes) {
+            Intent i = new Intent(this, TikectActivity.class);
             this.startActivity(i);
         }
 

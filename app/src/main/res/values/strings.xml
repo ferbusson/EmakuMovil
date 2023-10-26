@@ -406,5 +406,9 @@
     <string name="contentDescFechaIniCartera">Seleccione la fecha inicial</string>
     <string name="contentDescFechaFinCartera">Seleccione la fecha final del reporte</string>
     <string name="contentDescGenerarRepoCartera">Haga clic para generar el reporte</string>
+    <string name="tv_venta_tiquetes">Venta de Tiquetes</string>
+    <string name="tv_origen">Origen</string>
+    <string name="tv_destino">Destino</string>
+    <string name="bt_buscar_destino">Buscar Destino de Viaje</string>
 
 </resources>

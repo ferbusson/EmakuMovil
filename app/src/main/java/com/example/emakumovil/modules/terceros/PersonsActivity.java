@@ -802,6 +802,8 @@ public class PersonsActivity extends Activity implements OnClickListener, Dialog
 		}
 	}
 
+
+
 	private void sendNewTransaction() {
 		Document transaction = new Document();
 		Element raiz = new Element("TRANSACTION");
