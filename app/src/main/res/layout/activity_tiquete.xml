@@ -47,7 +47,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:textSize="20sp"
-            android:text="Pasto"
+            android:text="-"
             />
     </LinearLayout>
     <!-- Linea Buscar Destino -->

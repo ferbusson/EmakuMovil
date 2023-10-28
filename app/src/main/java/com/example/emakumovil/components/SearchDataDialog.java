@@ -118,7 +118,7 @@ public class SearchDataDialog extends DialogFragment implements OnClickListener,
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		System.out.println("generalndo query");
+		System.out.println("generando query");
 		String arg = et_query.getText().toString();
 		if (arg.length()>3) {
 			new SearchQuery(SearchDataDialog.this,query, new String[] {arg}).start();
@@ -152,13 +152,13 @@ public class SearchDataDialog extends DialogFragment implements OnClickListener,
 					for (int i = 0; i < listRows.size(); i++) {
 						Element Erow = (Element) listRows.get(i);
 						List<Element> Lcol = Erow.getChildren();
-						String id = ((Element) Lcol.get(0)).getText();
-						String codigo = ((Element) Lcol.get(1)).getText();
-						String descripcion = ((Element) Lcol.get(2)).getText();
-						String descripcion2 = ((Element) Lcol.get(3)).getText();
-						String descripcion3 = ((Element) Lcol.get(4)).getText();
-						String id2 = ((Element) Lcol.get(5)).getText();
-						String id3 = ((Element) Lcol.get(6)).getText();
+						String id = ((Element) Lcol.get(0)).getText(); // id
+						String codigo = ((Element) Lcol.get(1)).getText(); // nombres
+						String descripcion = ((Element) Lcol.get(2)).getText(); // id_char
+						String descripcion2 = ((Element) Lcol.get(3)).getText(); // direccion
+						String descripcion3 = ((Element) Lcol.get(4)).getText(); // telefono
+						String id2 = ((Element) Lcol.get(5)).getText(); // id_direccion
+						String id3 = ((Element) Lcol.get(6)).getText(); // id_telefono
 						items.add(new recordsData(id,codigo,descripcion,descripcion2,descripcion3,id2,id3));
 					}
 					LVrecords.setAdapter(new RecordsDataAdapter(
@@ -166,7 +166,7 @@ public class SearchDataDialog extends DialogFragment implements OnClickListener,
 							items));
 				}
 			});
-		} else if (e.getSqlCode().equals("MVSEL0081")) {
+		} else if (e.getSqlCode().equals("MVSEL0081")) { // consulta punto destino
 			final Element rootNode = doc.getRootElement();
 			getActivity().runOnUiThread(new Runnable() {
 				public void run() {
@@ -175,8 +175,8 @@ public class SearchDataDialog extends DialogFragment implements OnClickListener,
 					for (int i = 0; i < listRows.size(); i++) {
 						Element Erow = (Element) listRows.get(i);
 						List<Element> Lcol = Erow.getChildren();
-						String codigo = ((Element) Lcol.get(0)).getText();
-						String descripcion = ((Element) Lcol.get(1)).getText();
+						String codigo = ((Element) Lcol.get(0)).getText(); // codigo punto
+						String descripcion = ((Element) Lcol.get(1)).getText(); // descripcion punto
 
 						items.add(new recordsData(codigo,descripcion));
 					}

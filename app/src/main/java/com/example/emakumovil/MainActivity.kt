@@ -173,6 +173,7 @@ class MainActivity : androidx.activity.ComponentActivity() {
         ip: String,
         mac: String
     ) {
+        Global.setSystem_user(usuario);
         val connections = getSharedPreferences(
             "lastConnectionEmaku", MODE_PRIVATE
         )
