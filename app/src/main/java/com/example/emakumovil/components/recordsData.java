@@ -12,8 +12,12 @@ public class recordsData {
 	private String descripcion3;
 	private String valor;
 	private double dvalor;
-	
-	public recordsData(String id,String codigo,String descripcion) {
+
+	public recordsData(String id,String descripcion) {
+		this.id=id;
+		this.descripcion=descripcion;
+	}
+		public recordsData(String id,String codigo,String descripcion) {
 		this.id=id;
 		this.codigo=codigo;
 		this.descripcion=descripcion;

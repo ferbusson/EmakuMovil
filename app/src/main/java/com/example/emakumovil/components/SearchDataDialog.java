@@ -175,10 +175,10 @@ public class SearchDataDialog extends DialogFragment implements OnClickListener,
 					for (int i = 0; i < listRows.size(); i++) {
 						Element Erow = (Element) listRows.get(i);
 						List<Element> Lcol = Erow.getChildren();
-						String id = ((Element) Lcol.get(0)).getText();
-						String codigo = ((Element) Lcol.get(1)).getText();
+						String codigo = ((Element) Lcol.get(0)).getText();
+						String descripcion = ((Element) Lcol.get(1)).getText();
 
-						items.add(new recordsData(id,codigo,null));
+						items.add(new recordsData(codigo,descripcion));
 					}
 					LVrecords.setAdapter(new RecordsDataAdapter(
 							getActivity(), R.layout.recordsearch,
@@ -262,8 +262,13 @@ public class SearchDataDialog extends DialogFragment implements OnClickListener,
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
-		descripcion = items.get(arg2).getDescripcion();
+		System.out.println("onItemClick");
 		idRecord = items.get(arg2).getId();
+		descripcion = items.get(arg2).getDescripcion();
+
+		System.out.println("descripcion: " + descripcion);
+		System.out.println("idRecord" + idRecord);
+
         DialogClickEvent event = new DialogClickEvent(this,idRecord,descripcion,b);
         notificando(event);
 
