@@ -410,5 +410,6 @@
     <string name="tv_origen">Origen</string>
     <string name="tv_destino">Destino</string>
     <string name="bt_buscar_destino">Buscar Destino de Viaje</string>
+    <string name="bt_buscar_bus">Buscar bus disponible en la ruta</string>
 
 </resources>
