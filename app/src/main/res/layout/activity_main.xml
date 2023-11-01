@@ -4,8 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/palette2"
+
     android:orientation="vertical"
     tools:context=".MainActivity" >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05"
+        android:background="#5d7f32"
+        >
+
+
+
+    </FrameLayout>
+
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:padding="5dp"
+        android:bottomRightRadius="15dp"
+        android:bottomLeftRadius="15dp"
+        android:topLeftRadius="15dp"
+        android:topRightRadius="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/splash" />
 
     <EditText
         android:id="@+id/empresa"
@@ -16,6 +40,10 @@
         android:background="#ffffff"
         android:minHeight="48dp"
         android:ems="10"
+        android:bottomRightRadius="15dp"
+        android:bottomLeftRadius="15dp"
+        android:topLeftRadius="15dp"
+        android:topRightRadius="15dp"
         android:text="transsandona"
         android:hint="@string/empresa"
         android:singleLine="true" >
@@ -33,6 +61,10 @@
         android:minHeight="48dp"
         android:ems="10"
         android:text="emaku"
+        android:bottomRightRadius="15dp"
+        android:bottomLeftRadius="15dp"
+        android:topLeftRadius="15dp"
+        android:topRightRadius="15dp"
         android:hint="@string/usuario"
         android:singleLine="true" />
 
@@ -45,6 +77,10 @@
         android:background="#ffffff"
         android:minHeight="48dp"
         android:ems="10"
+        android:bottomRightRadius="15dp"
+        android:bottomLeftRadius="15dp"
+        android:topLeftRadius="15dp"
+        android:topRightRadius="15dp"
         android:text="perla2010"
         android:hint="@string/password"
         android:inputType="textPassword" />
@@ -54,32 +90,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:ems="13"
         android:layout_marginBottom="40dp"
         android:layout_marginTop="40dp"
         android:text="@string/ingresar"
         android:onClick="onClick" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.05"
-        android:background="#79897f" >
 
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/splash" />
-
-    </FrameLayout>
-
+    <!--
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.16"
         android:background="#000000" >
 
-    </FrameLayout>
+    </FrameLayout>-->
 
 </LinearLayout>

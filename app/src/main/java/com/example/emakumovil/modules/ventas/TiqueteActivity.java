@@ -16,6 +16,7 @@ import com.example.emakumovil.components.DialogClickEvent;
 import com.example.emakumovil.components.DialogClickListener;
 import com.example.emakumovil.components.SearchDataDialog;
 import com.example.emakumovil.components.SearchQuery;
+import com.example.emakumovil.components.SelectedDataDialog;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -28,6 +29,9 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
 
     private ImageButton ib_buscar_bus;
     private SearchDataDialog search;
+    private SelectedDataDialog selected;
+
+    private SearchDataDialog search_bus;
     private EditText et_destino;
     private EditText et_numero_bus;
 
@@ -37,6 +41,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
     private String system_user = Global.getSystem_user();
     private TextView tv_origen_value;
     private String id_punto_origen;
+    private String id_punto_destino;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         String[] args = {system_user};
@@ -65,33 +70,35 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         if (v.getId() == R.id.ib_buscar_destino) {
             System.out.println("Hice clic en la lupa");
             // se instancia el dialogo para buscar por palabra clave, el titulo se pone al componente
-            search = new SearchDataDialog("Buscar destino", "MVSEL0081", null, R.id.ib_buscar_destino);
+            selected = new SelectedDataDialog(R.id.ib_buscar_destino,"Seleccione Destino","MVSEL0081", new String[] {id_punto_origen});
             // se adiciona listener
-            search.addDialogClickListener(this);
+            selected.addDialogClickListener(this);
             // se hace visible el dialogo, el tag solo es una marca
-            search.show(getFragmentManager(), "Buscar punto destino");
+            selected.show(getFragmentManager(), "Buscar punto destino");
         } else if (v.getId() == R.id.ib_buscar_bus) {
             System.out.println("Hice clic en la lupa buscar bus");
             // se instancia el dialogo para buscar por palabra clave, el titulo se pone al componente
-
-            String[] args = {id_punto_origen,et_destino.getText().toString()};
-            search = new SearchDataDialog("Buscar Bus", "MVSEL0083", args, R.id.ib_buscar_bus);
+            System.out.println("id_punto_origen + et_destino" + id_punto_origen + " + " + et_destino.getText().toString());
+            String[] args_buscar_bus = {id_punto_origen,et_destino.getText().toString()};
+            selected = new SelectedDataDialog(R.id.ib_buscar_bus,"Vehículos disponibles", "MVSEL0083", args_buscar_bus);
             // se adiciona listener
-            search.addDialogClickListener(this);
+            selected.addDialogClickListener(this);
             // se hace visible el dialogo, el tag solo es una marca
-            search.show(getFragmentManager(), "Buscar Bus");
+            selected.show(getFragmentManager(), "Buscar Bus");
         }
     }
     @Override
     public void dialogClickEvent(DialogClickEvent e) {
+        // aqui llegan los datos al hacer clic en los selectedDataDialog y SearchDataDialog
         System.out.println("tiene que ser aqui0");
-        System.out.println("tiene que ser aqui0"+e.getId());
-        System.out.println("tiene que ser aqui0"+e.getValue());
         if (e.getIdobject() == R.id.ib_buscar_destino) {
             et_destino.setText((e.getId()));
             et_descripcion_punto.setText(e.getValue());
             et_descripcion_punto.setVisibility(View.VISIBLE);
-        } else if (e.getIdobject() == R.id.ib_buscar_bus) {
+            et_destino.setSelection(et_destino.getText().length());
+            et_numero_bus.requestFocus();
+        } else
+            if (e.getIdobject() == R.id.ib_buscar_bus) {
             et_numero_bus.setText((e.getId()));
             et_descripcion_bus.setText(e.getValue());
             et_descripcion_bus.setVisibility(View.VISIBLE);
@@ -111,6 +118,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
 
     @Override
     public void arriveAnswerEvent(AnswerEvent e) {
+        // estas son las sentencias ejecutadas directamente en la vista
         System.out.println("tiene que ser aqui2");
         Document doc = e.getDocument();
         final Element elm = doc.getRootElement();
@@ -127,7 +135,6 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                 this.runOnUiThread(new Runnable() {
                     public void run() {
                         tv_origen_value.setText(descripcion_punto);
-                        //tv_.setText(codigo_punto);
                     }
                 });
             }

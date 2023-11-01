@@ -47,11 +47,13 @@ public class SearchDataDialog extends DialogFragment implements OnClickListener,
 	private LinearLayout progressLayout;
 	private long b;
 	private String query;
+	private String[] args_search;
 	
 	public SearchDataDialog(String titulo,String query, String args[],long b) {
 		Bundle bundle = new Bundle();
 		bundle.putString("titulo",titulo);
 		bundle.putString("query",query);
+		this.args_search = args;
 		setArguments(bundle);
 		this.b=b;
 	}
@@ -119,21 +121,43 @@ public class SearchDataDialog extends DialogFragment implements OnClickListener,
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		System.out.println("generando query");
+		if (args_search != null) System.out.println("tamaño de args: " + args_search.length);
 		String arg = et_query.getText().toString();
-		if (arg.length()>3) {
-			new SearchQuery(SearchDataDialog.this,query, new String[] {arg}).start();
-			getActivity().runOnUiThread(new Runnable() {
-	
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					progressLayout.setVisibility(View.VISIBLE);	
-					
+		System.out.println("generando query");
+		if(args_search != null && args_search.length > 1) { //validamos que args_sarch tenga info
+			System.out.println("entre por multiples argumentos");
+			ArrayList<String> lista_argumentos = new ArrayList<String>();
+
+				for(String s : args_search){
+					lista_argumentos.add(s);
 				}
-			});
-		}
-		else {
-			Toast.makeText(this.getActivity(), R.string.error_minchar, Toast.LENGTH_LONG).show();
+			lista_argumentos.add(arg);
+			System.out.println("evie los argumentos a la query");
+				new SearchQuery(SearchDataDialog.this, query, lista_argumentos).start();
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						progressLayout.setVisibility(View.VISIBLE);
+
+					}
+				});
+
+			} else {
+			System.out.println("me fui por el camino viejo, validando si el arg es mayor a 3 caracteres");
+				if (arg.length() > 3) {
+				new SearchQuery(SearchDataDialog.this, query, new String[]{arg}).start();
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						progressLayout.setVisibility(View.VISIBLE);
+
+					}
+				});
+			} else {
+				Toast.makeText(this.getActivity(), R.string.error_minchar, Toast.LENGTH_LONG).show();
+			}
 		}
 	}
 
@@ -185,6 +209,25 @@ public class SearchDataDialog extends DialogFragment implements OnClickListener,
 							items));
 				}
 			});
+		} else if (e.getSqlCode().equals("MVSEL0083")) { // consulta punto destino
+			final Element rootNode = doc.getRootElement();
+			getActivity().runOnUiThread(new Runnable() {
+				public void run() {
+					List<Element> listRows = rootNode.getChildren("row");
+					items.clear();
+					for (int i = 0; i < listRows.size(); i++) {
+						Element Erow = (Element) listRows.get(i);
+						List<Element> Lcol = Erow.getChildren();
+						String indice = ((Element) Lcol.get(0)).getText(); // codigo punto
+						String descripcion = ((Element) Lcol.get(1)).getText(); // descripcion punto
+
+						items.add(new recordsData(indice,descripcion));
+					}
+					LVrecords.setAdapter(new RecordsDataAdapter(
+							getActivity(), R.layout.recordsearch,
+							items));
+				}
+			});
 		}
 		getActivity().runOnUiThread(new Runnable() {
 
@@ -220,7 +263,7 @@ public class SearchDataDialog extends DialogFragment implements OnClickListener,
 			recordsData recData = items.get(position);
 			if (recData != null) {
 				if (query.equals("MVSEL0010") || query.equals("MVSEL0035") || query.equals("MVSEL0048")
-						|| query.equals("MVSEL0061")  || query.equals("MVSEL0081") ) {
+						|| query.equals("MVSEL0061")  || query.equals("MVSEL0081") || query.equals("MVSEL0083") ) {
 					v = inflater.inflate(R.layout.recordsearch, null);
 					TextView tv_descripcion1 = (TextView) v
 							.findViewById(R.id.tv_descripcion1);

@@ -141,7 +141,8 @@ public class SelectedDataDialog  extends DialogFragment implements OnClickListen
 				query.equals("MVSEL0049") || query.equals("MVSEL0050")|| query.equals("MVSEL0051")
 				|| query.equals("MVSEL0052")|| query.equals("MVSEL0053")|| query.equals("MVSEL0054")
 				|| query.equals("MVSEL0055")|| query.equals("MVSEL0056")|| query.equals("MVSEL0057")
-				|| query.equals("MVSEL0058")|| query.equals("MVSEL0059")|| query.equals("MVSEL0060")) {
+				|| query.equals("MVSEL0058")|| query.equals("MVSEL0059")|| query.equals("MVSEL0060")
+				|| query.equals("MVSEL0081") || query.equals("MVSEL0083")) {
 			final Element rootNode = doc.getRootElement();
 			getActivity().runOnUiThread(new Runnable() {
 				@Override
@@ -223,7 +224,8 @@ public class SelectedDataDialog  extends DialogFragment implements OnClickListen
 						query.equals("MVSEL0049") || query.equals("MVSEL0050")|| query.equals("MVSEL0051")
 						|| query.equals("MVSEL0052")|| query.equals("MVSEL0053")|| query.equals("MVSEL0054")
 						|| query.equals("MVSEL0055")|| query.equals("MVSEL0056")|| query.equals("MVSEL0057")
-						|| query.equals("MVSEL0058")|| query.equals("MVSEL0059")|| query.equals("MVSEL0060")) {
+						|| query.equals("MVSEL0058")|| query.equals("MVSEL0059")|| query.equals("MVSEL0060")
+						|| query.equals("MVSEL0081") || query.equals("MVSEL0083")) {
 					v = inflater.inflate(R.layout.singlerecorddata, null);
 					TextView tv_descripcion1 = (TextView) v
 							.findViewById(R.id.tv_descripcion1);
