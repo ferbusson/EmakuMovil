@@ -193,8 +193,10 @@
                 android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
-    <!-- puestos disponibles bus -->
+
+    <!-- aqui se dibuja el bus - puestos disponibles bus -->
     <ScrollView
+        android:id="@+id/sv_scroll_view_bus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -202,24 +204,7 @@
         android:background="@drawable/palette5" >
 
 
-        <LinearLayout
-            android:id="@+id/ll_receptor_bus"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="20dp"
-            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_por_ver"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:textSize="20sp"
-                android:text="aqui debe salir el bus"
-                />
-
-        </LinearLayout>
 
     </ScrollView>
 

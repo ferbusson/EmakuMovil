@@ -1,6 +1,7 @@
 package com.example.emakumovil.modules.ventas;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -47,7 +48,8 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
 
     private EditText et_descripcion_punto;
     private EditText et_descripcion_bus;
-
+    private TableLayout tl_plano_del_bus;
+    private ScrollView sv_scroll_view_bus;
     private String system_user = Global.getSystem_user();
     private TextView tv_origen_value;
     private String id_punto_origen;
@@ -90,10 +92,11 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         et_descripcion_punto = (EditText) findViewById(R.id.et_descripcion_punto);
         et_descripcion_bus = (EditText) findViewById(R.id.et_descripcion_bus);
         tv_origen_value = (TextView) findViewById(R.id.tv_origen_value);
+        //tl_plano_del_bus = findViewById(R.id.tl_plano_del_bus);
+        sv_scroll_view_bus = findViewById(R.id.sv_scroll_view_bus);
         // se agrega listener al boton para ejecutar lo que se ponga en onClick
         ib_buscar_destino.setOnClickListener(this);
         ib_buscar_bus.setOnClickListener(this);
-        ll_receptor_bus = (LinearLayout) findViewById(R.id.ll_receptor_bus);
         System.out.println("Usuario: "+ system_user);
     }
     @Override
@@ -173,23 +176,87 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
             }
         } else if (e.getSqlCode().equals("MVSEL0084")) {
             System.out.println("llego query distribucion de bus 84");
-            //Iterator<Element> i = elm.getChildren("row").iterator();
+            // actualizamos informacion del bus sengun query
+            procesaQueryDistribucionVehiculo(elm.getChildren("row").iterator());
+            System.out.println("termine de capturar respuesta query 84");
+            System.out.println("pintando bus...");
+            System.out.println("rows and cols: " + rowsp1 + " " + colsp1);
+            TableLayout tl_plano_del_bus = new TableLayout(this);
+            if (colsp1!=0) {
+                if (orientation) {
+                    //Bus Parado
+                    //paintFloorVertical(floors);
+                    System.out.println("Pintando bus vertical");
+                    //capturamos localmente las filas y columnas del bus
+                    int numRows = rowsp1;
+                    int numCols = colsp1;
+                    System.out.println("rows and cols: " + numRows + " " + numCols);
+                    //creamos map con la info de los puestos del piso 1
+                    Map<Integer,PuestoVehiculo> filas_vehiculos = pisos_vehiculos.get(1); //piso 1
 
-            this.runOnUiThread(new Runnable() {
-                public void run() {
-                    ll_receptor_bus.addView(
-                          procesaQueryDistribucionVehiculo(elm.getChildren("row").iterator())
-                    );
-                    System.out.println("pase por aqui");
+                    for(Map.Entry<Integer,PuestoVehiculo> entry : filas_vehiculos.entrySet()){
+                        int i = entry.getKey();
+                        PuestoVehiculo pv = entry.getValue();
+                        System.out.println("Key: " + i);
+                        for(Map.Entry<Integer,InfoPuestoVehiculo> entry1 : pv.info_puesto_vehiculos.entrySet()){
+                            int j = entry1.getKey();
+                            System.out.println("Key: " + j);
+                            System.out.println("Value: " + entry1.getValue().getPuesto());
+                        }
+                        System.out.println("Puesto: " + pv);
+                    }
+                    this.runOnUiThread(new Runnable() {
+                        public void run() {
+                    Context appContext = getApplicationContext();
+                    //recorremos las filas
+                    for(int r = 0; r < numRows; r ++){
+                        System.out.println("en fila: " + r);
+                        //creamos variable de tipo TableRow
+                        TableRow tableRow = new TableRow(appContext);
+                        //establecemos parametros de TableRow
+                        tableRow.setLayoutParams(new TableLayout.LayoutParams(
+                                TableLayout.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.WRAP_CONTENT
+                        ));
+                        //recorremos las columnas
+                        for(int c = 0; c < numCols; c++){
+                            System.out.println("en col: " + c);
+                            //Creamos un text view para representar el puesto
+                            TextView seat = new TextView(appContext);
+                            //ponemos texto al puesto
+                            seat.setText(r+"-"+c);
+                            System.out.println("en puesto: " + r + " " + c);
+                            seat.setGravity(Gravity.CENTER);
+                            seat.setLayoutParams(new TableRow.LayoutParams(
+                                    TableLayout.LayoutParams.MATCH_PARENT,
+                                    ViewGroup.LayoutParams.WRAP_CONTENT
+                            ));
+                            tableRow.addView(seat);
+                        }
+                        System.out.println("adicionando filas");
+                        tl_plano_del_bus.addView(tableRow);
+                    }
+                            System.out.println("adicionando tl_plano_bus");
+                            sv_scroll_view_bus.addView(tl_plano_del_bus);
+                        }
+                    });
+
+                    //System.out.println("haciento visible el bus");
+                    //myTableLayout.setVisibility(View.VISIBLE);
+                    System.out.println("deberias tener un bus en pantalla");
                 }
-            });
+                else {
+                    System.out.println("Pintando bus horizontal");
+                    //paintFloorHorizontal(floors);
+                }
+            }
 
+
+            //hasta aqui
         }
-
-
     }
 
-    private TableLayout procesaQueryDistribucionVehiculo(Iterator i) {
+    private void procesaQueryDistribucionVehiculo(Iterator i) {
 
         if (mode==SALES) {
             System.out.println("Limpiando bus...");
@@ -279,16 +346,13 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
             }*/
             last_row=fila;
         }
+        //termina while iterator
+
         idActivo = id_activo;
         puestos = maxpuesto;
         //exportar(puestos_vendidos); pendiente exportar cuantos puestos se han vendido
         pisos_vehiculos.put(1, filas_vehiculosp1);
         pisos_vehiculos.put(2, filas_vehiculosp2);
-        //System.out.println("Cols revision 0 " + filas_vehiculosp1.get(0).cols());
-        System.out.println("Cols revision 1 " + filas_vehiculosp1.get(1).cols());
-        System.out.println("Cols revision 2" + filas_vehiculosp1.get(2).cols());
-        System.out.println("Cols revision fila" + filas_vehiculosp1.get(2).fila);
-        System.out.println("Cols revision tostring" + filas_vehiculosp1.get(2).toString());
         rowsp1 = filas_vehiculosp1.size();
         try {
             //colsp1 = filas_vehiculosp1.get(1).cols();
@@ -303,63 +367,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
             rowsp2 = filas_vehiculosp2.size();
             colsp2 = filas_vehiculosp2.get(1).cols();
         }
-
-        System.out.println("pintando bus desde query");
-        System.out.println("rows and cols: " + rowsp1 + " " + colsp1);
-        if (colsp1!=0) {
-            if (orientation) {
-                //Bus Parado
-                //paintFloorVertical(floors);
-                System.out.println("Pintando bus vertical");
-                TableLayout myTableLayout = new TableLayout(this);
-                int numRows = rowsp1;
-                int numCols = colsp1;
-                System.out.println("rows and cols: " + numRows + " " + numCols);
-                Map<Integer,PuestoVehiculo> filas_vehiculos = pisos_vehiculos.get(1); //piso 1
-                for(int r = 0; r < numRows; r ++){
-                    PuestoVehiculo info_seat = filas_vehiculos.get(r);
-                    System.out.println("en fila: " + r);
-                    TableRow tableRow = new TableRow(this);
-                    tableRow.setLayoutParams(new TableLayout.LayoutParams(
-                            TableLayout.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT
-                    ));
-
-                    for(int c = 0; c < numCols; c++){
-                        System.out.println("en col: " + c);
-                        TextView seat = new TextView(this);
-                        seat.setText("A");
-                        System.out.println("en puesto: " + r + " " + c);
-                        seat.setGravity(Gravity.CENTER);
-                        seat.setLayoutParams(new TableLayout.LayoutParams(
-                                TableLayout.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT
-                        ));
-                        tableRow.addView(seat);
-                    }
-
-
-                    System.out.println("adicionando filas");
-                    myTableLayout.addView(tableRow);
-
-                }
-                System.out.println("haciento visible el bus");
-                myTableLayout.setVisibility(View.VISIBLE);
-                System.out.println("deberias tener un bus en pantalla");
-                return myTableLayout;
-
-            }
-            else {
-                System.out.println("Pintando bus horizontal");
-                //paintFloorHorizontal(floors);
-            }
-            /*
-            if (mode==SALES) {
-                sendCarSelection();
-            }*/
-        }
 //		this.updateUI();
-        return null;
     }
 
     class PuestoVehiculo {
