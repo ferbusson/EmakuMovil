@@ -137,7 +137,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:textSize="20sp"
-            android:text="Bus"
+            android:text="Vehículo"
             />
 
         <EditText
@@ -148,7 +148,7 @@
             android:layout_marginLeft="2dp"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Orden"
+            android:hint="Buscar ..."
             android:includeFontPadding="true"
             android:maxLength="20"
             android:singleLine="true" >
@@ -201,6 +201,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:orientation="vertical"
+        android:layout_gravity="center"
         android:background="@drawable/palette5" >
 
 

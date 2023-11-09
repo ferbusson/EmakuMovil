@@ -2,7 +2,9 @@ package com.example.emakumovil.modules.ventas;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ import com.example.emakumovil.components.DialogClickListener;
 import com.example.emakumovil.components.SearchDataDialog;
 import com.example.emakumovil.components.SearchQuery;
 import com.example.emakumovil.components.SelectedDataDialog;
+import com.google.firebase.database.collection.LLRBNode;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -182,6 +185,10 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
             System.out.println("pintando bus...");
             System.out.println("rows and cols: " + rowsp1 + " " + colsp1);
             TableLayout tl_plano_del_bus = new TableLayout(this);
+            tl_plano_del_bus.setOrientation(LinearLayout.VERTICAL);
+            tl_plano_del_bus.setShrinkAllColumns(true);
+            tl_plano_del_bus.setStretchAllColumns(true);
+
             if (colsp1!=0) {
                 if (orientation) {
                     //Bus Parado
@@ -213,11 +220,15 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                         System.out.println("en fila: " + r);
                         //creamos variable de tipo TableRow
                         TableRow tableRow = new TableRow(appContext);
-                        //establecemos parametros de TableRow
-                        tableRow.setLayoutParams(new TableLayout.LayoutParams(
+                        TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(
                                 TableLayout.LayoutParams.MATCH_PARENT,
                                 ViewGroup.LayoutParams.WRAP_CONTENT
-                        ));
+                        );
+                        tableRow.setGravity(Gravity.CENTER_HORIZONTAL);
+
+                        //establecemos parametros de TableRow
+                        tableRow.setLayoutParams(layoutParams
+                        );
                         //recorremos las columnas
                         for(int c = 0; c < numCols; c++){
                             System.out.println("en col: " + c);
@@ -226,11 +237,29 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                             //ponemos texto al puesto
                             seat.setText(r+"-"+c);
                             System.out.println("en puesto: " + r + " " + c);
-                            seat.setGravity(Gravity.CENTER);
-                            seat.setLayoutParams(new TableRow.LayoutParams(
-                                    TableLayout.LayoutParams.MATCH_PARENT,
+
+                            TableRow.LayoutParams layoutParamsRow = new TableRow.LayoutParams(
+                                    TableRow.LayoutParams.MATCH_PARENT,
                                     ViewGroup.LayoutParams.WRAP_CONTENT
-                            ));
+                            );
+                            // Set margins in pixels (1dp converted to pixels)
+                            int marginInDp = 1;
+                            float scale = getResources().getDisplayMetrics().density;
+                            int marginInPixels = (int) (marginInDp * scale + 0.5f);
+
+                            layoutParamsRow.setMargins(marginInPixels,marginInPixels,marginInPixels,marginInPixels);
+
+                            // Create LayoutParams with a specific width in pixels (30dp converted to pixels)
+                            int widthInDp = 30;
+                            float scale2 = getResources().getDisplayMetrics().density;
+                            int widthInPixels = (int) (widthInDp * scale2 + 0.5f);
+
+                            seat.setLayoutParams(layoutParamsRow);
+                            seat.setWidth(widthInPixels); //30dp
+                            seat.setHeight(widthInPixels); //30dp
+                            seat.setBackgroundColor(Color.WHITE);
+                            seat.setGravity(Gravity.CENTER);
+                            seat.setTextColor(Color.BLACK);
                             tableRow.addView(seat);
                         }
                         System.out.println("adicionando filas");
