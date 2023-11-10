@@ -1,8 +1,11 @@
 package com.example.emakumovil.modules.ventas;
 
+import static com.example.emakumovil.R.drawable.*;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Layout;
 import android.view.Gravity;
@@ -15,6 +18,8 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import com.example.emakumovil.Global;
 import com.example.emakumovil.R;
@@ -35,28 +40,31 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class TiqueteActivity extends Activity implements View.OnClickListener, DialogClickListener, AnswerListener, View.OnFocusChangeListener {
-
-    private ImageButton ib_buscar_destino;
-
-    private ImageButton ib_buscar_bus;
-    private SearchDataDialog search;
-    private SelectedDataDialog selected;
-
-    private SearchDataDialog search_bus;
-    private EditText et_destino;
-    private LinearLayout ll_receptor_bus;
-
-    private EditText et_numero_bus;
-
-    private EditText et_descripcion_punto;
-    private EditText et_descripcion_bus;
-    private TableLayout tl_plano_del_bus;
-    private ScrollView sv_scroll_view_bus;
-    private String system_user = Global.getSystem_user();
-    private TextView tv_origen_value;
+public class TiqueteActivity extends Activity implements View.OnClickListener, DialogClickListener,
+        AnswerListener, View.OnFocusChangeListener {
+    // cadena que almacena id_punto_origen
     private String id_punto_origen;
-    private String id_punto_destino;
+    // etiqueta que recibe descripcion punto origen
+    private TextView tv_origen_value;
+    // lupa buscar destino
+    private ImageButton ib_buscar_destino;
+    //lupa buscar bus
+    private ImageButton ib_buscar_bus;
+    private SelectedDataDialog selected;
+    // etiqueta que recibe descripcion destino
+    private EditText et_destino;
+    // etiqueta que recibe numero bus
+    private EditText et_numero_bus;
+    // etiqueta que recibe descripcion punto
+    private EditText et_descripcion_punto;
+    // etiqueta que recibe descripcion bus
+    private EditText et_descripcion_bus;
+    // scrollview que recibe el plano del bus
+    private ScrollView sv_scroll_view_bus;
+    // recibe nombre de usuario de la sesion
+    private String system_user = Global.getSystem_user();
+
+    // constantes plano del bus
     private final int VIEW = 0;
     private final int CONFIG = 1;
     private final int SALES = 3;
@@ -64,9 +72,10 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
     private final int VENDIDO_REVERTIDA=10;
     private final int VENDIDO_FUTURA=12;
     private final int RESERVA=11;
+    // variables plano del bus
     private int puestos_vendidos=0;
     private boolean orientation = true;
-    private int mode=0;
+    private int mode=3;
     private int puestos = 0;
     private int rowsp1 = 0;
     private int colsp1 = 0;
@@ -78,12 +87,12 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
     private int idActivo = -1;
     private Map<Integer,Map> pisos_vehiculos = new HashMap<Integer,Map>();
     private Map<Integer,InfoPuestoVehiculo> datos_puestos = new HashMap<Integer,InfoPuestoVehiculo>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         String[] args = {system_user};
         super.onCreate(savedInstanceState);
-
-        // hace que al dar clic en Tiquete se muestre la interfaz de tiquetes
+        // hace que al dar clic en menu Tiquete se muestre la interfaz de tiquetes
         setContentView(R.layout.activity_tiquete);
         // consulta el punto origen basado en el usuario
         new SearchQuery(this,"MVSEL0082",args).start();
@@ -95,35 +104,35 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         et_descripcion_punto = (EditText) findViewById(R.id.et_descripcion_punto);
         et_descripcion_bus = (EditText) findViewById(R.id.et_descripcion_bus);
         tv_origen_value = (TextView) findViewById(R.id.tv_origen_value);
-        //tl_plano_del_bus = findViewById(R.id.tl_plano_del_bus);
         sv_scroll_view_bus = findViewById(R.id.sv_scroll_view_bus);
+
         // se agrega listener al boton para ejecutar lo que se ponga en onClick
         ib_buscar_destino.setOnClickListener(this);
         ib_buscar_bus.setOnClickListener(this);
-        System.out.println("Usuario: "+ system_user);
     }
+
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.ib_buscar_destino) {
-            System.out.println("Hice clic en la lupa");
             // se instancia el dialogo para buscar por palabra clave, el titulo se pone al componente
-            selected = new SelectedDataDialog(R.id.ib_buscar_destino,"Seleccione Destino","MVSEL0081", new String[] {id_punto_origen});
+            selected = new SelectedDataDialog(R.id.ib_buscar_destino,"Seleccione Destino",
+                    "MVSEL0081", new String[] {id_punto_origen});
             // se adiciona listener
             selected.addDialogClickListener(this);
             // se hace visible el dialogo, el tag solo es una marca
             selected.show(getFragmentManager(), "Buscar punto destino");
         } else if (v.getId() == R.id.ib_buscar_bus) {
-            System.out.println("Hice clic en la lupa buscar bus");
             // se instancia el dialogo para buscar por palabra clave, el titulo se pone al componente
-            System.out.println("id_punto_origen + et_destino" + id_punto_origen + " + " + et_destino.getText().toString());
             String[] args_buscar_bus = {id_punto_origen,et_destino.getText().toString()};
-            selected = new SelectedDataDialog(R.id.ib_buscar_bus,"Vehículos disponibles", "MVSEL0083", args_buscar_bus);
+            selected = new SelectedDataDialog(R.id.ib_buscar_bus,"Vehículos disponibles",
+                    "MVSEL0083", args_buscar_bus);
             // se adiciona listener
             selected.addDialogClickListener(this);
             // se hace visible el dialogo, el tag solo es una marca
             selected.show(getFragmentManager(), "Buscar Bus");
         }
     }
+
     @Override
     public void dialogClickEvent(DialogClickEvent e) {
         // aqui llegan los datos al hacer clic en los selectedDataDialog y SearchDataDialog
@@ -135,42 +144,35 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
             et_destino.setSelection(et_destino.getText().length());
             et_numero_bus.requestFocus();
         } else
+            // llega info luego de hacer clic en la lista de buses
             if (e.getIdobject() == R.id.ib_buscar_bus) {
             et_numero_bus.setText((e.getId()));
             et_descripcion_bus.setText(e.getValue());
             et_descripcion_bus.setVisibility(View.VISIBLE);
-            String[] args = {id_punto_origen,et_destino.getText().toString(),et_numero_bus.getText().toString()};
+            String[] args = {id_punto_origen,et_destino.getText().toString(),
+                    et_numero_bus.getText().toString()};
+            // se ejecuta query para pintar el plano del bus
             new SearchQuery(this,"MVSEL0084",args).start();
         }
     }
 
     @Override
     public void onFocusChange(View arg0, boolean arg1) {
-        System.out.println("tiene que ser aqui1");
-        /*
-        System.out.println("Di un enter");
-        if (arg0.getId() == R.id.et_destino) {
-            String codigo_punto = et_destino.getText().toString();
-            new SearchQuery(TiqueteActivity.this, "MVSEL0081", new String[] { codigo_punto }).start();
-        }*/
     }
 
+    // sentencias ejecutadas directamente en la vista
     @Override
     public void arriveAnswerEvent(AnswerEvent e) {
-        // estas son las sentencias ejecutadas directamente en la vista
-        System.out.println("tiene que ser aqui2");
         Document doc = e.getDocument();
         final Element elm = doc.getRootElement();
         if (e.getSqlCode().equals("MVSEL0082")) {
             System.out.println("en arriveAnswerEvent");
             Iterator<Element> i = elm.getChildren("row").iterator();
             while (i.hasNext()) {
-                System.out.println("iterator con datos");
                 Element row = (Element) i.next();
                 Iterator<Element> j = row.getChildren().iterator();
                 id_punto_origen = (String) j.next().getValue();
                 final String descripcion_punto = ((Element) j.next()).getValue();
-                System.out.println("va el hilo para hacer visibles los et...");
                 this.runOnUiThread(new Runnable() {
                     public void run() {
                         tv_origen_value.setText(descripcion_punto);
@@ -179,11 +181,11 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
             }
         } else if (e.getSqlCode().equals("MVSEL0084")) {
             System.out.println("llego query distribucion de bus 84");
-            // actualizamos informacion del bus sengun query
+            // recepcion de datos de la query
             procesaQueryDistribucionVehiculo(elm.getChildren("row").iterator());
-            System.out.println("termine de capturar respuesta query 84");
+
             System.out.println("pintando bus...");
-            System.out.println("rows and cols: " + rowsp1 + " " + colsp1);
+
             TableLayout tl_plano_del_bus = new TableLayout(this);
             tl_plano_del_bus.setOrientation(LinearLayout.VERTICAL);
             tl_plano_del_bus.setShrinkAllColumns(true);
@@ -197,27 +199,28 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                     //capturamos localmente las filas y columnas del bus
                     int numRows = rowsp1;
                     int numCols = colsp1;
-                    System.out.println("rows and cols: " + numRows + " " + numCols);
-                    //creamos map con la info de los puestos del piso 1
-                    Map<Integer,PuestoVehiculo> filas_vehiculos = pisos_vehiculos.get(1); //piso 1
 
-                    for(Map.Entry<Integer,PuestoVehiculo> entry : filas_vehiculos.entrySet()){
-                        int i = entry.getKey();
-                        PuestoVehiculo pv = entry.getValue();
-                        System.out.println("Key: " + i);
-                        for(Map.Entry<Integer,InfoPuestoVehiculo> entry1 : pv.info_puesto_vehiculos.entrySet()){
-                            int j = entry1.getKey();
-                            System.out.println("Key: " + j);
-                            System.out.println("Value: " + entry1.getValue().getPuesto());
-                        }
-                        System.out.println("Puesto: " + pv);
-                    }
                     this.runOnUiThread(new Runnable() {
                         public void run() {
-                    Context appContext = getApplicationContext();
+                            Context appContext = getApplicationContext();
+                            Drawable seat_v = ContextCompat.getDrawable(appContext,R.drawable.seat_v);
+                            Drawable conductor_v = ContextCompat.getDrawable(appContext, ico_conductor_v);
+                            Drawable grada_v = ContextCompat.getDrawable(appContext, ico_grada_v);
+                            Drawable water_v = ContextCompat.getDrawable(appContext, ico_water_v);
+                            Drawable tele_v = ContextCompat.getDrawable(appContext, ico_tele_v);
+                            Drawable panel = ContextCompat.getDrawable(appContext, ico_panel);
+                            Drawable puesto_facturado_v = ContextCompat.getDrawable(appContext, ico_puesto_facturado_v);
+                            Drawable puesto_reservado_v = ContextCompat.getDrawable(appContext, ico_puesto_reservado_v);
+                            Drawable pasillo_v = ContextCompat.getDrawable(appContext, ico_pasillo_v);
+
+                    Map<Integer,PuestoVehiculo> filas_vehiculo = pisos_vehiculos.get(1);
+                    String texto_asiento = "--";
+
                     //recorremos las filas
                     for(int r = 0; r < numRows; r ++){
-                        System.out.println("en fila: " + r);
+                        System.out.println("r: " + r);
+                        PuestoVehiculo fila_vehiculo = filas_vehiculo.get(r+1);
+
                         //creamos variable de tipo TableRow
                         TableRow tableRow = new TableRow(appContext);
                         TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(
@@ -231,12 +234,31 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                         );
                         //recorremos las columnas
                         for(int c = 0; c < numCols; c++){
-                            System.out.println("en col: " + c);
+                                InfoPuestoVehiculo info_seat = fila_vehiculo.getInfoPuestoVehiculo(c + 1);
+                                texto_asiento = String.valueOf(info_seat.getPuesto());
                             //Creamos un text view para representar el puesto
                             TextView seat = new TextView(appContext);
                             //ponemos texto al puesto
-                            seat.setText(r+"-"+c);
-                            System.out.println("en puesto: " + r + " " + c);
+                            seat.setText(texto_asiento);
+
+                            if (info_seat.getIdTipoPuesto()==2)
+                                seat.setCompoundDrawablesWithIntrinsicBounds(null,seat_v,null,null);
+                            else if (info_seat.getIdTipoPuesto()==1)
+                                seat.setCompoundDrawablesWithIntrinsicBounds(null,conductor_v,null,null);
+                            else if (info_seat.getIdTipoPuesto()==3)
+                                seat.setCompoundDrawablesWithIntrinsicBounds(null,grada_v,null,null);
+                            else if (info_seat.getIdTipoPuesto()==5)
+                                seat.setCompoundDrawablesWithIntrinsicBounds(null,water_v,null,null);
+                            else if (info_seat.getIdTipoPuesto()==6)
+                                seat.setCompoundDrawablesWithIntrinsicBounds(null,tele_v,null,null);
+                            else if (info_seat.getIdTipoPuesto()==7)
+                                seat.setCompoundDrawablesWithIntrinsicBounds(null,panel,null,null);
+                            else if (info_seat.getIdTipoPuesto()==9)
+                                seat.setCompoundDrawablesWithIntrinsicBounds(null,puesto_facturado_v,null,null);
+                            else if (info_seat.getIdTipoPuesto()==11)
+                                seat.setCompoundDrawablesWithIntrinsicBounds(null,puesto_reservado_v,null,null);
+                            else if (info_seat.getIdTipoPuesto()==4)
+                                seat.setCompoundDrawablesWithIntrinsicBounds(null,pasillo_v,null,null);
 
                             TableRow.LayoutParams layoutParamsRow = new TableRow.LayoutParams(
                                     TableRow.LayoutParams.MATCH_PARENT,
@@ -262,21 +284,16 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                             seat.setTextColor(Color.BLACK);
                             tableRow.addView(seat);
                         }
-                        System.out.println("adicionando filas");
                         tl_plano_del_bus.addView(tableRow);
                     }
                             System.out.println("adicionando tl_plano_bus");
                             sv_scroll_view_bus.addView(tl_plano_del_bus);
                         }
                     });
-
-                    //System.out.println("haciento visible el bus");
-                    //myTableLayout.setVisibility(View.VISIBLE);
                     System.out.println("deberias tener un bus en pantalla");
                 }
                 else {
                     System.out.println("Pintando bus horizontal");
-                    //paintFloorHorizontal(floors);
                 }
             }
 
@@ -292,6 +309,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
             //clean(); Pendiente implementar clean
         }
         //pisos_vehiculos.clear(); pendiente
+
         int last_row = 0;
         int cols = 0;
         Map<Integer,PuestoVehiculo> filas_vehiculosp1 = new HashMap<Integer,PuestoVehiculo>();
@@ -305,15 +323,10 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
             Element elm = (Element) i.next();
             List data = elm.getChildren();
             int piso = Integer.parseInt(((Element) data.get(0)).getValue());
-            System.out.println("piso " + piso);
             int fila = Integer.parseInt(((Element) data.get(1)).getValue());
-            System.out.println("fila " + fila);
             int ubicacion = Integer.parseInt(((Element) data.get(2)).getValue());
-            System.out.println("ubicacion " + ubicacion);
             int id_tipo_puesto = Integer.parseInt(((Element) data.get(3)).getValue());
-            System.out.println("id_tipo_puesto " + id_tipo_puesto);
             int puesto = Integer.parseInt(((Element) data.get(4)).getValue());
-            System.out.println("puesto " + puesto);
             int id_horario=0;
             int id_ruta=0;
             int id_linea=0;
@@ -341,12 +354,25 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                 info_doc[3] = String.valueOf(((Element)data.get(18)).getValue());
                 info_doc[4] = String.valueOf(((Element)data.get(19)).getValue());
             }
+            System.out.println("piso: " + piso );
+            System.out.println("fila: " + fila );
+            System.out.println("ubicacion: " + ubicacion );
+            System.out.println("id_tipo_puesto: " + id_tipo_puesto );
+            System.out.println("puesto: " + puesto );
+            System.out.println("id_horario: " + id_horario );
+            System.out.println("id_ruta: " + id_ruta );
+            System.out.println("valor: " + valor);
 
             if (last_row!=fila) {
+                System.out.println("Creé una fila");
+                // puesto_vehiculo: en realidad es una fila, se almacena info de los puestos de una
+                // fila
                 puesto_vehiculo=new PuestoVehiculo(piso,fila); // siempre empieza piso 1 fila 1
             }
             else {
                 if (piso==1) {
+                    System.out.println("Adicioné una fila: " + fila + " al piso 1");
+                    // se adicionan las filas a filas_vehiculosp1
                     filas_vehiculosp1.put(fila,puesto_vehiculo);
                     floors = 1;
                 }
@@ -365,9 +391,11 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
 
             if (id_tipo_puesto==VENDIDO_TAQUILLA || id_tipo_puesto==VENDIDO_REVERTIDA ||
                     id_tipo_puesto==VENDIDO_FUTURA || id_tipo_puesto==RESERVA) {
+                System.out.println("Puestos vendidos: " + puestos_vendidos);
                 puestos_vendidos++;
             }
             if (mode==SALES) {
+                System.out.println("Agregando info puesto: " + puesto + " a la fila: " + fila + " valor: " + valor);
                 puesto_vehiculo.setInfoPuesto(piso, fila, ubicacion, id_tipo_puesto, puesto, id_activo, id_horario, id_linea, id_ruta, id_punto_origen, id_punto_destino, valor, min, web, credito, info_doc);
             }
             /*else {
@@ -380,6 +408,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         idActivo = id_activo;
         puestos = maxpuesto;
         //exportar(puestos_vendidos); pendiente exportar cuantos puestos se han vendido
+        System.out.println("Adicionando filas vehiculos a pisos");
         pisos_vehiculos.put(1, filas_vehiculosp1);
         pisos_vehiculos.put(2, filas_vehiculosp2);
         rowsp1 = filas_vehiculosp1.size();
