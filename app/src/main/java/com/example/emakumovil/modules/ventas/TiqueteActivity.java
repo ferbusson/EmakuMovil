@@ -5,6 +5,7 @@ import static com.example.emakumovil.R.drawable.*;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Layout;
@@ -60,7 +61,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
     // etiqueta que recibe descripcion bus
     private EditText et_descripcion_bus;
     // scrollview que recibe el plano del bus
-    private ScrollView sv_scroll_view_bus;
+    private TableLayout tl_plano_bus;
     // recibe nombre de usuario de la sesion
     private String system_user = Global.getSystem_user();
 
@@ -104,8 +105,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         et_descripcion_punto = (EditText) findViewById(R.id.et_descripcion_punto);
         et_descripcion_bus = (EditText) findViewById(R.id.et_descripcion_bus);
         tv_origen_value = (TextView) findViewById(R.id.tv_origen_value);
-        sv_scroll_view_bus = findViewById(R.id.sv_scroll_view_bus);
-
+        tl_plano_bus = (TableLayout) findViewById(R.id.tl_plano_bus);
         // se agrega listener al boton para ejecutar lo que se ponga en onClick
         ib_buscar_destino.setOnClickListener(this);
         ib_buscar_bus.setOnClickListener(this);
@@ -185,11 +185,8 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
             procesaQueryDistribucionVehiculo(elm.getChildren("row").iterator());
 
             System.out.println("pintando bus...");
-
-            TableLayout tl_plano_del_bus = new TableLayout(this);
-            tl_plano_del_bus.setOrientation(LinearLayout.VERTICAL);
-            tl_plano_del_bus.setShrinkAllColumns(true);
-            tl_plano_del_bus.setStretchAllColumns(true);
+            System.out.println("Rows: " + rowsp1);
+            System.out.println("Cols: " + colsp1);
 
             if (colsp1!=0) {
                 if (orientation) {
@@ -199,23 +196,49 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                     //capturamos localmente las filas y columnas del bus
                     int numRows = rowsp1;
                     int numCols = colsp1;
-
                     this.runOnUiThread(new Runnable() {
                         public void run() {
                             Context appContext = getApplicationContext();
-                            Drawable seat_v = ContextCompat.getDrawable(appContext,R.drawable.seat_v);
+                            Drawable front_of_bus = ContextCompat.getDrawable(appContext,bus_frente_160x70_v);
+                            Drawable back_of_bus = ContextCompat.getDrawable(appContext,bus_trasera_160x70_v);
+                            Drawable seat_v = ContextCompat.getDrawable(appContext, seat_free);
                             Drawable conductor_v = ContextCompat.getDrawable(appContext, ico_conductor_v);
                             Drawable grada_v = ContextCompat.getDrawable(appContext, ico_grada_v);
                             Drawable water_v = ContextCompat.getDrawable(appContext, ico_water_v);
                             Drawable tele_v = ContextCompat.getDrawable(appContext, ico_tele_v);
                             Drawable panel = ContextCompat.getDrawable(appContext, ico_panel);
-                            Drawable puesto_facturado_v = ContextCompat.getDrawable(appContext, ico_puesto_facturado_v);
-                            Drawable puesto_reservado_v = ContextCompat.getDrawable(appContext, ico_puesto_reservado_v);
+                            Drawable puesto_facturado_v = ContextCompat.getDrawable(appContext, seat_busy);
+                            Drawable puesto_reservado_v = ContextCompat.getDrawable(appContext, seat_reserved);
                             Drawable pasillo_v = ContextCompat.getDrawable(appContext, ico_pasillo_v);
+                            /*
+                            int width = 80; // Set your desired width in pixels
+                            int height = 80; // Set your desired height in pixels
+
+                            seat_v.setBounds(0,0,width,height);
+                            conductor_v.setBounds(0,0,width,height);
+                            grada_v.setBounds(0,0,width,height);
+                            water_v.setBounds(0,0,width,height);
+                            tele_v.setBounds(0,0,width,height);
+                            panel.setBounds(0,0,width,height);
+                            puesto_facturado_v.setBounds(0,0,width,height);
+                            puesto_reservado_v.setBounds(0,0,width,height);
+                            pasillo_v.setBounds(0,0,width,height);*/
 
                     Map<Integer,PuestoVehiculo> filas_vehiculo = pisos_vehiculos.get(1);
+                    float density = getResources().getDisplayMetrics().density;
                     String texto_asiento = "--";
-
+                    TableRow tableRowFront = new TableRow(appContext);
+                    TextView panelFrontal = new TextView(appContext);
+                    TableRow.LayoutParams tableRowFront_params = new TableRow.LayoutParams(
+                            TableLayout.LayoutParams.MATCH_PARENT,
+                            TableLayout.LayoutParams.MATCH_PARENT
+                    );
+                    panelFrontal.setLayoutParams(tableRowFront_params);
+                    tableRowFront_params.weight = 1;
+                    panelFrontal.setLayoutParams(tableRowFront_params);
+                    panelFrontal.setBackground(front_of_bus);
+                    tableRowFront.addView(panelFrontal);
+                    tl_plano_bus.addView(tableRowFront);
                     //recorremos las filas
                     for(int r = 0; r < numRows; r ++){
                         System.out.println("r: " + r);
@@ -225,71 +248,86 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                         TableRow tableRow = new TableRow(appContext);
                         TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(
                                 TableLayout.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT
+                                TableLayout.LayoutParams.MATCH_PARENT
                         );
-                        tableRow.setGravity(Gravity.CENTER_HORIZONTAL);
+                        //tableRow.setGravity(Gravity.CENTER_HORIZONTAL);
 
                         //establecemos parametros de TableRow
-                        tableRow.setLayoutParams(layoutParams
-                        );
+                        tableRow.setLayoutParams(layoutParams);
                         //recorremos las columnas
                         for(int c = 0; c < numCols; c++){
                                 InfoPuestoVehiculo info_seat = fila_vehiculo.getInfoPuestoVehiculo(c + 1);
-                                texto_asiento = String.valueOf(info_seat.getPuesto());
                             //Creamos un text view para representar el puesto
                             TextView seat = new TextView(appContext);
+                            if(info_seat.getPuesto() != 0)
+                                texto_asiento = String.valueOf(info_seat.getPuesto());
+                            else
+                                texto_asiento = "";
                             //ponemos texto al puesto
                             seat.setText(texto_asiento);
-
                             if (info_seat.getIdTipoPuesto()==2)
-                                seat.setCompoundDrawablesWithIntrinsicBounds(null,seat_v,null,null);
+                                seat.setBackground(seat_v);
                             else if (info_seat.getIdTipoPuesto()==1)
-                                seat.setCompoundDrawablesWithIntrinsicBounds(null,conductor_v,null,null);
+                                seat.setBackground(conductor_v);
                             else if (info_seat.getIdTipoPuesto()==3)
-                                seat.setCompoundDrawablesWithIntrinsicBounds(null,grada_v,null,null);
+                                seat.setBackground(grada_v);
                             else if (info_seat.getIdTipoPuesto()==5)
-                                seat.setCompoundDrawablesWithIntrinsicBounds(null,water_v,null,null);
+                                seat.setBackground(water_v);
                             else if (info_seat.getIdTipoPuesto()==6)
-                                seat.setCompoundDrawablesWithIntrinsicBounds(null,tele_v,null,null);
+                                seat.setBackground(tele_v);
                             else if (info_seat.getIdTipoPuesto()==7)
-                                seat.setCompoundDrawablesWithIntrinsicBounds(null,panel,null,null);
+                                seat.setBackground(panel);
                             else if (info_seat.getIdTipoPuesto()==9)
-                                seat.setCompoundDrawablesWithIntrinsicBounds(null,puesto_facturado_v,null,null);
+                                seat.setBackground(puesto_facturado_v);
                             else if (info_seat.getIdTipoPuesto()==11)
-                                seat.setCompoundDrawablesWithIntrinsicBounds(null,puesto_reservado_v,null,null);
+                                seat.setBackground(puesto_reservado_v);
                             else if (info_seat.getIdTipoPuesto()==4)
-                                seat.setCompoundDrawablesWithIntrinsicBounds(null,pasillo_v,null,null);
+                                seat.setBackground(pasillo_v);
 
-                            TableRow.LayoutParams layoutParamsRow = new TableRow.LayoutParams(
-                                    TableRow.LayoutParams.MATCH_PARENT,
-                                    ViewGroup.LayoutParams.WRAP_CONTENT
-                            );
-                            // Set margins in pixels (1dp converted to pixels)
-                            int marginInDp = 1;
-                            float scale = getResources().getDisplayMetrics().density;
-                            int marginInPixels = (int) (marginInDp * scale + 0.5f);
+                            //seat.setGravity(Gravity.CENTER);
+                            //seat.setPadding(16,16,16,16);
 
-                            layoutParamsRow.setMargins(marginInPixels,marginInPixels,marginInPixels,marginInPixels);
-
-                            // Create LayoutParams with a specific width in pixels (30dp converted to pixels)
-                            int widthInDp = 30;
-                            float scale2 = getResources().getDisplayMetrics().density;
-                            int widthInPixels = (int) (widthInDp * scale2 + 0.5f);
-
-                            seat.setLayoutParams(layoutParamsRow);
-                            seat.setWidth(widthInPixels); //30dp
-                            seat.setHeight(widthInPixels); //30dp
-                            seat.setBackgroundColor(Color.WHITE);
-                            seat.setGravity(Gravity.CENTER);
+                            TableRow.LayoutParams table_row_params = new TableRow.LayoutParams(
+                                    (int)(0*density), //width
+                                    (int)(0*density)); // height
+                            seat.setLayoutParams(table_row_params);
+                            table_row_params.setMargins(10,10,10,10);
+                            table_row_params.weight = 1;
+                            table_row_params.width = 120;
+                            table_row_params.height = 120;
+                            seat.setLayoutParams(table_row_params);
+                            seat.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                            seat.setPadding(0,10,0,0);
                             seat.setTextColor(Color.BLACK);
+                            seat.setTypeface(null, Typeface.BOLD);
                             tableRow.addView(seat);
+
+                            seat.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // aqui va la programacion de los clics
+                                }
+                            });
                         }
-                        tl_plano_del_bus.addView(tableRow);
+                        tl_plano_bus.addView(tableRow);
                     }
-                            System.out.println("adicionando tl_plano_bus");
-                            sv_scroll_view_bus.addView(tl_plano_del_bus);
+
+                            TableRow tableRowBack = new TableRow(appContext);
+                            TextView panelTrasero = new TextView(appContext);
+                            TableRow.LayoutParams tableRowBack_params = new TableRow.LayoutParams(
+                                    TableLayout.LayoutParams.MATCH_PARENT,
+                                    TableLayout.LayoutParams.MATCH_PARENT
+                            );
+                            panelTrasero.setLayoutParams(tableRowBack_params);
+                            tableRowBack_params.weight = 1;
+                            panelTrasero.setLayoutParams(tableRowBack_params);
+                            panelTrasero.setBackground(back_of_bus);
+                            tableRowBack.addView(panelTrasero);
+                            tl_plano_bus.addView(tableRowBack);
+
                         }
                     });
+
                     System.out.println("deberias tener un bus en pantalla");
                 }
                 else {
