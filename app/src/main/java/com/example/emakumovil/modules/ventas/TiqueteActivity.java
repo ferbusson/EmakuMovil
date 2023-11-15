@@ -65,6 +65,10 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
     // recibe nombre de usuario de la sesion
     private String system_user = Global.getSystem_user();
 
+    private EditText et_valor_unitario;
+    private EditText et_cantidad_puestos;
+    private EditText et_total_venta;
+
     // constantes plano del bus
     private final int VIEW = 0;
     private final int CONFIG = 1;
@@ -89,6 +93,11 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
     private Map<Integer,Map> pisos_vehiculos = new HashMap<Integer,Map>();
     private Map<Integer,InfoPuestoVehiculo> datos_puestos = new HashMap<Integer,InfoPuestoVehiculo>();
 
+
+    private double valor_unitario = 0;
+    private int cantidad_clicks = 0;
+    private double total_venta = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         String[] args = {system_user};
@@ -106,6 +115,10 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         et_descripcion_bus = (EditText) findViewById(R.id.et_descripcion_bus);
         tv_origen_value = (TextView) findViewById(R.id.tv_origen_value);
         tl_plano_bus = (TableLayout) findViewById(R.id.tl_plano_bus);
+        et_valor_unitario = (EditText) findViewById(R.id.et_valor_unitario);
+        et_cantidad_puestos = (EditText) findViewById(R.id.et_cantidad_puestos);
+        et_total_venta = (EditText) findViewById(R.id.et_total_venta);
+
         // se agrega listener al boton para ejecutar lo que se ponga en onClick
         ib_buscar_destino.setOnClickListener(this);
         ib_buscar_bus.setOnClickListener(this);
@@ -183,7 +196,6 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
             System.out.println("llego query distribucion de bus 84");
             // recepcion de datos de la query
             procesaQueryDistribucionVehiculo(elm.getChildren("row").iterator());
-
             System.out.println("pintando bus...");
             System.out.println("Rows: " + rowsp1);
             System.out.println("Cols: " + colsp1);
@@ -281,8 +293,6 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                                 seat.setBackground(puesto_facturado_v);
                             else if (info_seat.getIdTipoPuesto()==11)
                                 seat.setBackground(puesto_reservado_v);
-                            else if (info_seat.getIdTipoPuesto()==4)
-                                seat.setBackground(pasillo_v);
 
                             //seat.setGravity(Gravity.CENTER);
                             //seat.setPadding(16,16,16,16);
@@ -303,9 +313,19 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                             tableRow.addView(seat);
 
                             seat.setOnClickListener(new View.OnClickListener() {
+
                                 @Override
                                 public void onClick(View v) {
                                     // aqui va la programacion de los clics
+                                    System.out.println("Hice click en: " + seat.getText().toString());
+                                    seat.setBackground(puesto_facturado_v);
+                                    valor_unitario = getVunitarioPuesto(seat.getText().toString());
+                                    cantidad_clicks++;
+                                    total_venta = cantidad_clicks*valor_unitario;
+                                    et_valor_unitario.setText(Double.toString(valor_unitario));
+                                    et_cantidad_puestos.setText(Integer.toString(cantidad_clicks));
+                                    et_total_venta.setText(Double.toString(total_venta));
+                                    System.out.println("Hice click en: " + seat.getText());
                                 }
                             });
                         }
@@ -339,6 +359,23 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
             //hasta aqui
         }
     }
+
+    private Double getVunitarioPuesto(String puesto_seleccionado){
+        Map<Integer,PuestoVehiculo> filas_vehiculo = pisos_vehiculos.get(1);
+        Map<Integer,String> info_puesto_seleccionado = null;
+        for(int r = 0; r < rowsp1; r++){
+            PuestoVehiculo fila_vehiculo = filas_vehiculo.get(r+1);
+            for(int c = 0; c < colsp1; c++){
+                InfoPuestoVehiculo info_seat = fila_vehiculo.getInfoPuestoVehiculo(c + 1);
+                if(info_seat.puesto == Integer.valueOf(puesto_seleccionado))
+                    info_puesto_seleccionado.put(0,String.valueOf(info_seat.getId_activo()));
+                    return info_seat.getValor();
+            }
+        }
+        return 0.0;
+    }
+
+
 
     private void procesaQueryDistribucionVehiculo(Iterator i) {
 

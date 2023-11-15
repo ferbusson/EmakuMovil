@@ -82,7 +82,7 @@
 
     <Button
         android:id="@+id/ingresar"
-        android:layout_width="wrap_content"
+        android:layout_width="322dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
@@ -90,14 +90,17 @@
         android:background="@drawable/bg_rounded_boton01"
         android:ems="19"
         android:onClick="onClick"
-        android:text="@string/ingresar" />
+        android:text="@string/ingresar"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editTextText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
         android:inputType="text"
+        android:enabled="false"
+
         android:text="Powered by GramaGroup SAS"
         android:textAlignment="center"
         android:textSize="15sp" />

@@ -10,24 +10,29 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/palette5"
+        android:background="@drawable/bg_rounded_boton01"
+
         android:orientation="horizontal"
-        >
+        android:paddingTop="0dp">
 
         <TextView
             android:id="@+id/tv_titulo_venta_tiquete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:paddingVertical="10dp"
             android:text="@string/tv_venta_tiquetes"
             android:textAlignment="center"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
     </LinearLayout>
     <!--    Linea Origen-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/palette5"
+        android:layout_marginTop="10dp"
+        android:minHeight="48dp"
+        android:background="@color/white"
         android:orientation="horizontal"
         >
 
@@ -36,7 +41,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+            android:textStyle="bold"
+            android:layout_weight="0.3"
+            android:layout_marginStart="10dp"
             android:textSize="20sp"
             android:text="@string/tv_origen"
              />
@@ -45,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+            android:layout_weight="0.7"
             android:textSize="20sp"
             android:text="-"
             />
@@ -54,8 +61,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/palette5" >
+            android:layout_margin="10dp"
+            android:background="@color/white">
 
             <TextView
                 android:id="@+id/tv_destino"
@@ -88,10 +95,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginRight="2dp"
                 android:layout_weight="0.1"
-                android:background="@drawable/palette9press"
+                android:background="@color/teal_700"
                 android:contentDescription="@string/bt_buscar_destino"
                 android:paddingLeft="6dp"
                 android:paddingRight="6dp"
@@ -128,7 +135,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:background="@drawable/palette5" >
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/tv_bus"
@@ -136,9 +143,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:textSize="20sp"
             android:text="Vehículo"
-            />
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/et_numero_bus"
@@ -151,7 +157,7 @@
             android:hint="Buscar ..."
             android:includeFontPadding="true"
             android:maxLength="20"
-            android:singleLine="true" >
+            android:singleLine="true">
 
         </EditText>
 
@@ -160,10 +166,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
             android:layout_marginTop="5dp"
+            android:layout_marginRight="2dp"
             android:layout_weight="0.1"
-            android:background="@drawable/palette9press"
+            android:background="@color/teal_700"
             android:contentDescription="@string/bt_buscar_bus"
             android:paddingLeft="6dp"
             android:paddingRight="6dp"
@@ -200,25 +206,85 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        android:layout_weight="1"
         android:orientation="vertical"
         android:layout_gravity="center"
          >
 
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_valor_unitario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Valor Unitario"/>
+
+                <EditText
+                    android:id="@+id/et_valor_unitario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0.0"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cantidad Puestos"/>
+
+                    <EditText
+                        android:id="@+id/et_cantidad_puestos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="0"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Total Venta"/>
+
+                    <EditText
+                        android:id="@+id/et_total_venta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="0"/>
+                </LinearLayout>
+            </LinearLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
+            android:layout_weight="0.4"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             tools:context=".modules.ventas.TiqueteActivity">
 
         <TableLayout
             android:id="@+id/tl_plano_bus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="40dp"
-            android:paddingBottom="40dp"
-            android:paddingStart="80dp"
-            android:paddingEnd="80dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -226,7 +292,7 @@
         </TableLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
+        </LinearLayout>
 
     </ScrollView>
 
