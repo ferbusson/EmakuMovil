@@ -317,15 +317,19 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                                 @Override
                                 public void onClick(View v) {
                                     // aqui va la programacion de los clics
+                                    Map<Integer,String> puesto_seleccionado = getVunitarioPuesto(seat.getText().toString());
                                     System.out.println("Hice click en: " + seat.getText().toString());
-                                    seat.setBackground(puesto_facturado_v);
-                                    valor_unitario = getVunitarioPuesto(seat.getText().toString());
-                                    cantidad_clicks++;
-                                    total_venta = cantidad_clicks*valor_unitario;
-                                    et_valor_unitario.setText(Double.toString(valor_unitario));
-                                    et_cantidad_puestos.setText(Integer.toString(cantidad_clicks));
-                                    et_total_venta.setText(Double.toString(total_venta));
-                                    System.out.println("Hice click en: " + seat.getText());
+                                    if(puesto_seleccionado != null && puesto_seleccionado.get(2) != null && Integer.valueOf(puesto_seleccionado.get(2))==2) {
+                                        System.out.println("Entre al otro if");
+                                        seat.setBackground(puesto_facturado_v);
+                                        valor_unitario = Double.valueOf(puesto_seleccionado.get(3));
+                                        cantidad_clicks++;
+                                        total_venta = cantidad_clicks * valor_unitario;
+                                        et_valor_unitario.setText(Double.toString(valor_unitario));
+                                        et_cantidad_puestos.setText(Integer.toString(cantidad_clicks));
+                                        et_total_venta.setText(Double.toString(total_venta));
+                                        System.out.println("Hice click en segundo: " + seat.getText());
+                                    }
                                 }
                             });
                         }
@@ -360,19 +364,27 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         }
     }
 
-    private Double getVunitarioPuesto(String puesto_seleccionado){
-        Map<Integer,PuestoVehiculo> filas_vehiculo = pisos_vehiculos.get(1);
-        Map<Integer,String> info_puesto_seleccionado = null;
-        for(int r = 0; r < rowsp1; r++){
-            PuestoVehiculo fila_vehiculo = filas_vehiculo.get(r+1);
-            for(int c = 0; c < colsp1; c++){
-                InfoPuestoVehiculo info_seat = fila_vehiculo.getInfoPuestoVehiculo(c + 1);
-                if(info_seat.puesto == Integer.valueOf(puesto_seleccionado))
-                    info_puesto_seleccionado.put(0,String.valueOf(info_seat.getId_activo()));
-                    return info_seat.getValor();
+    private Map<Integer,String> getVunitarioPuesto(String puesto_seleccionado){
+        try {
+            Map<Integer, PuestoVehiculo> filas_vehiculo = pisos_vehiculos.get(1);
+            Map<Integer, String> info_puesto_seleccionado = new HashMap<>();
+            for (int r = 0; r < rowsp1; r++) {
+                PuestoVehiculo fila_vehiculo = filas_vehiculo.get(r + 1);
+                for (int c = 0; c < colsp1; c++) {
+                    InfoPuestoVehiculo info_seat = fila_vehiculo.getInfoPuestoVehiculo(c + 1);
+                    if (!puesto_seleccionado.equals("") && info_seat.puesto == Integer.valueOf(puesto_seleccionado)) {
+                        System.out.println("Entre al if");
+                        info_puesto_seleccionado.put(0, String.valueOf(info_seat.id_activo));
+                        info_puesto_seleccionado.put(1, String.valueOf(info_seat.id_horario));
+                        info_puesto_seleccionado.put(2, String.valueOf(info_seat.id_tipo_puesto));
+                        info_puesto_seleccionado.put(3, String.valueOf(info_seat.valor));
+                        return info_puesto_seleccionado;
+                    }
+                }
             }
+        }catch (NullPointerException e){
         }
-        return 0.0;
+        return null;
     }
 
 
