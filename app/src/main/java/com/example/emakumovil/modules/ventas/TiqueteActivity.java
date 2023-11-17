@@ -4,6 +4,7 @@ import static com.example.emakumovil.R.drawable.*;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -12,6 +13,7 @@ import android.text.Layout;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -62,6 +64,8 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
     private EditText et_descripcion_bus;
     // scrollview que recibe el plano del bus
     private TableLayout tl_plano_bus;
+    private Button bt_continuar;
+    private TextView tv_selecciona_asiento;
     // recibe nombre de usuario de la sesion
     private String system_user = Global.getSystem_user();
 
@@ -109,19 +113,24 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         // boton lupa buscar destino
         ib_buscar_destino = (ImageButton) findViewById(R.id.ib_buscar_destino);
         ib_buscar_bus = (ImageButton) findViewById(R.id.ib_buscar_bus);
+        //et_destino = (EditText) findViewById(R.id.et_destino);
         et_destino = (EditText) findViewById(R.id.et_destino);
         et_numero_bus = (EditText) findViewById(R.id.et_numero_bus);
-        et_descripcion_punto = (EditText) findViewById(R.id.et_descripcion_punto);
+        //et_descripcion_punto = (EditText) findViewById(R.id.et_descripcion_punto);
         et_descripcion_bus = (EditText) findViewById(R.id.et_descripcion_bus);
         tv_origen_value = (TextView) findViewById(R.id.tv_origen_value);
         tl_plano_bus = (TableLayout) findViewById(R.id.tl_plano_bus);
+        tv_selecciona_asiento = (TextView) findViewById(R.id.tv_selecciona_asiento);
         et_valor_unitario = (EditText) findViewById(R.id.et_valor_unitario);
         et_cantidad_puestos = (EditText) findViewById(R.id.et_cantidad_puestos);
         et_total_venta = (EditText) findViewById(R.id.et_total_venta);
+        bt_continuar = (Button) findViewById(R.id.bt_continuar);
 
         // se agrega listener al boton para ejecutar lo que se ponga en onClick
         ib_buscar_destino.setOnClickListener(this);
         ib_buscar_bus.setOnClickListener(this);
+
+
     }
 
     @Override
@@ -151,11 +160,13 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         // aqui llegan los datos al hacer clic en los selectedDataDialog y SearchDataDialog
         System.out.println("tiene que ser aqui0");
         if (e.getIdobject() == R.id.ib_buscar_destino) {
-            et_destino.setText((e.getId()));
+            et_destino.setText((e.getValue()));
+            /*et_destino.setText((e.getId()));
             et_descripcion_punto.setText(e.getValue());
             et_descripcion_punto.setVisibility(View.VISIBLE);
             et_destino.setSelection(et_destino.getText().length());
-            et_numero_bus.requestFocus();
+            et_numero_bus.requestFocus();*/
+
         } else
             // llega info luego de hacer clic en la lista de buses
             if (e.getIdobject() == R.id.ib_buscar_bus) {
@@ -168,7 +179,11 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
             new SearchQuery(this,"MVSEL0084",args).start();
         }
     }
-
+    public void openFormaPago(View view) {
+        Intent intent = new Intent(this,FormaPagoTiquete.class);
+        System.out.println("en opemFormaPago");
+        startActivity(intent);
+    }
     @Override
     public void onFocusChange(View arg0, boolean arg1) {
     }
@@ -214,14 +229,14 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                             Drawable front_of_bus = ContextCompat.getDrawable(appContext,bus_frente_160x70_v);
                             Drawable back_of_bus = ContextCompat.getDrawable(appContext,bus_trasera_160x70_v);
                             Drawable seat_v = ContextCompat.getDrawable(appContext, seat_free);
-                            Drawable conductor_v = ContextCompat.getDrawable(appContext, ico_conductor_v);
-                            Drawable grada_v = ContextCompat.getDrawable(appContext, ico_grada_v);
+                            Drawable conductor_v = ContextCompat.getDrawable(appContext, driver01);
+                            Drawable grada_v = ContextCompat.getDrawable(appContext, stairs);
                             Drawable water_v = ContextCompat.getDrawable(appContext, ico_water_v);
                             Drawable tele_v = ContextCompat.getDrawable(appContext, ico_tele_v);
                             Drawable panel = ContextCompat.getDrawable(appContext, ico_panel);
                             Drawable puesto_facturado_v = ContextCompat.getDrawable(appContext, seat_busy);
                             Drawable puesto_reservado_v = ContextCompat.getDrawable(appContext, seat_reserved);
-                            Drawable pasillo_v = ContextCompat.getDrawable(appContext, ico_pasillo_v);
+                            Drawable pasillo_v = ContextCompat.getDrawable(appContext, hallway);
                             /*
                             int width = 80; // Set your desired width in pixels
                             int height = 80; // Set your desired height in pixels
@@ -259,8 +274,8 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                         //creamos variable de tipo TableRow
                         TableRow tableRow = new TableRow(appContext);
                         TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(
-                                TableLayout.LayoutParams.MATCH_PARENT,
-                                TableLayout.LayoutParams.MATCH_PARENT
+                                TableLayout.LayoutParams.WRAP_CONTENT,
+                                TableLayout.LayoutParams.WRAP_CONTENT
                         );
                         //tableRow.setGravity(Gravity.CENTER_HORIZONTAL);
 
@@ -271,18 +286,22 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                                 InfoPuestoVehiculo info_seat = fila_vehiculo.getInfoPuestoVehiculo(c + 1);
                             //Creamos un text view para representar el puesto
                             TextView seat = new TextView(appContext);
+                            // los puestos de pasajeros tienen numeracion diferente de cero
                             if(info_seat.getPuesto() != 0)
                                 texto_asiento = String.valueOf(info_seat.getPuesto());
                             else
                                 texto_asiento = "";
                             //ponemos texto al puesto
                             seat.setText(texto_asiento);
+                            // agregamos iconos como background
                             if (info_seat.getIdTipoPuesto()==2)
                                 seat.setBackground(seat_v);
                             else if (info_seat.getIdTipoPuesto()==1)
                                 seat.setBackground(conductor_v);
                             else if (info_seat.getIdTipoPuesto()==3)
                                 seat.setBackground(grada_v);
+                            else if (info_seat.getIdTipoPuesto()==4)
+                                seat.setBackground(pasillo_v);
                             else if (info_seat.getIdTipoPuesto()==5)
                                 seat.setBackground(water_v);
                             else if (info_seat.getIdTipoPuesto()==6)
@@ -298,18 +317,20 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                             //seat.setPadding(16,16,16,16);
 
                             TableRow.LayoutParams table_row_params = new TableRow.LayoutParams(
-                                    (int)(0*density), //width
-                                    (int)(0*density)); // height
+                                    TableRow.LayoutParams.WRAP_CONTENT,  //(int)(0*density), //width
+                                    TableRow.LayoutParams.WRAP_CONTENT);  //(int)(0*density)); // height
                             seat.setLayoutParams(table_row_params);
                             table_row_params.setMargins(10,10,10,10);
                             table_row_params.weight = 1;
-                            table_row_params.width = 120;
+                            table_row_params.width = 0;
                             table_row_params.height = 120;
                             seat.setLayoutParams(table_row_params);
                             seat.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                             seat.setPadding(0,10,0,0);
-                            seat.setTextColor(Color.BLACK);
+                            seat.setTextColor(Color.WHITE);
+                            seat.setTextSize(12);
                             seat.setTypeface(null, Typeface.BOLD);
+
                             tableRow.addView(seat);
 
                             seat.setOnClickListener(new View.OnClickListener() {
@@ -348,7 +369,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                             panelTrasero.setBackground(back_of_bus);
                             tableRowBack.addView(panelTrasero);
                             tl_plano_bus.addView(tableRowBack);
-
+                            tv_selecciona_asiento.setVisibility(View.VISIBLE);
                         }
                     });
 

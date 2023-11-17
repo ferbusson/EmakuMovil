@@ -184,6 +184,10 @@
             android:label="Venta de tiquetes" >
         </activity>
         <activity
+            android:name="com.example.emakumovil.modules.ventas.FormaPagoTiquete"
+            android:label="Venta de tiquetes" >
+        </activity>
+        <activity
             android:name="com.example.emakumovil.modules.ventas.ChangeResolutionActivity"
             android:label="@string/changeresolution"
             android:theme="@android:style/Theme.Dialog" >

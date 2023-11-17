@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_rounded_boton01"
+        android:background="#FFE8EDDA"
 
         android:orientation="horizontal"
         android:paddingTop="0dp">
@@ -105,7 +105,7 @@
                 android:src="@drawable/ic_action_search" />
 
         </LinearLayout>
-
+    <!--
     <ScrollView
         android:id="@+id/sv_puntos"
         android:layout_width="match_parent"
@@ -129,7 +129,7 @@
                 android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
-
+    -->
     <!-- Linea Buscar Bus -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -176,10 +176,7 @@
             android:src="@drawable/ic_action_search" />
 
     </LinearLayout>
-    <ScrollView
-        android:id="@+id/sv_bus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -198,7 +195,6 @@
                 android:singleLine="true"
                 android:visibility="gone" />
         </LinearLayout>
-    </ScrollView>
 
     <!-- aqui se dibuja el bus - puestos disponibles bus -->
     <ScrollView
@@ -215,10 +211,13 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             >
+            <!-- Totales -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.6"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -256,43 +255,61 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Total Venta"/>
+                        android:text="Total Venta"
+                        android:textColor="#F44336"
+                        android:textSize="15dp" />
 
                     <EditText
                         android:id="@+id/et_total_venta"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="0"/>
+                        android:text="0"
+                        android:textColor="#F44336"
+                        android:textSize="28sp" />
                 </LinearLayout>
+                <!-- Button to Submit -->
+                <Button
+                    android:id="@+id/bt_continuar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="openFormaPago"
+                    android:text="Continuar"/>
             </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_weight="0.4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:context=".modules.ventas.TiqueteActivity">
+            <!-- plano del bus -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_selecciona_asiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:text="Selecciona tus asientos"/>
+                <TableLayout
+                    android:id="@+id/tl_plano_bus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
 
-        <TableLayout
-            android:id="@+id/tl_plano_bus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            >
-        </TableLayout>
+                    >
+                </TableLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
         </LinearLayout>
+
 
     </ScrollView>
 
