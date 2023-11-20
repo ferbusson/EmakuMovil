@@ -38,6 +38,7 @@ import com.google.firebase.database.collection.LLRBNode;
 import org.jdom2.Document;
 import org.jdom2.Element;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -97,7 +98,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
     private Map<Integer,Map> pisos_vehiculos = new HashMap<Integer,Map>();
     private Map<Integer,InfoPuestoVehiculo> datos_puestos = new HashMap<Integer,InfoPuestoVehiculo>();
 
-
+    ArrayList<String> puestos_seleccionados = new ArrayList<>();
     private double valor_unitario = 0;
     private int cantidad_clicks = 0;
     private double total_venta = 0;
@@ -181,7 +182,17 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
     }
     public void openFormaPago(View view) {
         Intent intent = new Intent(this,FormaPagoTiquete.class);
-        System.out.println("en opemFormaPago");
+        //Create a bundle to pass data
+        Bundle bundle = new Bundle();
+        String origen = tv_origen_value.getText().toString();
+        String destino = et_destino.getText().toString();
+        String detalles_bus = et_descripcion_bus.getText().toString();
+        String valor_total = et_total_venta.getText().toString();
+        bundle.putString("origen",origen);
+        bundle.putString("destino",destino);
+        bundle.putString("detalles_bus",detalles_bus);
+        bundle.putString("valor_total",valor_total);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
     @Override
@@ -343,6 +354,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                                     if(puesto_seleccionado != null && puesto_seleccionado.get(2) != null && Integer.valueOf(puesto_seleccionado.get(2))==2) {
                                         System.out.println("Entre al otro if");
                                         seat.setBackground(puesto_facturado_v);
+                                        puestos_seleccionados.add(seat.getText().toString());
                                         valor_unitario = Double.valueOf(puesto_seleccionado.get(3));
                                         cantidad_clicks++;
                                         total_venta = cantidad_clicks * valor_unitario;
