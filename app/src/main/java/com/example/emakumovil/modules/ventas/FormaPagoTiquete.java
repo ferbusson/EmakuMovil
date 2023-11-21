@@ -7,11 +7,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -57,6 +61,8 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
     private String id_email;
     private String email;
 
+    private Spinner spinner_medio_de_pago;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forma_de_pago_tiquete);
@@ -70,6 +76,42 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
         editTextAddress = (EditText) findViewById(R.id.editTextAddress);
         editTextPhone = (EditText) findViewById(R.id.editTextPhone);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
+        spinner_medio_de_pago = (Spinner) findViewById(R.id.spinner_medio_pago);
+
+        // Inicia combo medios de pago
+        String[] medios_de_pago = {"Efectivo",
+                "Tarjeta",
+                "Efectivo",
+                "Crédito",
+                "Bonos",
+                "Efectivo",
+                "Cortesía"};
+        // Create an ArrayAdapter using the string array and a default spinner layout.
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.medios_de_pago_array,
+                R.layout.spinner_medio_pago_format
+        );
+        // Specify the layout to use when the list of choices appears.
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner.
+        spinner_medio_de_pago.setAdapter(adapter);
+
+        spinner_medio_de_pago.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String medioPagoSeleccionado = (String) parent.getItemAtPosition(position);
+                System.out.println("Medio seleccionado: " + medioPagoSeleccionado);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        // Termina combo medios de pago
+
         // Inside ActivityB in onCreate or another appropriate method
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -89,6 +131,24 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
             setupEditTextNumeroIDClienteListener();
         }
     }
+
+    /*
+    public class SpinnerActivity extends Activity implements AdapterView.OnItemSelectedListener {
+
+        public void onItemSelected(AdapterView<?> parent, View view,
+                                   int pos, long id) {
+            // An item is selected. You can retrieve the selected item using
+            // parent.getItemAtPosition(pos).
+            System.out.println("Item seleccionado de la forma de pago: " +
+                    parent.getSelectedItem().toString());
+        }
+
+        public void onNothingSelected(AdapterView<?> parent) {
+            // Another interface callback.
+        }
+
+    }*/
+
 
     private void setupEditTextNumeroIDClienteListener(){
         et_numero_id_cliente.setOnKeyListener((view,keyCode,keyEvent)->{
@@ -148,6 +208,8 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
             }
         }
     }
+
+
 
     @Override
     public boolean containSqlCode(String sqlCode) {

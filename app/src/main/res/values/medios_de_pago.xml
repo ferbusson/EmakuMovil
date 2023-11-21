@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="medios_de_pago_array">
+        <item>Efectivo</item>
+        <item>Tarjeta</item>
+        <item>Efectivo - Tarjeta</item>
+        <item>Crédito</item>
+        <item>Bonos</item>
+        <item>Efectivo y Bono</item>
+        <item>Cortesía</item>
+    </string-array>
+</resources>
