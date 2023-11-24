@@ -178,13 +178,14 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         String detalles_bus = et_descripcion_bus.getText().toString();
         String valor_total = et_total_venta.getText().toString();
 
+        bundle.putInt("id_activo",idActivo);
         bundle.putString("origen",origen);
         bundle.putString("destino",destino);
         bundle.putString("detalles_bus",detalles_bus);
         bundle.putString("valor_total",valor_total);
+
         // el hashmap de los puestos seleccionados no se puede pasar como hashmap en el bundle
-        // por esta razon lo serializamos
-        //Serializable serializableData = new HashMap<>(puestos_seleccionados_tiquete);
+        // por esta razon usamos Parcelable
         ParcelableMap parcelableMap = new ParcelableMap(puestos_seleccionados_tiquete);
         intent.putExtra("puestos_seleccionados",parcelableMap);
         intent.putExtras(bundle);

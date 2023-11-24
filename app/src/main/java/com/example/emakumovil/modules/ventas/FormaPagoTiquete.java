@@ -1,9 +1,6 @@
 package com.example.emakumovil.modules.ventas;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -12,13 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.emakumovil.R;
 import com.example.emakumovil.communications.SocketConnector;
@@ -28,18 +20,14 @@ import com.example.emakumovil.components.AnswerListener;
 import com.example.emakumovil.components.DialogClickEvent;
 import com.example.emakumovil.components.DialogClickListener;
 import com.example.emakumovil.components.SearchQuery;
-import com.example.emakumovil.modules.inventario.ListFitInventoryActivity;
 
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 
-import java.io.Serializable;
 import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -61,7 +49,10 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
     private EditText editTextAddress;
     private EditText editTextPhone;
     private EditText editTextEmail;
+    private Button btnSubmit;
+
     private String id;
+    private Integer id_activo;
     private String id_char;
     private String nombre1;
     private String nombre2;
@@ -100,6 +91,8 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
         spinner_medio_de_pago = (Spinner) findViewById(R.id.spinner_medio_pago);
         editTextCash = (EditText) findViewById(R.id.editTexCash);
         editTextCreditCard = (EditText) findViewById(R.id.editTexCreditCard);
+        btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        btnSubmit.setOnClickListener(this);
 
         // Inicia combo medios de pago
         String[] medios_de_pago = {"Efectivo",
@@ -140,6 +133,7 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
         if (bundle != null) {
             // aqui se almacenaran las puestos en formato integer para ser organizados luego
             ArrayList<Integer> cadena_puestos_seleccionados = new ArrayList<>();
+            id_activo = bundle.getInt("id_activo");
             String origen = bundle.getString("origen");
             String destino = bundle.getString("destino");
             String detalles_bus = bundle.getString("detalles_bus");
@@ -193,7 +187,8 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
     }
     @Override
     public void onClick(View v) {
-
+        btnSubmit.setEnabled(false);
+        sendTransaction();
     }
 
     @Override
@@ -384,7 +379,7 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
             package8.addContent(subpackage);
 
         }
-        raiz.addContent(package0);
+        raiz.addContent(package8);
 
         // paquete en blanco
         Element pblanco1 = new Element("package");
@@ -425,16 +420,93 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
         package10.addContent(valor_tarjeta);
         raiz.addContent(package10);
 
-        // llave centrocosto
+        // id_char cliente credito
         Element package11 = new Element("package");
-        Element field111 = new Element("field");
-        Attribute field111_attrubute111 = new Attribute("attribute","key");
-        Attribute field111_attrubute112 = new Attribute("name","centrocosto");
-        field111.setAttribute(field111_attrubute111);
-        field111.setAttribute(field111_attrubute112);
-        field111.setText("2"); // pendiente traer esto desde la app
-        package11.addContent(field111);
         raiz.addContent(package11);
+
+        // llave centrocosto
+        Element package12 = new Element("package");
+        Element field121 = new Element("field");
+        Attribute field121_attrubute121 = new Attribute("attribute","key");
+        Attribute field121_attrubute122 = new Attribute("name","centrocosto");
+        field121.setAttribute(field121_attrubute121);
+        field121.setAttribute(field121_attrubute122);
+        field121.setText("2"); // pendiente traer esto desde la app
+        package11.addContent(field121);
+        raiz.addContent(package12);
+
+        // valor pago a credito
+        Element package13 = new Element("package");
+        Element valor_credito = new Element("field");
+        valor_credito.setText("0.0");
+        package13.addContent(valor_credito);
+        raiz.addContent(package13);
+
+        // blanco 2
+        raiz.addContent(pblanco1);
+
+        // efectivo neto
+        Element package14 = new Element("package");
+        Element valor_efectivoneto = new Element("field");
+        valor_efectivoneto.setText(editTextCash.getText().toString());
+        package14.addContent(valor_efectivoneto);
+        raiz.addContent(package14);
+
+        // valor en tarjeta ******** reuso el mismo field que se uso antes tcreditcard *******
+        Element package15 = new Element("package");
+        package15.addContent(tcreditcard);
+        raiz.addContent(package15);
+
+        // llave id_activo
+        Element package16 = new Element("package");
+        Element field161 = new Element("field");
+        Attribute field161_attrubute161 = new Attribute("attribute","key");
+        Attribute field161_attrubute162 = new Attribute("name","idActivo");
+        field161.setAttribute(field161_attrubute161);
+        field161.setAttribute(field161_attrubute162);
+        field161.setText(String.valueOf(id_activo));
+        package16.addContent(field161);
+        raiz.addContent(package16);
+
+        // total neto
+        Element package17 = new Element("package");
+        Element total_neto = new Element("field");
+        total_neto.setText(editTextCash.getText().toString()); // ******* pendiente poner total neto
+        package17.addContent(total_neto);
+        raiz.addContent(package17);
+
+        // llave idTercero - id_char
+        Element package18 = new Element("package");
+        Element field181 = new Element("field");
+        Attribute field181_attrubute181 = new Attribute("attribute","key");
+        Attribute field181_attrubute182 = new Attribute("name","idTercero");
+        field181.setAttribute(field181_attrubute181);
+        field181.setAttribute(field181_attrubute182);
+        field181.setText(et_numero_id_cliente.getText().toString());
+        package18.addContent(field181);
+        raiz.addContent(package18);
+
+        // valor bono empresa
+        Element package19 = new Element("package");
+        Element valor_bono_empresa = new Element("field");
+        valor_bono_empresa.setText("0.0");
+        package19.addContent(valor_bono_empresa);
+        raiz.addContent(package19);
+
+        // valor bono propietario
+        Element package20 = new Element("package");
+        Element valor_bono_propietario = new Element("field");
+        valor_bono_propietario.setText("0.0");
+        package20.addContent(valor_bono_propietario);
+        raiz.addContent(package20);
+
+        // valor cortesia
+        Element package21 = new Element("package");
+        Element valor_cortesia = new Element("field");
+        valor_cortesia.setText("0.0");
+        package21.addContent(valor_cortesia);
+        raiz.addContent(package21);
+
 
         SocketChannel socket = SocketConnector.getSock();
         Log.d("EMAKU","EMAKU: Socket: "+socket);
