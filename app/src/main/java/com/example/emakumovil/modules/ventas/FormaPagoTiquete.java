@@ -5,6 +5,7 @@ import static androidx.core.content.ContextCompat.startActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,16 +21,27 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.emakumovil.R;
+import com.example.emakumovil.communications.SocketConnector;
+import com.example.emakumovil.communications.SocketWriter;
 import com.example.emakumovil.components.AnswerEvent;
 import com.example.emakumovil.components.AnswerListener;
 import com.example.emakumovil.components.DialogClickEvent;
 import com.example.emakumovil.components.DialogClickListener;
 import com.example.emakumovil.components.SearchQuery;
+import com.example.emakumovil.modules.inventario.ListFitInventoryActivity;
 
+import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 
+import java.io.Serializable;
+import java.nio.channels.SocketChannel;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public class FormaPagoTiquete extends Activity implements View.OnClickListener, DialogClickListener,
         AnswerListener, View.OnFocusChangeListener {
@@ -37,10 +49,14 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
     private TextView tv_detalle_origen;
     private TextView tv_detalle_destino;
     private TextView tv_detalles_bus;
+    private TextView tv_titulo_puestos_seleccionados;
+    private TextView tv_puestos_seleccionados;
     private TextView tv_total_compra;
     private EditText et_numero_id_cliente;
     private EditText editTextName;
     private EditText editTextLastName;
+    private EditText editTextCash;
+    private EditText editTextCreditCard;
 
     private EditText editTextAddress;
     private EditText editTextPhone;
@@ -61,14 +77,19 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
     private String id_email;
     private String email;
 
+    private Map<Integer,InfoPuestoVehiculo> puestos_seleccionados;
+
     private Spinner spinner_medio_de_pago;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forma_de_pago_tiquete);
+
         tv_detalle_origen = (TextView) findViewById(R.id.detalle_origen);
         tv_detalle_destino = (TextView) findViewById(R.id.detalle_destino);
         tv_detalles_bus = (TextView) findViewById(R.id.tv_detalles_bus);
+        tv_titulo_puestos_seleccionados = (TextView)findViewById(R.id.tv_titulo_puestos_seleccionados);
+        tv_puestos_seleccionados = (TextView) findViewById(R.id.tv_puestos_seleccionados);
         tv_total_compra = (TextView) findViewById(R.id.tv_total_compra);
         et_numero_id_cliente = (EditText) findViewById(R.id.et_numero_id_cliente);
         editTextName = (EditText) findViewById(R.id.editTextName);
@@ -77,6 +98,8 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
         editTextPhone = (EditText) findViewById(R.id.editTextPhone);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         spinner_medio_de_pago = (Spinner) findViewById(R.id.spinner_medio_pago);
+        editTextCash = (EditText) findViewById(R.id.editTexCash);
+        editTextCreditCard = (EditText) findViewById(R.id.editTexCreditCard);
 
         // Inicia combo medios de pago
         String[] medios_de_pago = {"Efectivo",
@@ -115,39 +138,46 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
         // Inside ActivityB in onCreate or another appropriate method
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
+            // aqui se almacenaran las puestos en formato integer para ser organizados luego
+            ArrayList<Integer> cadena_puestos_seleccionados = new ArrayList<>();
             String origen = bundle.getString("origen");
             String destino = bundle.getString("destino");
             String detalles_bus = bundle.getString("detalles_bus");
             String valor_total = bundle.getString("valor_total");
+            // des-parcel los puestos seleccionados que nos llegan en el bundle
+            ParcelableMap parcelableMap = getIntent().getParcelableExtra("puestos_seleccionados");
+            if(parcelableMap != null){
+                puestos_seleccionados = parcelableMap.getMap();
+                for(InfoPuestoVehiculo puesto : puestos_seleccionados.values()){
+                    // obtenemos los puestos
+                    cadena_puestos_seleccionados.add(puesto.getPuesto());
+                }
+            }
 
-            System.out.println(detalles_bus);
-            System.out.println(valor_total);
+            // organizamos el array de numeros de puesto de menor a mayor
+            Collections.sort(cadena_puestos_seleccionados);
+            // StringBuilder permite cambiar la cadena sin instanciar un nuevo objeto cada vez
+            // lo usamos para dar formato a la lista de puestos seleccionados
+            StringBuilder cadenaPuestosFormateada = new StringBuilder();
+            cadenaPuestosFormateada.append("[ ");
+            for (int i = 0; i < cadena_puestos_seleccionados.size(); i++){
+                cadenaPuestosFormateada.append(cadena_puestos_seleccionados.get(i));
+                if (i < cadena_puestos_seleccionados.size() - 1)
+                    cadenaPuestosFormateada.append(" ");
+            }
+            cadenaPuestosFormateada.append(" ]");
+            String mostrar_texto = cadena_puestos_seleccionados.size() == 1 ? "Asiento" : "Asientos";
 
             tv_detalle_origen.setText(origen);
             tv_detalle_destino.setText(destino);
             tv_detalles_bus.setText(detalles_bus);
+            tv_titulo_puestos_seleccionados.setText(mostrar_texto);
+            tv_puestos_seleccionados.setText(cadenaPuestosFormateada);
             tv_total_compra.setText(valor_total);
 
             setupEditTextNumeroIDClienteListener();
         }
     }
-
-    /*
-    public class SpinnerActivity extends Activity implements AdapterView.OnItemSelectedListener {
-
-        public void onItemSelected(AdapterView<?> parent, View view,
-                                   int pos, long id) {
-            // An item is selected. You can retrieve the selected item using
-            // parent.getItemAtPosition(pos).
-            System.out.println("Item seleccionado de la forma de pago: " +
-                    parent.getSelectedItem().toString());
-        }
-
-        public void onNothingSelected(AdapterView<?> parent) {
-            // Another interface callback.
-        }
-
-    }*/
 
 
     private void setupEditTextNumeroIDClienteListener(){
@@ -210,6 +240,207 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
     }
 
 
+    private void sendTransaction() {
+        Document transaction = new Document();
+        Element raiz = new Element("TRANSACTION");
+        Element driver = new Element("driver");
+        driver.setText("MVTR00021");
+        Element id = new Element("id");
+        id.setText("TMV21");
+        transaction.setRootElement(raiz);
+        raiz.addContent(driver);
+        raiz.addContent(id);
+
+        //prefijo tiquete
+        Element package0 = new Element("package");
+        Element field0 = new Element("field");
+        field0.setText("T1");
+        package0.addContent(field0);
+        raiz.addContent(package0);
+
+        // prefijo reserva, numero_reserva
+        Element package1 = new Element("package");
+        Element field11 = new Element("field");
+        Element field12 = new Element("field");
+        field11.setText("S1");
+        package1.addContent(field11);
+        package1.addContent(field12);
+        raiz.addContent(package1);
+
+        // prefijo valor bono, n bono
+        Element package2 = new Element("package");
+        Element field21 = new Element("field");
+        Element field22 = new Element("field");
+        field21.setText("0.0");
+        package2.addContent(field21);
+        package2.addContent(field22);
+        raiz.addContent(package2);
+
+        // datos personales
+        Element package3 = new Element("package");
+        Element field31 = new Element("field");
+        Element field32 = new Element("field");
+        Element field33 = new Element("field");
+        Element field34 = new Element("field");
+        Element field35 = new Element("field");
+        Element field36 = new Element("field");
+        Element field37 = new Element("field");
+
+        // tipo identificacion
+        field31.setText("13");
+        // id_char (nro id cliente)
+        field32.setText(et_numero_id_cliente.getText().toString());
+        // nombre1
+        field33.setText(editTextName.getText().toString());
+        // nombre2
+        field34.setText("");
+        // apellido1
+        field35.setText(editTextLastName.getText().toString());
+        // apellido2
+        field36.setText("");
+        // razon social
+        field37.setText("");
+
+        package3.addContent(field31);
+        package3.addContent(field32);
+        package3.addContent(field33);
+        package3.addContent(field34);
+        package3.addContent(field35);
+        package3.addContent(field36);
+        package3.addContent(field37);
+
+        raiz.addContent(package3);
+
+        // direccion
+        Element package4 = new Element("package");
+        Element field41 = new Element("field");
+        Element field42 = new Element("field");
+        field41.setText(editTextAddress.getText().toString());
+        field41.setText(et_numero_id_cliente.getText().toString());
+        package4.addContent(field41);
+        package4.addContent(field42);
+        raiz.addContent(package4);
+        // telefono
+        Element package5 = new Element("package");
+        Element field51 = new Element("field");
+        Element field52 = new Element("field");
+        field51.setText(editTextPhone.getText().toString());
+        field51.setText(et_numero_id_cliente.getText().toString());
+        package5.addContent(field51);
+        package5.addContent(field52);
+        raiz.addContent(package5);
+        // email
+        Element package6 = new Element("package");
+        Element field61 = new Element("field");
+        Element field62 = new Element("field");
+        field61.setText(editTextEmail.getText().toString());
+        field61.setText(et_numero_id_cliente.getText().toString());
+        package6.addContent(field61);
+        package6.addContent(field62);
+        raiz.addContent(package6);
+        // llave idpasajero
+        Element package7 = new Element("package");
+        Element field71 = new Element("field");
+        Attribute field71_attrubute71 = new Attribute("attribute","key");
+        Attribute field71_attrubute72 = new Attribute("name","idPasajero");
+        field71.setAttribute(field71_attrubute71);
+        field71.setAttribute(field71_attrubute72);
+        field71.setText(et_numero_id_cliente.getText().toString());
+        package7.addContent(field71);
+        raiz.addContent(package7);
+
+        // puestos seleccionados
+        Element package8 = new Element("package");
+        for(InfoPuestoVehiculo puesto : puestos_seleccionados.values()){
+            // obtenemos los puestos
+            Element subpackage = new Element("subpackage");
+
+            Element id_ruta = new Element("field");
+            id_ruta.setText(String.valueOf(puesto.getId_ruta()));
+            Element id_punto_origen = new Element("field");
+            id_punto_origen.setText(String.valueOf(puesto.getId_punto_origen()));
+            Element id_punto_destino = new Element("field");
+            id_punto_destino.setText(String.valueOf(puesto.getId_punto_destino()));
+            Element id_horario = new Element("field");
+            id_horario.setText(String.valueOf(puesto.getId_horario()));
+            Element id_linea_servicio = new Element("field");
+            id_linea_servicio.setText(String.valueOf(puesto.getId_linea()));
+            Element id_activo = new Element("field");
+            id_activo.setText(String.valueOf(puesto.getId_activo()));
+            Element npuesto = new Element("field");
+            npuesto.setText(String.valueOf(puesto.getPuesto()));
+            Element tarifa = new Element("field");
+            tarifa.setText(String.valueOf(puesto.getValor()));
+
+            subpackage.addContent(id_ruta);
+            subpackage.addContent(id_punto_origen);
+            subpackage.addContent(id_punto_destino);
+            subpackage.addContent(id_horario);
+            subpackage.addContent(id_linea_servicio);
+            subpackage.addContent(id_activo);
+            subpackage.addContent(npuesto);
+            subpackage.addContent(tarifa);
+
+            package8.addContent(subpackage);
+
+        }
+        raiz.addContent(package0);
+
+        // paquete en blanco
+        Element pblanco1 = new Element("package");
+        Element fblanco1 = new Element("field");
+        pblanco1.addContent(fblanco1);
+        raiz.addContent(pblanco1);
+
+        // valores forma de pago
+        Element package9 = new Element("package");
+        Element efectivo = new Element("field");
+        Element credito = new Element("field");
+        Element tcreditcard = new Element("field");
+        Element cambio = new Element("field");
+        Element anticipo = new Element("field");
+        Element total = new Element("field");
+
+        efectivo.setText(editTextCash.getText().toString());
+        credito.setText("0.0");
+        tcreditcard.setText(editTextCash.getText().toString());
+        cambio.setText("0.0");
+        anticipo.setText("0.0");
+        total.setText(editTextCash.getText().toString());
+        package9.addContent(efectivo);
+        package9.addContent(credito);
+        package9.addContent(tcreditcard);
+        package9.addContent(cambio);
+        package9.addContent(anticipo);
+        package9.addContent(total);
+        raiz.addContent(package9);
+
+        // tipo de tarjeta y valor en tarjeta
+        Element package10 = new Element("package");
+        Element idTipoTarjeta = new Element("field");
+        Element valor_tarjeta = new Element("field");
+        idTipoTarjeta.setText("NULL");
+        valor_tarjeta.setText("0.0");
+        package10.addContent(idTipoTarjeta);
+        package10.addContent(valor_tarjeta);
+        raiz.addContent(package10);
+
+        // llave centrocosto
+        Element package11 = new Element("package");
+        Element field111 = new Element("field");
+        Attribute field111_attrubute111 = new Attribute("attribute","key");
+        Attribute field111_attrubute112 = new Attribute("name","centrocosto");
+        field111.setAttribute(field111_attrubute111);
+        field111.setAttribute(field111_attrubute112);
+        field111.setText("2"); // pendiente traer esto desde la app
+        package11.addContent(field111);
+        raiz.addContent(package11);
+
+        SocketChannel socket = SocketConnector.getSock();
+        Log.d("EMAKU","EMAKU: Socket: "+socket);
+        SocketWriter.writing(socket, transaction);
+
+    }
 
     @Override
     public boolean containSqlCode(String sqlCode) {

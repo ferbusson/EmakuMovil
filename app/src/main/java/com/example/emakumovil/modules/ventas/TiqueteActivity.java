@@ -8,20 +8,19 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.icu.text.IDNA;
 import android.os.Bundle;
-import android.text.Layout;
-import android.view.Gravity;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.example.emakumovil.Global;
@@ -30,15 +29,13 @@ import com.example.emakumovil.components.AnswerEvent;
 import com.example.emakumovil.components.AnswerListener;
 import com.example.emakumovil.components.DialogClickEvent;
 import com.example.emakumovil.components.DialogClickListener;
-import com.example.emakumovil.components.SearchDataDialog;
 import com.example.emakumovil.components.SearchQuery;
 import com.example.emakumovil.components.SelectedDataDialog;
-import com.google.firebase.database.collection.LLRBNode;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -96,9 +93,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
     private int seatConfig = 1;
     private int idActivo = -1;
     private Map<Integer,Map> pisos_vehiculos = new HashMap<Integer,Map>();
-    private Map<Integer,InfoPuestoVehiculo> datos_puestos = new HashMap<Integer,InfoPuestoVehiculo>();
-
-    ArrayList<String> puestos_seleccionados = new ArrayList<>();
+    private Map<Integer,InfoPuestoVehiculo> puestos_seleccionados_tiquete = new HashMap<Integer,InfoPuestoVehiculo>();
     private double valor_unitario = 0;
     private int cantidad_clicks = 0;
     private double total_venta = 0;
@@ -162,12 +157,6 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         System.out.println("tiene que ser aqui0");
         if (e.getIdobject() == R.id.ib_buscar_destino) {
             et_destino.setText((e.getValue()));
-            /*et_destino.setText((e.getId()));
-            et_descripcion_punto.setText(e.getValue());
-            et_descripcion_punto.setVisibility(View.VISIBLE);
-            et_destino.setSelection(et_destino.getText().length());
-            et_numero_bus.requestFocus();*/
-
         } else
             // llega info luego de hacer clic en la lista de buses
             if (e.getIdobject() == R.id.ib_buscar_bus) {
@@ -188,10 +177,16 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         String destino = et_destino.getText().toString();
         String detalles_bus = et_descripcion_bus.getText().toString();
         String valor_total = et_total_venta.getText().toString();
+
         bundle.putString("origen",origen);
         bundle.putString("destino",destino);
         bundle.putString("detalles_bus",detalles_bus);
         bundle.putString("valor_total",valor_total);
+        // el hashmap de los puestos seleccionados no se puede pasar como hashmap en el bundle
+        // por esta razon lo serializamos
+        //Serializable serializableData = new HashMap<>(puestos_seleccionados_tiquete);
+        ParcelableMap parcelableMap = new ParcelableMap(puestos_seleccionados_tiquete);
+        intent.putExtra("puestos_seleccionados",parcelableMap);
         intent.putExtras(bundle);
         startActivity(intent);
     }
@@ -248,19 +243,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                             Drawable puesto_facturado_v = ContextCompat.getDrawable(appContext, seat_busy);
                             Drawable puesto_reservado_v = ContextCompat.getDrawable(appContext, seat_reserved);
                             Drawable pasillo_v = ContextCompat.getDrawable(appContext, hallway);
-                            /*
-                            int width = 80; // Set your desired width in pixels
-                            int height = 80; // Set your desired height in pixels
-
-                            seat_v.setBounds(0,0,width,height);
-                            conductor_v.setBounds(0,0,width,height);
-                            grada_v.setBounds(0,0,width,height);
-                            water_v.setBounds(0,0,width,height);
-                            tele_v.setBounds(0,0,width,height);
-                            panel.setBounds(0,0,width,height);
-                            puesto_facturado_v.setBounds(0,0,width,height);
-                            puesto_reservado_v.setBounds(0,0,width,height);
-                            pasillo_v.setBounds(0,0,width,height);*/
+                            
 
                     Map<Integer,PuestoVehiculo> filas_vehiculo = pisos_vehiculos.get(1);
                     float density = getResources().getDisplayMetrics().density;
@@ -348,20 +331,40 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
 
                                 @Override
                                 public void onClick(View v) {
-                                    // aqui va la programacion de los clics
-                                    Map<Integer,String> puesto_seleccionado = getVunitarioPuesto(seat.getText().toString());
-                                    System.out.println("Hice click en: " + seat.getText().toString());
-                                    if(puesto_seleccionado != null && puesto_seleccionado.get(2) != null && Integer.valueOf(puesto_seleccionado.get(2))==2) {
-                                        System.out.println("Entre al otro if");
-                                        seat.setBackground(puesto_facturado_v);
-                                        puestos_seleccionados.add(seat.getText().toString());
-                                        valor_unitario = Double.valueOf(puesto_seleccionado.get(3));
-                                        cantidad_clicks++;
-                                        total_venta = cantidad_clicks * valor_unitario;
-                                        et_valor_unitario.setText(Double.toString(valor_unitario));
-                                        et_cantidad_puestos.setText(Integer.toString(cantidad_clicks));
-                                        et_total_venta.setText(Double.toString(total_venta));
-                                        System.out.println("Hice click en segundo: " + seat.getText());
+                                    // programacion de los clics hechos en el bus
+                                    // obtenemos info completa del puesto sobre el que se hizo click
+                                    InfoPuestoVehiculo puesto_seleccionado = getInfoPuesto(seat.getText().toString());
+                                    System.out.println("Hice click en: " + puesto_seleccionado.getPuesto());
+
+                                    // si la info del puesto seleccionado no es null y el puesto es
+                                    // un asiento disponible
+                                    if(puesto_seleccionado != null
+                                            && puesto_seleccionado.getIdTipoPuesto() ==2) {
+                                        // esta primera condicion evalua si se esta haciendo clic por segunda vez
+                                        // en un mismo asiento
+                                        if (puestos_seleccionados_tiquete.containsKey(puesto_seleccionado.getPuesto())) {
+                                            seat.setBackground(seat_v);
+                                            puestos_seleccionados_tiquete.remove(puesto_seleccionado.getPuesto());
+                                            System.out.println("Tamaño hashmap: " + puestos_seleccionados_tiquete.size());
+                                            total_venta = total_venta - puesto_seleccionado.getValor();
+                                            if (puestos_seleccionados_tiquete.isEmpty())
+                                                valor_unitario = 0.0;
+                                            et_valor_unitario.setText(Double.toString(valor_unitario));
+                                            et_cantidad_puestos.setText(Integer.toString(puestos_seleccionados_tiquete.size()));
+                                            et_total_venta.setText(Double.toString(total_venta));
+                                            System.out.println("Click por segunda vez en un puesto");
+                                        } else {
+                                            seat.setBackground(puesto_facturado_v);
+                                            puestos_seleccionados_tiquete.put(puesto_seleccionado.getPuesto(),puesto_seleccionado);
+                                            System.out.println("Tamaño hashmap: " + puestos_seleccionados_tiquete.size());
+                                            Integer cantidad_puestos_tiquete = puestos_seleccionados_tiquete.size();
+                                            valor_unitario = Double.valueOf(puesto_seleccionado.getValor());
+                                            total_venta = cantidad_puestos_tiquete * valor_unitario;
+                                            et_valor_unitario.setText(Double.toString(valor_unitario));
+                                            et_cantidad_puestos.setText(Integer.toString(cantidad_puestos_tiquete));
+                                            et_total_venta.setText(Double.toString(total_venta));
+                                            System.out.println("Hice click en un puesto libre: " + seat.getText());
+                                    }
                                     }
                                 }
                             });
@@ -397,21 +400,28 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         }
     }
 
-    private Map<Integer,String> getVunitarioPuesto(String puesto_seleccionado){
+    private InfoPuestoVehiculo getInfoPuesto(String puesto_seleccionado){
         try {
+            // pisos_vehiculo contiene todas las filas de puestos del piso
+            // filas_vehiculo recibe todas las filas del piso 1
             Map<Integer, PuestoVehiculo> filas_vehiculo = pisos_vehiculos.get(1);
+            // info_puesto_seleccionado contendra la informacion del puesto recibido como param
             Map<Integer, String> info_puesto_seleccionado = new HashMap<>();
+            // recorremos las diferentes filas del vehiculo
             for (int r = 0; r < rowsp1; r++) {
+                // PuestoVehiculo es un objeto que contiene la fila completa, el nombre no
+                // corresponde a su contenido, se instancia la variable fila_vehiculo, la primera
+                // fila es siempre la 1, no inician desde 0
                 PuestoVehiculo fila_vehiculo = filas_vehiculo.get(r + 1);
+                // recorremos la fila en turno
                 for (int c = 0; c < colsp1; c++) {
+                    // info_seat contiene toda la info del puesto en turno, tambien inicia en 1
                     InfoPuestoVehiculo info_seat = fila_vehiculo.getInfoPuestoVehiculo(c + 1);
-                    if (!puesto_seleccionado.equals("") && info_seat.puesto == Integer.valueOf(puesto_seleccionado)) {
-                        System.out.println("Entre al if");
-                        info_puesto_seleccionado.put(0, String.valueOf(info_seat.id_activo));
-                        info_puesto_seleccionado.put(1, String.valueOf(info_seat.id_horario));
-                        info_puesto_seleccionado.put(2, String.valueOf(info_seat.id_tipo_puesto));
-                        info_puesto_seleccionado.put(3, String.valueOf(info_seat.valor));
-                        return info_puesto_seleccionado;
+                    // puesto_seleccionado que se recibe como parametro debe ser: diferente de vacio
+                    // y casteando su valor como entero se compara con el numero de puesto en turno
+                    if (!puesto_seleccionado.equals("") && info_seat.getPuesto() == Integer.valueOf(puesto_seleccionado)) {
+                    // retornamos el objeto del asiento sobre el que se hizo click
+                    return info_seat;
                     }
                 }
             }
@@ -543,190 +553,12 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         if (dospisos) {
             floors = 2;
             rowsp2 = filas_vehiculosp2.size();
-            colsp2 = filas_vehiculosp2.get(1).cols();
+            colsp2 = filas_vehiculosp2.get(1).info_puesto_vehiculos.size();
         }
 //		this.updateUI();
     }
 
-    class PuestoVehiculo {
-        private int piso;
-        private int fila;
-        Map<Integer,InfoPuestoVehiculo> info_puesto_vehiculos = new HashMap<Integer,InfoPuestoVehiculo>();
 
-
-        private PuestoVehiculo(int piso,int fila) {
-            this.piso=piso;
-            this.fila=fila;
-        }
-
-
-        private void setInfoPuesto(int piso,int fila,int ubicacion,int id_tipo_ubicacion,int puesto) {
-            info_puesto_vehiculos.put(ubicacion, new InfoPuestoVehiculo(piso,fila,ubicacion,id_tipo_ubicacion,puesto));
-        }
-
-
-        private void setInfoPuesto(int piso,int fila,int ubicacion,int id_tipo_ubicacion,int puesto,int id_activo,int id_horario,int id_linea,int id_ruta,int id_punto_origen,int id_punto_destino,double valor,double min,double web,double credito,String[] info_doc) {
-            InfoPuestoVehiculo InfoPuesto = new InfoPuestoVehiculo(piso,fila,ubicacion,id_tipo_ubicacion,puesto,id_activo,id_horario,id_linea,id_ruta,id_punto_origen,id_punto_destino,valor,min,web,credito,info_doc);
-            info_puesto_vehiculos.put(ubicacion, InfoPuesto);
-            datos_puestos.put(puesto, InfoPuesto);
-        }
-
-        private int cols() {
-            return info_puesto_vehiculos.size();
-        }
-
-        public InfoPuestoVehiculo getInfoPuestoVehiculo(int pos) {
-            InfoPuestoVehiculo seat = info_puesto_vehiculos.get(pos);
-            return seat;
-        }
-
-        public void setInfoPuestoVehiculo(int col,InfoPuestoVehiculo seat) {
-            info_puesto_vehiculos.remove(col);
-            info_puesto_vehiculos.put(col, seat);
-        }
-    }
-
-
-    class InfoPuestoVehiculo {
-        private int fila;
-        private int ubicacion;
-        private int id_tipo_puesto;
-        private int puesto;
-        private int piso;
-        private int id_activo;
-        private int id_horario;
-        private double valor;
-        private double min;
-        private double web;
-        private double credito;
-        private int id_linea;
-        private int id_ruta;
-        private int id_punto_origen;
-        private int id_punto_destino;
-        //private EmakuSeat emakuSeat;
-        private String[] info_doc;
-
-        private InfoPuestoVehiculo(int piso,int fila,int ubicacion,int id_tipo_puesto, int puesto) {
-            this.piso=piso;
-            this.fila=fila;
-            this.ubicacion=ubicacion;
-            this.id_tipo_puesto=id_tipo_puesto;
-            this.puesto=puesto;
-        }
-
-        private InfoPuestoVehiculo(int piso,int fila,int ubicacion,int id_tipo_puesto, int puesto,int id_activo,int id_horario,int id_linea,int id_ruta,int id_punto_origen,int id_punto_destino,double valor,double min,double web,double credito,String[] info_doc) {
-            this.piso=piso;
-            this.fila=fila;
-            this.ubicacion=ubicacion;
-            this.id_tipo_puesto=id_tipo_puesto;
-            this.puesto=puesto;
-            this.id_activo=id_activo;
-            this.id_horario=id_horario;
-            this.id_linea=id_linea;
-            this.id_ruta=id_ruta;
-            this.id_punto_origen=id_punto_origen;
-            this.id_punto_destino=id_punto_destino;
-            this.valor=valor;
-            this.min=min;
-            this.web=web;
-            this.credito=credito;
-            this.info_doc=info_doc;
-        }
-
-
-        public String[] getInfo_doc() {
-            return info_doc;
-        }
-/*
-        public EmakuSeat getEmakuSeat() {
-            return emakuSeat;
-        }
-
-        public void setEmakuSeat(EmakuSeat emakuSeat) {
-            this.emakuSeat = emakuSeat;
-        }
-*/
-        public int getFila() {
-            return fila;
-        }
-
-        public void setFila(int fila) {
-            this.fila=fila;
-        }
-
-        public int getUbicacion() {
-            return ubicacion;
-        }
-
-
-        public void setInfo_doc(String[] info_doc) {
-            this.info_doc = info_doc;
-        }
-
-        public void setIdTipoPuesto(int id_tipo_puesto) {
-            this.id_tipo_puesto=id_tipo_puesto;
-        }
-
-
-        public int getIdTipoPuesto() {
-            return id_tipo_puesto;
-        }
-
-        public void setPuesto(int puesto) {
-            this.puesto=puesto;
-        }
-
-        public int getPuesto() {
-            return puesto;
-        }
-
-        public int getPiso(){
-            return piso;
-        }
-
-        public double getValor() {
-            return valor;
-        }
-
-        public double getMin() {
-            return min;
-        }
-
-        public double getWeb() {
-            return web;
-        }
-
-        public double getCredito() {
-            return credito;
-        }
-
-        public int getId_linea() {
-            return id_linea;
-        }
-
-        public int getId_ruta() {
-            return id_ruta;
-        }
-
-        public int getId_activo() {
-            return id_activo;
-        }
-
-        public int getId_horario() {
-            return id_horario;
-        }
-
-        public int getId_punto_origen() {
-            return id_punto_origen;
-        }
-
-        public int getId_punto_destino() {
-            return id_punto_destino;
-        }
-
-
-
-    }
 
     public void onSaveInstanceState(Bundle savedInstanceState) {
         System.out.println("tiene que ser aqui3");
