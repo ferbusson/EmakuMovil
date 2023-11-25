@@ -11,7 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.emakumovil.Global;
 import com.example.emakumovil.R;
 import com.example.emakumovil.communications.SocketConnector;
 import com.example.emakumovil.communications.SocketWriter;
@@ -20,19 +22,28 @@ import com.example.emakumovil.components.AnswerListener;
 import com.example.emakumovil.components.DialogClickEvent;
 import com.example.emakumovil.components.DialogClickListener;
 import com.example.emakumovil.components.SearchQuery;
+import com.example.emakumovil.control.ClientHeaderValidator;
+import com.example.emakumovil.control.SuccessEvent;
+import com.example.emakumovil.control.SuccessListener;
+import com.example.emakumovil.misc.settings.ConfigFileHandler;
+import com.example.emakumovil.modules.inventario.ListFitInventoryActivity;
 
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 import java.nio.channels.SocketChannel;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 
 public class FormaPagoTiquete extends Activity implements View.OnClickListener, DialogClickListener,
-        AnswerListener, View.OnFocusChangeListener {
+        AnswerListener, View.OnFocusChangeListener, SuccessListener {
 
     private TextView tv_detalle_origen;
     private TextView tv_detalle_destino;
@@ -171,6 +182,7 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
 
             setupEditTextNumeroIDClienteListener();
         }
+        ClientHeaderValidator.addSuccessListener(this);
     }
 
 
@@ -189,6 +201,7 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
     public void onClick(View v) {
         btnSubmit.setEnabled(false);
         sendTransaction();
+        sendPrintJob("574118");
     }
 
     @Override
@@ -223,8 +236,8 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
 
                 this.runOnUiThread(new Runnable() {
                     public void run() {
-                        editTextName.setText(nombre1 + " " + nombre2);
-                        editTextLastName.setText(apellido1 + " " + apellido2);
+                        editTextName.setText(nombre1);
+                        editTextLastName.setText(apellido1);
                         editTextAddress.setText(direccion + " " + departamento + " " + ciudad);
                         editTextPhone.setText(numero);
                         editTextEmail.setText(email);
@@ -311,7 +324,7 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
         Element field41 = new Element("field");
         Element field42 = new Element("field");
         field41.setText(editTextAddress.getText().toString());
-        field41.setText(et_numero_id_cliente.getText().toString());
+        field42.setText(et_numero_id_cliente.getText().toString());
         package4.addContent(field41);
         package4.addContent(field42);
         raiz.addContent(package4);
@@ -320,7 +333,7 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
         Element field51 = new Element("field");
         Element field52 = new Element("field");
         field51.setText(editTextPhone.getText().toString());
-        field51.setText(et_numero_id_cliente.getText().toString());
+        field52.setText(et_numero_id_cliente.getText().toString());
         package5.addContent(field51);
         package5.addContent(field52);
         raiz.addContent(package5);
@@ -329,7 +342,7 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
         Element field61 = new Element("field");
         Element field62 = new Element("field");
         field61.setText(editTextEmail.getText().toString());
-        field61.setText(et_numero_id_cliente.getText().toString());
+        field62.setText(et_numero_id_cliente.getText().toString());
         package6.addContent(field61);
         package6.addContent(field62);
         raiz.addContent(package6);
@@ -398,7 +411,7 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
 
         efectivo.setText(editTextCash.getText().toString());
         credito.setText("0.0");
-        tcreditcard.setText(editTextCash.getText().toString());
+        tcreditcard.setText(editTextCreditCard.getText().toString());
         cambio.setText("0.0");
         anticipo.setText("0.0");
         total.setText(editTextCash.getText().toString());
@@ -432,7 +445,7 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
         field121.setAttribute(field121_attrubute121);
         field121.setAttribute(field121_attrubute122);
         field121.setText("2"); // pendiente traer esto desde la app
-        package11.addContent(field121);
+        package12.addContent(field121);
         raiz.addContent(package12);
 
         // valor pago a credito
@@ -443,7 +456,11 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
         raiz.addContent(package13);
 
         // blanco 2
-        raiz.addContent(pblanco1);
+        Element pblanco2 = new Element("package");
+        Element fblanco2 = new Element("field");
+        pblanco2.addContent(fblanco2);
+        raiz.addContent(pblanco2);
+
 
         // efectivo neto
         Element package14 = new Element("package");
@@ -452,9 +469,11 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
         package14.addContent(valor_efectivoneto);
         raiz.addContent(package14);
 
-        // valor en tarjeta ******** reuso el mismo field que se uso antes tcreditcard *******
+        // valor en tarjeta
         Element package15 = new Element("package");
-        package15.addContent(tcreditcard);
+        Element valor_en_tarjeta = new Element("field");
+        valor_en_tarjeta.setText(editTextCreditCard.getText().toString());
+        package15.addContent(valor_en_tarjeta);
         raiz.addContent(package15);
 
         // llave id_activo
@@ -507,13 +526,205 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
         package21.addContent(valor_cortesia);
         raiz.addContent(package21);
 
+        // Create an XMLOutputter with desired format
+        XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
 
+        try {
+            // Output the XML content of the Document to a String
+            String xmlString = xmlOutputter.outputString(transaction);
+
+            // Print the XML content
+            System.out.println(xmlString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        /*
         SocketChannel socket = SocketConnector.getSock();
         Log.d("EMAKU","EMAKU: Socket: "+socket);
         SocketWriter.writing(socket, transaction);
 
+         */
+
     }
 
+    private void sendPrintJob(String ndocumento) {
+        Document transaction = new Document();
+        Element raiz = new Element("SERVERPRINTER");
+
+        Element printerTemplate = new Element("printerTemplate");
+        printerTemplate.setText("/graphics/TSFacturacionTiquete.xml");
+
+        Element jarFile = new Element("jarFile");
+        jarFile.setText(ConfigFileHandler.getJarFile());
+
+        Element jarDirectory = new Element("jarDirectory");
+        jarDirectory.setText(ConfigFileHandler.getJarDirectory());
+        // numero
+        Element numero1 = new Element("package");
+        numero1.addContent(new Element("field").setText(ndocumento));
+        // prefijo
+        Element prefijo = new Element("package");
+        prefijo.addContent(new Element("field").setText("T1"));
+        // sucursal
+        Element sucursal  = new Element("package");
+        sucursal.addContent(new Element("field").setText(sucursal.getTextTrim()));
+        // origen
+        Element origen  = new Element("package");
+        origen.addContent(new Element("field").setText(tv_detalle_origen.getText().toString()));
+        // destino
+        Element destino  = new Element("package");
+        destino.addContent(new Element("field").setText(tv_detalle_destino.getText().toString()));
+        // fecha
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH); // Note: Month starts from 0 (January is 0)
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String currentDate = year + "-" + (month + 1) + "-" + day; // Creating a date string
+
+        Element fecha  = new Element("package");
+        fecha.addContent(new Element("field").setText(currentDate));
+        // hora
+        // Get the current time
+        Calendar calendar2 = Calendar.getInstance();
+        int hour = calendar2.get(Calendar.HOUR_OF_DAY); // 24-hour format
+        int minute = calendar2.get(Calendar.MINUTE);
+        int second = calendar2.get(Calendar.SECOND);
+        // Display or use the current time
+        String currentTime = hour + ":" + minute + ":" + second;
+
+        Element hora  = new Element("package");
+        hora.addContent(new Element("field").setText(currentTime));
+
+        // fecha ******* pendiente tener la fecha de programacion del bus
+        Element fecha_viaje  = new Element("package");
+        fecha_viaje.addContent(new Element("field").setText(currentDate));
+
+        // pasajero
+        Element pasajero  = new Element("package");
+        pasajero.addContent(new Element("field").setText(
+                editTextName.getText().toString()
+                + " " + editTextLastName.getText().toString()));
+        // cc
+        Element cc  = new Element("package");
+        cc.addContent(new Element("field").setText(et_numero_id_cliente.getText().toString()));
+        // linea ******* pendiente
+        Element linea  = new Element("package");
+        linea.addContent(new Element("field").setText("Microbuses"));
+        // hora del viaje ******* pendiente
+        Element hora_viaje  = new Element("package");
+        hora_viaje.addContent(new Element("field").setText(currentTime));
+        // placa *******pendiente
+        Element placa  = new Element("package");
+        placa.addContent(new Element("field").setText("DOD-228"));
+        // norden ******* pendiente
+        Element norden  = new Element("package");
+        norden.addContent(new Element("field").setText(tv_detalles_bus.getText().toString()));
+        // valor
+        Element valor  = new Element("package");
+        valor.addContent(new Element("field").setText(tv_total_compra.getText().toString()));
+
+        // TABLA
+        Element tabla_puestos = new Element("package");
+        for(InfoPuestoVehiculo puesto : puestos_seleccionados.values()){
+            // obtenemos los puestos
+            Element subpackage = new Element("subpackage");
+
+            Element puesto_imp = new Element("field");
+            puesto_imp.setText(String.valueOf(puesto.getPuesto()));
+            Element valor_puesto_imp = new Element("field");
+            valor_puesto_imp.setText(String.valueOf(puesto.getValor()));
+
+            subpackage.addContent(puesto_imp);
+            subpackage.addContent(valor_puesto_imp);
+
+            tabla_puestos.addContent(subpackage);
+
+        }
+
+        // linea
+        Element linea1  = new Element("package");
+
+        // linea
+        Element linea2  = new Element("package");
+
+        // total numero de puestos
+        Element total  = new Element("package");
+        total.addContent(new Element("field").setText(String.valueOf(puestos_seleccionados.size())));
+        // forma de pago ******* pendiente
+        Element forma  = new Element("package");
+        forma.addContent(new Element("field").setText("Efectivo"));
+
+        // efectivo
+        Element efectivo  = new Element("package");
+        efectivo.addContent(new Element("field").setText(editTextCash.getText().toString()));
+        // tarjeras
+        Element tarjeras  = new Element("package");
+        tarjeras.addContent(new Element("field").setText(editTextCreditCard.getText().toString()));
+        // cambio
+        Element cambio  = new Element("package");
+        cambio.addContent(new Element("field").setText("0.0"));
+        // linea3
+        Element linea3  = new Element("package");
+        // elaboro
+        Element elaboro  = new Element("package");
+        elaboro.addContent(new Element("field").setText(Global.getSystem_user() + " - " +
+                "Movil App"));
+        // field
+        Element field  = new Element("package");
+
+        transaction.setRootElement(raiz);
+        raiz.addContent(printerTemplate);
+        raiz.addContent(jarFile);
+        raiz.addContent(jarDirectory);
+        raiz.addContent(numero1);
+        raiz.addContent(prefijo);
+        raiz.addContent(sucursal);
+        raiz.addContent(origen);
+        raiz.addContent(destino);
+        raiz.addContent(fecha);
+        raiz.addContent(hora);
+        raiz.addContent(fecha_viaje);
+        raiz.addContent(pasajero);
+        raiz.addContent(cc);
+        raiz.addContent(linea);
+        raiz.addContent(hora_viaje);
+        raiz.addContent(placa);
+        raiz.addContent(norden);
+        raiz.addContent(valor);
+        raiz.addContent(tabla_puestos);
+        raiz.addContent(linea1);
+        raiz.addContent(linea2);
+        raiz.addContent(total);
+        raiz.addContent(forma);
+        raiz.addContent(efectivo);
+        raiz.addContent(tarjeras);
+        raiz.addContent(cambio);
+        raiz.addContent(linea3);
+        raiz.addContent(elaboro);
+        raiz.addContent(field);
+
+        // Create an XMLOutputter with desired format
+        XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+
+        try {
+            // Output the XML content of the Document to a String
+            String xmlString = xmlOutputter.outputString(transaction);
+
+            // Print the XML content
+            System.out.println(xmlString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        /*
+        SocketChannel socket = SocketConnector.getSock();
+        Log.d("EMAKU","EMAKU: Socket: "+socket);
+        SocketWriter.writing(socket, transaction);
+        */
+
+
+    }
     @Override
     public boolean containSqlCode(String sqlCode) {
         return false;
@@ -522,5 +733,11 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
     @Override
     public void dialogClickEvent(DialogClickEvent e) {
 
+    }
+
+    @Override
+    public void cathSuccesEvent(SuccessEvent e) {
+        Toast.makeText(this,"Felicidades!!! ya tienes tu tiquete ;) imprimiendo...",Toast.LENGTH_LONG).show();
+        sendPrintJob(e.getNdocument());
     }
 }

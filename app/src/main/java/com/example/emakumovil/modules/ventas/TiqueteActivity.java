@@ -45,6 +45,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         AnswerListener, View.OnFocusChangeListener {
     // cadena que almacena id_punto_origen
     private String id_punto_origen;
+    private String id_punto_destino;
     // etiqueta que recibe descripcion punto origen
     private TextView tv_origen_value;
     // lupa buscar destino
@@ -109,7 +110,6 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         // boton lupa buscar destino
         ib_buscar_destino = (ImageButton) findViewById(R.id.ib_buscar_destino);
         ib_buscar_bus = (ImageButton) findViewById(R.id.ib_buscar_bus);
-        //et_destino = (EditText) findViewById(R.id.et_destino);
         et_destino = (EditText) findViewById(R.id.et_destino);
         et_numero_bus = (EditText) findViewById(R.id.et_numero_bus);
         //et_descripcion_punto = (EditText) findViewById(R.id.et_descripcion_punto);
@@ -141,7 +141,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
             selected.show(getFragmentManager(), "Buscar punto destino");
         } else if (v.getId() == R.id.ib_buscar_bus) {
             // se instancia el dialogo para buscar por palabra clave, el titulo se pone al componente
-            String[] args_buscar_bus = {id_punto_origen,et_destino.getText().toString()};
+            String[] args_buscar_bus = {id_punto_origen,id_punto_destino};
             selected = new SelectedDataDialog(R.id.ib_buscar_bus,"Vehículos disponibles",
                     "MVSEL0083", args_buscar_bus);
             // se adiciona listener
@@ -156,14 +156,17 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         // aqui llegan los datos al hacer clic en los selectedDataDialog y SearchDataDialog
         System.out.println("tiene que ser aqui0");
         if (e.getIdobject() == R.id.ib_buscar_destino) {
+            id_punto_destino = e.getId();
             et_destino.setText((e.getValue()));
+            System.out.println("id_punto_destino: " + id_punto_destino);
+            System.out.println("descripcion destino: " + et_destino.getText().toString());
         } else
             // llega info luego de hacer clic en la lista de buses
             if (e.getIdobject() == R.id.ib_buscar_bus) {
             et_numero_bus.setText((e.getId()));
             et_descripcion_bus.setText(e.getValue());
             et_descripcion_bus.setVisibility(View.VISIBLE);
-            String[] args = {id_punto_origen,et_destino.getText().toString(),
+            String[] args = {id_punto_origen,id_punto_destino,
                     et_numero_bus.getText().toString()};
             // se ejecuta query para pintar el plano del bus
             new SearchQuery(this,"MVSEL0084",args).start();
