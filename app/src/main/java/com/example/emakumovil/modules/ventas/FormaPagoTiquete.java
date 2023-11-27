@@ -539,12 +539,10 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
             e.printStackTrace();
         }
 
-        /*
+
         SocketChannel socket = SocketConnector.getSock();
         Log.d("EMAKU","EMAKU: Socket: "+socket);
         SocketWriter.writing(socket, transaction);
-
-         */
 
     }
 
@@ -717,11 +715,11 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
             e.printStackTrace();
         }
 
-        /*
+
         SocketChannel socket = SocketConnector.getSock();
         Log.d("EMAKU","EMAKU: Socket: "+socket);
         SocketWriter.writing(socket, transaction);
-        */
+
 
 
     }
@@ -737,7 +735,13 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
 
     @Override
     public void cathSuccesEvent(SuccessEvent e) {
-        Toast.makeText(this,"Felicidades!!! ya tienes tu tiquete ;) imprimiendo...",Toast.LENGTH_LONG).show();
+
+        FormaPagoTiquete.this.runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(FormaPagoTiquete.this,
+                        "Felicidades ya tienes tu tiquete imprimiendo",
+                        Toast.LENGTH_LONG).show();
+            }});
         sendPrintJob(e.getNdocument());
     }
 }
