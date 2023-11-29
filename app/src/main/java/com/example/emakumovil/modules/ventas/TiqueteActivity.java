@@ -5,7 +5,9 @@ import static com.example.emakumovil.R.drawable.*;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.icu.text.IDNA;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -63,6 +66,10 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
     private EditText et_descripcion_bus;
     // scrollview que recibe el plano del bus
     private TableLayout tl_plano_bus;
+    private LinearLayout ll_buscar_bus;
+    private LinearLayout ll_valor_unitario;
+    private LinearLayout ll_cantidad_puestos;
+    private LinearLayout ll_total_venta;
     private Button bt_continuar;
     private TextView tv_selecciona_asiento;
     // recibe nombre de usuario de la sesion
@@ -121,6 +128,10 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         et_cantidad_puestos = (EditText) findViewById(R.id.et_cantidad_puestos);
         et_total_venta = (EditText) findViewById(R.id.et_total_venta);
         bt_continuar = (Button) findViewById(R.id.bt_continuar);
+        ll_valor_unitario = (LinearLayout) findViewById(R.id.ll_valor_unitario);
+        ll_cantidad_puestos = (LinearLayout) findViewById(R.id.ll_cantidad_puestos);
+        ll_total_venta = (LinearLayout) findViewById(R.id.ll_total_venta);
+        ll_buscar_bus = (LinearLayout) findViewById(R.id.ll_buscar_bus);
 
         // se agrega listener al boton para ejecutar lo que se ponga en onClick
         ib_buscar_destino.setOnClickListener(this);
@@ -133,6 +144,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
     public void onClick(View v) {
         if (v.getId() == R.id.ib_buscar_destino) {
             // se instancia el dialogo para buscar por palabra clave, el titulo se pone al componente
+            // consulta punto destino a partir de punto origen
             selected = new SelectedDataDialog(R.id.ib_buscar_destino,"Seleccione Destino",
                     "MVSEL0081", new String[] {id_punto_origen});
             // se adiciona listener
@@ -158,6 +170,9 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         if (e.getIdobject() == R.id.ib_buscar_destino) {
             id_punto_destino = e.getId();
             et_destino.setText((e.getValue()));
+            ll_buscar_bus.setVisibility(View.VISIBLE);
+            et_numero_bus.requestFocus();
+
             System.out.println("id_punto_destino: " + id_punto_destino);
             System.out.println("descripcion destino: " + et_destino.getText().toString());
         } else
@@ -166,6 +181,8 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
             et_numero_bus.setText((e.getId()));
             et_descripcion_bus.setText(e.getValue());
             et_descripcion_bus.setVisibility(View.VISIBLE);
+            et_numero_bus.requestFocus();
+            et_numero_bus.setSelection(et_numero_bus.getText().length());
             String[] args = {id_punto_origen,id_punto_destino,
                     et_numero_bus.getText().toString()};
             // se ejecuta query para pintar el plano del bus
@@ -203,6 +220,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
     public void arriveAnswerEvent(AnswerEvent e) {
         Document doc = e.getDocument();
         final Element elm = doc.getRootElement();
+        // consulta descripcion de punto origen
         if (e.getSqlCode().equals("MVSEL0082")) {
             System.out.println("en arriveAnswerEvent");
             Iterator<Element> i = elm.getChildren("row").iterator();
@@ -217,7 +235,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                     }
                 });
             }
-        } else if (e.getSqlCode().equals("MVSEL0084")) {
+        } else if (e.getSqlCode().equals("MVSEL0084")) { // consulta distribucion del bus
             System.out.println("llego query distribucion de bus 84");
             // recepcion de datos de la query
             procesaQueryDistribucionVehiculo(elm.getChildren("row").iterator());
@@ -338,12 +356,11 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                                     // programacion de los clics hechos en el bus
                                     // obtenemos info completa del puesto sobre el que se hizo click
                                     InfoPuestoVehiculo puesto_seleccionado = getInfoPuesto(seat.getText().toString());
-                                    System.out.println("Hice click en: " + puesto_seleccionado.getPuesto());
 
                                     // si la info del puesto seleccionado no es null y el puesto es
                                     // un asiento disponible
                                     if(puesto_seleccionado != null
-                                            && puesto_seleccionado.getIdTipoPuesto() ==2) {
+                                            && puesto_seleccionado.getIdTipoPuesto() == 2) {
                                         // esta primera condicion evalua si se esta haciendo clic por segunda vez
                                         // en un mismo asiento
                                         if (puestos_seleccionados_tiquete.containsKey(puesto_seleccionado.getPuesto())) {
@@ -351,17 +368,23 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                                             puestos_seleccionados_tiquete.remove(puesto_seleccionado.getPuesto());
                                             System.out.println("Tamaño hashmap: " + puestos_seleccionados_tiquete.size());
                                             total_venta = total_venta - puesto_seleccionado.getValor();
-                                            if (puestos_seleccionados_tiquete.isEmpty())
+                                            if (puestos_seleccionados_tiquete.isEmpty()){
                                                 valor_unitario = 0.0;
+                                                bt_continuar.setEnabled(false);
+                                                bt_continuar.setBackgroundColor(Color.parseColor("#B2DFDB"));
+                                            }
                                             et_valor_unitario.setText(Double.toString(valor_unitario));
                                             et_cantidad_puestos.setText(Integer.toString(puestos_seleccionados_tiquete.size()));
                                             et_total_venta.setText(Double.toString(total_venta));
                                             System.out.println("Click por segunda vez en un puesto");
                                         } else {
+                                            System.out.println("aqui voy, tipo puesto: " + puesto_seleccionado.getIdTipoPuesto());
                                             seat.setBackground(puesto_facturado_v);
                                             puestos_seleccionados_tiquete.put(puesto_seleccionado.getPuesto(),puesto_seleccionado);
                                             System.out.println("Tamaño hashmap: " + puestos_seleccionados_tiquete.size());
                                             Integer cantidad_puestos_tiquete = puestos_seleccionados_tiquete.size();
+                                            bt_continuar.setEnabled(true);
+                                            bt_continuar.setBackgroundColor(Color.parseColor("#009688"));
                                             valor_unitario = Double.valueOf(puesto_seleccionado.getValor());
                                             total_venta = cantidad_puestos_tiquete * valor_unitario;
                                             et_valor_unitario.setText(Double.toString(valor_unitario));
@@ -389,6 +412,9 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                             tableRowBack.addView(panelTrasero);
                             tl_plano_bus.addView(tableRowBack);
                             tv_selecciona_asiento.setVisibility(View.VISIBLE);
+                            ll_valor_unitario.setVisibility(View.VISIBLE);
+                            ll_cantidad_puestos.setVisibility(View.VISIBLE);
+                            ll_total_venta.setVisibility(View.VISIBLE);
                         }
                     });
 

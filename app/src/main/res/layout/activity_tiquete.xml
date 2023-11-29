@@ -82,7 +82,7 @@
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Destino"
+                android:hint="a donde vamos ?"
                 android:includeFontPadding="true"
                 android:maxLength="20"
                 android:singleLine="true" >
@@ -135,6 +135,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        android:id="@+id/ll_buscar_bus"
+        android:visibility="gone"
         android:background="@color/white">
 
         <TextView
@@ -188,6 +190,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:enabled="false"
                 android:hint="Descripcion Bus"
                 android:inputType="text"
                 android:maxLength="30"
@@ -222,38 +225,50 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/ll_valor_unitario"
+                    android:visibility="gone"
                     android:orientation="vertical">
                 <TextView
                     android:id="@+id/tv_valor_unitario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:text="Valor Unitario"/>
 
                 <EditText
                     android:id="@+id/et_valor_unitario"
                     android:layout_width="match_parent"
+                    android:enabled="false"
+                    android:textStyle="bold"
                     android:layout_height="wrap_content"
                     android:text="0.0"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:id="@+id/ll_cantidad_puestos"
                     android:orientation="vertical">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textStyle="bold"
                         android:text="Cantidad Puestos"/>
 
                     <EditText
                         android:id="@+id/et_cantidad_puestos"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="0"/>
+                        android:enabled="false"
+                        android:textStyle="bold"
+                        android:text="0.0"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:id="@+id/ll_total_venta"
                     android:orientation="vertical">
 
                     <TextView
@@ -267,7 +282,9 @@
                         android:id="@+id/et_total_venta"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="0"
+                        android:textStyle="bold"
+                        android:text="0.0"
+                        android:enabled="false"
                         android:textColor="#F44336"
                         android:textSize="28sp" />
                 </LinearLayout>
@@ -276,8 +293,12 @@
                     android:id="@+id/bt_continuar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="#B2DFDB"
+                    android:enabled="false"
                     android:onClick="openFormaPago"
-                    android:text="Continuar"/>
+                    android:shadowColor="#CDDC39"
+                    android:text="Continuar"
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <!-- plano del bus -->
