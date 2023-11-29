@@ -4,6 +4,7 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
     android:orientation="vertical" >
 
     <!-- Titulo -->
@@ -79,10 +80,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:minHeight="48dp"
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="a donde vamos ?"
+                android:hint="buscar ..."
                 android:includeFontPadding="true"
                 android:maxLength="20"
                 android:singleLine="true" >
@@ -97,6 +99,8 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="2dp"
+                android:minHeight="48dp"
+                android:minWidth="48dp"
                 android:layout_weight="0.1"
                 android:background="@color/teal_700"
                 android:contentDescription="@string/bt_buscar_destino"
@@ -162,7 +166,6 @@
             android:singleLine="true">
 
         </EditText>
-
         <ImageButton
             android:id="@+id/ib_buscar_bus"
             android:layout_width="wrap_content"
@@ -171,6 +174,8 @@
             android:layout_marginTop="5dp"
             android:layout_marginRight="2dp"
             android:layout_weight="0.1"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
             android:background="@color/teal_700"
             android:contentDescription="@string/bt_buscar_bus"
             android:paddingLeft="6dp"
@@ -180,24 +185,17 @@
     </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
 
-            <EditText
+            <TextView
                 android:id="@+id/et_descripcion_bus"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:enabled="false"
-                android:hint="Descripcion Bus"
-                android:inputType="text"
-                android:maxLength="30"
+                android:textSize="18dp"
+                android:textColor="@color/black"
                 android:textAlignment="center"
-                android:singleLine="true"
                 android:visibility="gone" />
-        </LinearLayout>
+
 
     <!-- aqui se dibuja el bus - puestos disponibles bus -->
     <ScrollView
@@ -312,6 +310,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
+                    android:textSize="18dp"
                     android:textStyle="bold"
                     android:visibility="gone"
                     android:text="Selecciona tus asientos"/>

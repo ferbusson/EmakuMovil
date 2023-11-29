@@ -188,12 +188,19 @@
                     android:layout_height="wrap_content"
                     android:text="0.00"
                     android:textColor="#008000"
-                    android:textSize="24sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Datos del Pasajero"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:textSize="18dp"
+            android:textStyle="bold"/>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -209,14 +216,18 @@
                 android:id="@+id/et_numero_id_cliente"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="No cédula o NIT"
-                android:inputType="number" />
+                android:hint="No. Cédula o NIT"
+                android:inputType="number">
+                <requestFocus />
+            </EditText>
+
 
             <!-- Name Field -->
             <EditText
                 android:id="@+id/editTextName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:hint="Name" />
 
             <!-- Last Name Field -->
@@ -224,6 +235,7 @@
                 android:id="@+id/editTextLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:hint="Last Name" />
 
             <!-- Address Field -->
@@ -231,6 +243,7 @@
                 android:id="@+id/editTextAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:hint="Address" />
 
             <!-- Phone Field -->
@@ -239,6 +252,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Phone Number"
+                android:visibility="gone"
                 android:inputType="phone" />
 
             <!-- Email Field (optional) -->
@@ -247,6 +261,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email (Optional)"
+                android:visibility="gone"
                 android:inputType="textEmailAddress" />
 
             <Space
@@ -285,6 +300,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:hint="Efectivo"
+                    android:text="0.0"
                     android:inputType="numberDecimal"
                     android:padding="8dp"/>
 
@@ -292,6 +308,8 @@
                     android:id="@+id/editTexCreditCard"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
+                    android:visibility="gone"
+                    android:text="0.0"
                     android:hint="Pago en tarjeta"
                     android:inputType="numberDecimal"
                     android:padding="8dp"/>

@@ -237,10 +237,15 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
                 this.runOnUiThread(new Runnable() {
                     public void run() {
                         editTextName.setText(nombre1);
+                        editTextName.setVisibility(View.VISIBLE);
                         editTextLastName.setText(apellido1);
+                        editTextLastName.setVisibility(View.VISIBLE);
                         editTextAddress.setText(direccion + " " + departamento + " " + ciudad);
+                        editTextAddress.setVisibility(View.VISIBLE);
                         editTextPhone.setText(numero);
+                        editTextPhone.setVisibility(View.VISIBLE);
                         editTextEmail.setText(email);
+                        editTextEmail.setVisibility(View.VISIBLE);
                     }
                 });
             }

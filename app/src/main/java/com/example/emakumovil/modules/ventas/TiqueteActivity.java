@@ -52,9 +52,9 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
     // etiqueta que recibe descripcion punto origen
     private TextView tv_origen_value;
     // lupa buscar destino
-    private ImageButton ib_buscar_destino;
+    //private ImageButton ib_buscar_destino;
     //lupa buscar bus
-    private ImageButton ib_buscar_bus;
+    //private ImageButton ib_buscar_bus;
     private SelectedDataDialog selected;
     // etiqueta que recibe descripcion destino
     private EditText et_destino;
@@ -63,7 +63,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
     // etiqueta que recibe descripcion punto
     private EditText et_descripcion_punto;
     // etiqueta que recibe descripcion bus
-    private EditText et_descripcion_bus;
+    private TextView et_descripcion_bus;
     // scrollview que recibe el plano del bus
     private TableLayout tl_plano_bus;
     private LinearLayout ll_buscar_bus;
@@ -115,12 +115,12 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         // consulta el punto origen basado en el usuario
         new SearchQuery(this,"MVSEL0082",args).start();
         // boton lupa buscar destino
-        ib_buscar_destino = (ImageButton) findViewById(R.id.ib_buscar_destino);
-        ib_buscar_bus = (ImageButton) findViewById(R.id.ib_buscar_bus);
+        //ib_buscar_destino = (ImageButton) findViewById(R.id.ib_buscar_destino);
+        //ib_buscar_bus = (ImageButton) findViewById(R.id.ib_buscar_bus);
         et_destino = (EditText) findViewById(R.id.et_destino);
         et_numero_bus = (EditText) findViewById(R.id.et_numero_bus);
         //et_descripcion_punto = (EditText) findViewById(R.id.et_descripcion_punto);
-        et_descripcion_bus = (EditText) findViewById(R.id.et_descripcion_bus);
+        et_descripcion_bus = (TextView) findViewById(R.id.et_descripcion_bus);
         tv_origen_value = (TextView) findViewById(R.id.tv_origen_value);
         tl_plano_bus = (TableLayout) findViewById(R.id.tl_plano_bus);
         tv_selecciona_asiento = (TextView) findViewById(R.id.tv_selecciona_asiento);
@@ -134,27 +134,29 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         ll_buscar_bus = (LinearLayout) findViewById(R.id.ll_buscar_bus);
 
         // se agrega listener al boton para ejecutar lo que se ponga en onClick
-        ib_buscar_destino.setOnClickListener(this);
-        ib_buscar_bus.setOnClickListener(this);
+        et_destino.setOnClickListener(this);
+        et_numero_bus.setOnClickListener(this);
+        //ib_buscar_bus.setOnClickListener(this);
+        //ib_buscar_destino.setOnClickListener(this);
 
 
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.ib_buscar_destino) {
+        if (v.getId() == R.id.et_destino) {
             // se instancia el dialogo para buscar por palabra clave, el titulo se pone al componente
             // consulta punto destino a partir de punto origen
-            selected = new SelectedDataDialog(R.id.ib_buscar_destino,"Seleccione Destino",
+            selected = new SelectedDataDialog(R.id.et_destino,"Seleccione Destino",
                     "MVSEL0081", new String[] {id_punto_origen});
             // se adiciona listener
             selected.addDialogClickListener(this);
             // se hace visible el dialogo, el tag solo es una marca
             selected.show(getFragmentManager(), "Buscar punto destino");
-        } else if (v.getId() == R.id.ib_buscar_bus) {
+        } else if (v.getId() == R.id.et_numero_bus) {
             // se instancia el dialogo para buscar por palabra clave, el titulo se pone al componente
             String[] args_buscar_bus = {id_punto_origen,id_punto_destino};
-            selected = new SelectedDataDialog(R.id.ib_buscar_bus,"Vehículos disponibles",
+            selected = new SelectedDataDialog(R.id.et_numero_bus,"Vehículos disponibles",
                     "MVSEL0083", args_buscar_bus);
             // se adiciona listener
             selected.addDialogClickListener(this);
@@ -167,7 +169,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
     public void dialogClickEvent(DialogClickEvent e) {
         // aqui llegan los datos al hacer clic en los selectedDataDialog y SearchDataDialog
         System.out.println("tiene que ser aqui0");
-        if (e.getIdobject() == R.id.ib_buscar_destino) {
+        if (e.getIdobject() == R.id.et_destino) {
             id_punto_destino = e.getId();
             et_destino.setText((e.getValue()));
             ll_buscar_bus.setVisibility(View.VISIBLE);
@@ -177,16 +179,16 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
             System.out.println("descripcion destino: " + et_destino.getText().toString());
         } else
             // llega info luego de hacer clic en la lista de buses
-            if (e.getIdobject() == R.id.ib_buscar_bus) {
+            if (e.getIdobject() == R.id.et_numero_bus) {
             et_numero_bus.setText((e.getId()));
             et_descripcion_bus.setText(e.getValue());
             et_descripcion_bus.setVisibility(View.VISIBLE);
-            et_numero_bus.requestFocus();
             et_numero_bus.setSelection(et_numero_bus.getText().length());
             String[] args = {id_punto_origen,id_punto_destino,
                     et_numero_bus.getText().toString()};
             // se ejecuta query para pintar el plano del bus
             new SearchQuery(this,"MVSEL0084",args).start();
+            et_numero_bus.clearFocus();
         }
     }
     public void openFormaPago(View view) {
@@ -236,13 +238,8 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                 });
             }
         } else if (e.getSqlCode().equals("MVSEL0084")) { // consulta distribucion del bus
-            System.out.println("llego query distribucion de bus 84");
             // recepcion de datos de la query
             procesaQueryDistribucionVehiculo(elm.getChildren("row").iterator());
-            System.out.println("pintando bus...");
-            System.out.println("Rows: " + rowsp1);
-            System.out.println("Cols: " + colsp1);
-
             if (colsp1!=0) {
                 if (orientation) {
                     //Bus Parado
@@ -253,6 +250,10 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                     int numCols = colsp1;
                     this.runOnUiThread(new Runnable() {
                         public void run() {
+
+                            // limpia bus
+                            tl_plano_bus.removeAllViews();
+
                             Context appContext = getApplicationContext();
                             Drawable front_of_bus = ContextCompat.getDrawable(appContext,bus_frente_160x70_v);
                             Drawable back_of_bus = ContextCompat.getDrawable(appContext,bus_trasera_160x70_v);
@@ -293,7 +294,6 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                                 TableLayout.LayoutParams.WRAP_CONTENT,
                                 TableLayout.LayoutParams.WRAP_CONTENT
                         );
-                        //tableRow.setGravity(Gravity.CENTER_HORIZONTAL);
 
                         //establecemos parametros de TableRow
                         tableRow.setLayoutParams(layoutParams);
@@ -328,9 +328,6 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                                 seat.setBackground(puesto_facturado_v);
                             else if (info_seat.getIdTipoPuesto()==11)
                                 seat.setBackground(puesto_reservado_v);
-
-                            //seat.setGravity(Gravity.CENTER);
-                            //seat.setPadding(16,16,16,16);
 
                             TableRow.LayoutParams table_row_params = new TableRow.LayoutParams(
                                     TableRow.LayoutParams.WRAP_CONTENT,  //(int)(0*density), //width
