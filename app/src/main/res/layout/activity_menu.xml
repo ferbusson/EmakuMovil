@@ -25,6 +25,7 @@
                 android:background="@drawable/palette5"
                 android:gravity="center"
                 android:text="@string/caja"
+                android:textColor="#000000"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:visibility="gone" />
 
@@ -41,7 +42,7 @@
                 android:minHeight="58dp"
                 android:text="@string/arqueo"
                 android:visibility="gone" 
-                android:textColor="#ffffff" />
+                android:textColor="#000000" />
 
             <Button
                 android:id="@+id/bt_ventas"
@@ -56,7 +57,7 @@
                 android:gravity="start|center_vertical"
                 android:text="@string/ventas"
                 android:visibility="gone" 
-                android:textColor="#ffffff" />
+                android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/tv_mterceros"
@@ -65,6 +66,7 @@
                 android:background="@drawable/palette5"
                 android:gravity="center"
                 android:text="@string/terceros"
+                android:textColor="#000000"
                 android:visibility="gone" 
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -81,7 +83,7 @@
                 android:minHeight="58dp"
                 android:visibility="gone" 
                 android:text="@string/atercero"
-                android:textColor="#ffffff" />
+                android:textColor="#000000" />
             <TextView
                 android:id="@+id/tv_trm"
                 android:layout_width="match_parent"
@@ -89,6 +91,7 @@
                 android:background="@drawable/palette5"
                 android:gravity="center"
                 android:text="@string/trm"
+                android:textColor="#000000"
                 android:visibility="gone" 
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -105,7 +108,7 @@
                 android:minHeight="58dp"
                 android:visibility="gone" 
                 android:text="@string/atrm"
-                android:textColor="#ffffff" />
+                android:textColor="#000000" />
             
             <TextView
                 android:id="@+id/tv_productos"
@@ -114,6 +117,7 @@
                 android:background="@drawable/palette5"
                 android:gravity="center"
                 android:text="@string/productos"
+                android:textColor="#000000"
                 android:visibility="gone" 
                 android:textAppearance="?android:attr/textAppearanceLarge" />
             <Button
@@ -129,7 +133,7 @@
                 android:gravity="start|center_vertical"
                 android:text="@string/imagenes"
                 android:visibility="gone" 
-                android:textColor="#ffffff" />
+                android:textColor="#000000" />
 
             <Button
                 android:id="@+id/bt_maestro"
@@ -144,7 +148,7 @@
                 android:minHeight="58dp"
                 android:text="@string/maestro_productos"
                 android:visibility="gone" 
-                android:textColor="#ffffff" />
+                android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/tv_ventas"
@@ -153,6 +157,7 @@
                 android:background="@drawable/palette5"
                 android:gravity="center"
                 android:text="@string/tventas"
+                android:textColor="#000000"
                 android:visibility="gone" 
                 android:textAppearance="?android:attr/textAppearanceLarge" />
             <Button
@@ -168,7 +173,7 @@
                 android:gravity="start|center_vertical"
                 android:text="@string/resolucion_facturacion"
                 android:visibility="gone" 
-                android:textColor="#ffffff" />
+                android:textColor="#000000" />
             <Button
                 android:id="@+id/bt_venta_tiquetes"
                 android:layout_width="match_parent"
@@ -182,13 +187,14 @@
                 android:gravity="start|center_vertical"
                 android:text="Tiquetes"
                 android:visibility="gone"
-                android:textColor="#ffffff" />
+                android:textColor="#000000" />
             <TextView
                 android:id="@+id/tv_compras"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/palette5"
                 android:gravity="center"
+                android:textColor="#000000"
                 android:text="@string/compras"
                 android:visibility="gone" 
                 android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -206,7 +212,7 @@
                 android:minHeight="58dp"
                 android:visibility="gone" 
                 android:text="@string/ccompra"
-                android:textColor="#ffffff" />
+                android:textColor="#000000" />
 
             <Button
                 android:id="@+id/bt_plantilla_con_barra"
@@ -221,7 +227,7 @@
                 android:minHeight="58dp"
                 android:visibility="gone" 
                 android:text="@string/plantilla_con_barra"
-                android:textColor="#ffffff" />
+                android:textColor="#000000" />
             
             <Button
                 android:id="@+id/bt_plantilla_sin_barra"
@@ -236,7 +242,7 @@
                 android:minHeight="58dp"
                 android:visibility="gone" 
                 android:text="@string/plantilla_sin_barra"
-                android:textColor="#ffffff" />
+                android:textColor="#000000" />
             
             <TextView
                 android:id="@+id/tv_inventarios"
@@ -244,6 +250,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/palette5"
                 android:gravity="center"
+                android:textColor="#000000"
                 android:text="@string/inventarios"
                 android:visibility="gone" 
                 android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -260,7 +267,7 @@
                 android:gravity="start|center_vertical"
                 android:text="@string/ajustes"
                 android:visibility="gone" 
-                android:textColor="#ffffff" />
+                android:textColor="#000000" />
 
             <Button
                 android:id="@+id/bt_recolectores"
@@ -275,7 +282,7 @@
                 android:minHeight="58dp"
                 android:text="@string/recolectores"
                 android:visibility="gone" 
-                android:textColor="#ffffff" />
+                android:textColor="#000000" />
 
             <Button
                 android:id="@+id/bt_consultar_recolectores"
@@ -290,7 +297,7 @@
                 android:minHeight="58dp"
                 android:text="@string/consultar_recolectores"
                 android:visibility="gone" 
-                android:textColor="#ffffff" />
+                android:textColor="#000000" />
             
             <TextView
                 android:id="@+id/tv_cartera"
@@ -298,6 +305,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/palette5"
                 android:gravity="center"
+                android:textColor="#000000"
                 android:text="@string/cartera"
                 android:visibility="gone" 
                 android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -314,7 +322,7 @@
                 android:gravity="start|center_vertical"
                 android:text="@string/abono_cartera"
                 android:visibility="gone" 
-                android:textColor="#ffffff" />
+                android:textColor="#000000" />
 
             <Button
                 android:id="@+id/bt_informes_cartera"
@@ -329,7 +337,7 @@
                 android:minHeight="58dp"
                 android:text="@string/informes_cartera"
                 android:visibility="gone" 
-                android:textColor="#ffffff" />
+                android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/tv_cxp"
@@ -338,6 +346,7 @@
                 android:background="@drawable/palette5"
                 android:gravity="center"
                 android:text="@string/cxp"
+                android:textColor="#000000"
                 android:visibility="gone" 
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -354,7 +363,7 @@
                 android:minHeight="58dp"
                 android:text="@string/abono_cxp"
                 android:visibility="gone" 
-                android:textColor="#ffffff" />
+                android:textColor="#000000" />
 
             <Button
                 android:id="@+id/bt_informes_cxp"
@@ -369,13 +378,14 @@
                 android:minHeight="58dp"
                 android:text="@string/informes_cxp"
                 android:visibility="gone" 
-                android:textColor="#ffffff" />
+                android:textColor="#000000" />
             <TextView
                 android:id="@+id/tv_documentos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/palette5"
                 android:gravity="center"
+                android:textColor="#000000"
                 android:text="@string/documentos"
                 android:visibility="gone" 
                 android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -393,7 +403,7 @@
                 android:minHeight="58dp"
                 android:text="@string/anular_documentos"
                 android:visibility="gone" 
-                android:textColor="#ffffff" />
+                android:textColor="#000000" />
             
         </LinearLayout>
     </ScrollView>

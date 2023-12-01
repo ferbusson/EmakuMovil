@@ -1,6 +1,11 @@
 package com.example.emakumovil.modules.ventas;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.bluetooth.BluetoothAdapter;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -12,8 +17,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.Manifest;
 
-import com.example.emakumovil.Global;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import com.example.emakumovil.Global;;
 import com.example.emakumovil.R;
 import com.example.emakumovil.communications.SocketConnector;
 import com.example.emakumovil.communications.SocketWriter;
@@ -26,7 +36,15 @@ import com.example.emakumovil.control.ClientHeaderValidator;
 import com.example.emakumovil.control.SuccessEvent;
 import com.example.emakumovil.control.SuccessListener;
 import com.example.emakumovil.misc.settings.ConfigFileHandler;
-import com.example.emakumovil.modules.inventario.ListFitInventoryActivity;
+import com.google.firebase.platforminfo.DefaultUserAgentPublisher;
+import com.mazenrashed.printooth.Printooth;
+import com.mazenrashed.printooth.data.printable.Printable;
+import com.mazenrashed.printooth.data.printable.RawPrintable;
+import com.mazenrashed.printooth.data.printable.TextPrintable;
+import com.mazenrashed.printooth.data.printer.DefaultPrinter;
+import com.mazenrashed.printooth.ui.ScanningActivity;
+import com.mazenrashed.printooth.utilities.Printing;
+import com.mazenrashed.printooth.utilities.PrintingCallback;
 
 import org.jdom2.Attribute;
 import org.jdom2.Document;
@@ -35,7 +53,6 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 import java.nio.channels.SocketChannel;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -43,8 +60,9 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class FormaPagoTiquete extends Activity implements View.OnClickListener, DialogClickListener,
-        AnswerListener, View.OnFocusChangeListener, SuccessListener {
+        AnswerListener, View.OnFocusChangeListener, SuccessListener, PrintingCallback {
 
+    Printing printing;
     private TextView tv_detalle_origen;
     private TextView tv_detalle_destino;
     private TextView tv_detalles_bus;
@@ -61,6 +79,9 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
     private EditText editTextPhone;
     private EditText editTextEmail;
     private Button btnSubmit;
+    private Button btn_print;
+    private Button btn_print_image;
+    private Button btn_print_text;
 
     private String id;
     private Integer id_activo;
@@ -78,19 +99,26 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
     private String numero;
     private String id_email;
     private String email;
+    private static final int REQUEST_ENABLE_BT = 1;
+    private static final int MY_BLUETOOTH_PERMISSION_REQUEST_SCANN = 123;
+    private static final int MY_BLUETOOTH_PERMISSION_REQUEST_CONNECT = 456;
 
-    private Map<Integer,InfoPuestoVehiculo> puestos_seleccionados;
+    private Map<Integer, InfoPuestoVehiculo> puestos_seleccionados;
 
     private Spinner spinner_medio_de_pago;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // POS printer setup
+        Printooth.INSTANCE.init(this);
+
         setContentView(R.layout.forma_de_pago_tiquete);
 
         tv_detalle_origen = (TextView) findViewById(R.id.detalle_origen);
         tv_detalle_destino = (TextView) findViewById(R.id.detalle_destino);
         tv_detalles_bus = (TextView) findViewById(R.id.tv_detalles_bus);
-        tv_titulo_puestos_seleccionados = (TextView)findViewById(R.id.tv_titulo_puestos_seleccionados);
+        tv_titulo_puestos_seleccionados = (TextView) findViewById(R.id.tv_titulo_puestos_seleccionados);
         tv_puestos_seleccionados = (TextView) findViewById(R.id.tv_puestos_seleccionados);
         tv_total_compra = (TextView) findViewById(R.id.tv_total_compra);
         et_numero_id_cliente = (EditText) findViewById(R.id.et_numero_id_cliente);
@@ -104,6 +132,85 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
         editTextCreditCard = (EditText) findViewById(R.id.editTexCreditCard);
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(this);
+
+        btn_print = (Button) findViewById(R.id.btn_print);
+        btn_print.setOnClickListener(this);
+        btn_print_image = (Button) findViewById(R.id.btn_print_image);
+        btn_print_image.setOnClickListener(this);
+        btn_print_text = (Button) findViewById(R.id.btn_print_text);
+        btn_print_text.setOnClickListener(this);
+
+
+        if (printing != null)
+            printing.setPrintingCallback(this);
+
+        btn_print.setOnClickListener(
+                view -> {
+                    BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                    if (bluetoothAdapter != null && !bluetoothAdapter.isEnabled()) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage("Bluetooth is currently off. Do you want to turn it on?")
+                                .setCancelable(false)
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                                        // Check if permission is granted
+                                        if (ContextCompat.checkSelfPermission(FormaPagoTiquete.this, Manifest.permission.BLUETOOTH_SCAN)
+                                                != PackageManager.PERMISSION_GRANTED) {
+                                            // Permission not granted, request it
+                                            System.out.println("Permission not granted, request it - scann");
+                                            ActivityCompat.requestPermissions(FormaPagoTiquete.this,
+                                                    new String[]{Manifest.permission.BLUETOOTH_SCAN}, MY_BLUETOOTH_PERMISSION_REQUEST_SCANN);
+                                            System.out.println("He request it - scann");
+                                        } if (ContextCompat.checkSelfPermission(FormaPagoTiquete.this, Manifest.permission.BLUETOOTH_CONNECT)
+                                                != PackageManager.PERMISSION_GRANTED) {
+                                            // Permission not granted, request it
+                                            System.out.println("Permission not granted, request it - connect");
+                                            ActivityCompat.requestPermissions(FormaPagoTiquete.this,
+                                                    new String[]{Manifest.permission.BLUETOOTH_CONNECT}, MY_BLUETOOTH_PERMISSION_REQUEST_CONNECT);
+                                            System.out.println("He request it - connect");
+                                        } else {
+                                            if (Printooth.INSTANCE.hasPairedPrinter()) {
+                                                Printooth.INSTANCE.removeCurrentPrinter();
+                                                System.out.println("has paired printer");
+                                            } else {
+                                                startActivityForResult(new Intent(FormaPagoTiquete.this,
+                                                                ScanningActivity.class),
+                                                        ScanningActivity.SCANNING_FOR_PRINTER);
+                                                System.out.println("has paired printer else");
+                                                changePairAndunpair();
+                                            }
+                                        }
+                                        startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                                    }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }
+
+
+                });
+
+        btn_print_image.setOnClickListener(view ->{
+            if(!Printooth.INSTANCE.hasPairedPrinter())
+                startActivityForResult(new Intent(FormaPagoTiquete.this,ScanningActivity.class),ScanningActivity.SCANNING_FOR_PRINTER);
+            else
+                printImages();
+        });
+
+        btn_print_text.setOnClickListener(view ->{
+            if(!Printooth.INSTANCE.hasPairedPrinter())
+                startActivityForResult(new Intent(FormaPagoTiquete.this,ScanningActivity.class),ScanningActivity.SCANNING_FOR_PRINTER);
+            else
+                printText();
+        });
+
+        changePairAndunpair();
 
         // Inicia combo medios de pago
         String[] medios_de_pago = {"Efectivo",
@@ -186,6 +293,8 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
     }
 
 
+
+
     private void setupEditTextNumeroIDClienteListener(){
         et_numero_id_cliente.setOnKeyListener((view,keyCode,keyEvent)->{
                     if((keyEvent.getAction() == KeyEvent.ACTION_DOWN ) &&
@@ -202,6 +311,44 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
         btnSubmit.setEnabled(false);
         sendTransaction();
         sendPrintJob("574118");
+    }
+
+    private void changePairAndunpair() {
+        if(Printooth.INSTANCE.hasPairedPrinter()){
+            btn_print.setText(new StringBuilder("Unpair ").append(
+                    Printooth.INSTANCE.getPairedPrinter().getName().toString()));
+        } else {
+            btn_print.setText("Pair with printer");
+        }
+    }
+
+    private void printText() {
+        System.out.println("Entre a imprimir texto");
+        ArrayList<Printable> printables = new ArrayList<>();
+        printables.add(new RawPrintable.Builder(new byte[]{27,100,4}).build());
+        // add text
+        printables.add(new TextPrintable.Builder()
+                .setText("hello mi amor! : e")
+                .setCharacterCode(DefaultPrinter.Companion.getCHARCODE_PC1252())
+                .setNewLinesAfter(1).build());
+
+        // custom text
+        printables.add(new TextPrintable.Builder()
+                .setText("hello mi amor!")
+                .setLineSpacing(DefaultPrinter.Companion.getLINE_SPACING_60())
+                .setAlignment(DefaultPrinter.Companion.getALIGNMENT_CENTER())
+                .setEmphasizedMode(DefaultPrinter.Companion.getEMPHASIZED_MODE_BOLD())
+                .setUnderlined(DefaultPrinter.Companion.getUNDERLINED_MODE_ON())
+                .setCharacterCode(DefaultPrinter.Companion.getCHARCODE_PC1252())
+                .setNewLinesAfter(1).build());
+
+        printing.print(printables);
+
+
+    }
+
+    private void printImages() {
+
     }
 
     @Override
@@ -748,5 +895,35 @@ public class FormaPagoTiquete extends Activity implements View.OnClickListener, 
                         Toast.LENGTH_LONG).show();
             }});
         sendPrintJob(e.getNdocument());
+    }
+
+    @Override
+    public void connectingWithPrinter() {
+
+    }
+
+    @Override
+    public void connectionFailed(@NonNull String s) {
+
+    }
+
+    @Override
+    public void onError(@NonNull String s) {
+
+    }
+
+    @Override
+    public void onMessage(@NonNull String s) {
+
+    }
+
+    @Override
+    public void printingOrderSentSuccessfully() {
+
+    }
+
+    @Override
+    public void disconnected() {
+
     }
 }

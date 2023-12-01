@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -62,6 +63,8 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
     private EditText et_numero_bus;
     // etiqueta que recibe descripcion punto
     private EditText et_descripcion_punto;
+
+    private ImageView progress_animation;
     // etiqueta que recibe descripcion bus
     private TextView et_descripcion_bus;
     // scrollview que recibe el plano del bus
@@ -132,6 +135,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         ll_cantidad_puestos = (LinearLayout) findViewById(R.id.ll_cantidad_puestos);
         ll_total_venta = (LinearLayout) findViewById(R.id.ll_total_venta);
         ll_buscar_bus = (LinearLayout) findViewById(R.id.ll_buscar_bus);
+        progress_animation = (ImageView) findViewById(R.id.progressImageView);
 
         // se agrega listener al boton para ejecutar lo que se ponga en onClick
         et_destino.setOnClickListener(this);
@@ -186,8 +190,10 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
             et_numero_bus.setSelection(et_numero_bus.getText().length());
             String[] args = {id_punto_origen,id_punto_destino,
                     et_numero_bus.getText().toString()};
+            progress_animation.setVisibility(View.VISIBLE);
             // se ejecuta query para pintar el plano del bus
             new SearchQuery(this,"MVSEL0084",args).start();
+                progress_animation.setVisibility(View.GONE);
             et_numero_bus.clearFocus();
         }
     }

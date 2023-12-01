@@ -324,6 +324,30 @@
                 android:text="Comprar Tiquete"
                 android:textColor="@color/white" />
 
+            <Button
+                android:id="@+id/btn_print"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#BBB8BF"
+                android:text="Printer Setup"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_print_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#BBB8BF"
+                android:text="Print Logo"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_print_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#BBB8BF"
+                android:text="Print Text"
+                android:textColor="@color/white" />
+
         </LinearLayout>
 
         </ScrollView>

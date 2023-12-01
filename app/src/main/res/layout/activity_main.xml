@@ -4,7 +4,7 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_green_dark"
+    android:background="@color/white"
 
     android:orientation="vertical"
     tools:context=".MainActivity">
@@ -13,22 +13,24 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="E-maku"
+        android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="45dp"
-        android:textAlignment="center"/>
+        android:textSize="45dp" />
+
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        app:cardCornerRadius="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         app:cardBackgroundColor="#ECECEC"
+        app:cardCornerRadius="15dp"
         app:cardElevation="0dp">
 
         <ImageView
@@ -36,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:src="@drawable/splash" />
+            android:src="@drawable/emaku_logo_01" />
 
     </androidx.cardview.widget.CardView>
 
@@ -47,10 +49,10 @@
         android:layout_gravity="center"
         android:layout_marginTop="63dp"
         android:background="@drawable/gb_rounded"
-        android:paddingLeft="16dp"
         android:ems="15"
         android:hint="@string/empresa"
         android:minHeight="48dp"
+        android:paddingLeft="16dp"
         android:singleLine="true"
         android:text="transsandona"
         android:textAlignment="gravity">
@@ -64,13 +66,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
+        android:background="@drawable/gb_rounded"
         android:ems="15"
-        android:paddingLeft="16dp"
         android:hint="@string/usuario"
         android:minHeight="48dp"
+        android:paddingLeft="16dp"
         android:singleLine="true"
-        android:text="emaku"
-        android:background="@drawable/gb_rounded" />
+        android:text="emaku" />
 
     <EditText
         android:id="@+id/password"
@@ -78,13 +80,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
+        android:background="@drawable/gb_rounded"
         android:ems="15"
-        android:paddingLeft="16dp"
         android:hint="@string/password"
         android:inputType="textPassword"
         android:minHeight="48dp"
-        android:text="perla2010"
-        android:background="@drawable/gb_rounded" />
+        android:paddingLeft="16dp"
+        android:text="perla2010" />
 
     <Button
         android:id="@+id/ingresar"
@@ -97,6 +99,7 @@
         android:ems="19"
         android:onClick="onClick"
         android:text="@string/ingresar"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold" />
 

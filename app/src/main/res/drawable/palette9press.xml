@@ -15,9 +15,9 @@
      <item android:state_pressed="true">
         <shape>
             <gradient android:angle="270" 
-                android:startColor="#ABABAB"
-		        android:centerColor="#BDBFBD"
-		        android:endColor="#ABABAB" />
+                android:startColor="#66bb6a"
+		        android:centerColor="#e8f5e9"
+		        android:endColor="#66bb6a" />
             <corners android:radius="5dp" />
         </shape>
         
@@ -25,9 +25,9 @@
     <item android:state_pressed="false">
         <shape>
             <gradient android:angle="270" 
-                android:startColor="#F5C382"
-		        android:centerColor="#F5D09F"
-		        android:endColor="#F5C382" />
+                android:startColor="#388e3c"
+		        android:centerColor="#81c784"
+		        android:endColor="#388e3c" />
             <corners android:radius="5dp" />
         </shape>
         
