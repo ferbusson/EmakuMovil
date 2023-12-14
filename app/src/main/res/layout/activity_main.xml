@@ -18,10 +18,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="E-maku"
+        android:text="E-maku - Intertrans"
         android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="45dp" />
+        android:textStyle="bold"
+        android:textColor="@color/blue"
+        android:textSize="35dp" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
@@ -35,10 +36,10 @@
 
         <ImageView
             android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:src="@drawable/emaku_logo_01" />
+            android:layout_width="242dp"
+            android:layout_height="67dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/logo_transsandona_big" />
 
     </androidx.cardview.widget.CardView>
 

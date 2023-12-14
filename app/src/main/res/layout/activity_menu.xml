@@ -10,7 +10,7 @@
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:background="@drawable/palette2"
+        android:background="@drawable/palette6press"
         android:layout_height="match_parent" >
 
         <LinearLayout
@@ -25,7 +25,8 @@
                 android:background="@drawable/palette5"
                 android:gravity="center"
                 android:text="@string/caja"
-                android:textColor="#000000"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:visibility="gone" />
 
@@ -66,7 +67,8 @@
                 android:background="@drawable/palette5"
                 android:gravity="center"
                 android:text="@string/terceros"
-                android:textColor="#000000"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:visibility="gone" 
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -77,7 +79,7 @@
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
                 android:background="@drawable/palette7press"
-                android:drawableStart="@drawable/ic_action_list_2"
+                android:drawableStart="@drawable/ic_action_list_2_black"
                 android:drawablePadding="5dp"
                 android:gravity="start|center_vertical"
                 android:minHeight="58dp"
@@ -91,7 +93,8 @@
                 android:background="@drawable/palette5"
                 android:gravity="center"
                 android:text="@string/trm"
-                android:textColor="#000000"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:visibility="gone" 
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -102,7 +105,7 @@
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
                 android:background="@drawable/palette7press"
-                android:drawableStart="@drawable/ic_action_list_2"
+                android:drawableStart="@drawable/ic_action_list_2_black"
                 android:drawablePadding="5dp"
                 android:gravity="start|center_vertical"
                 android:minHeight="58dp"
@@ -117,7 +120,8 @@
                 android:background="@drawable/palette5"
                 android:gravity="center"
                 android:text="@string/productos"
-                android:textColor="#000000"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:visibility="gone" 
                 android:textAppearance="?android:attr/textAppearanceLarge" />
             <Button
@@ -157,7 +161,8 @@
                 android:background="@drawable/palette5"
                 android:gravity="center"
                 android:text="@string/tventas"
-                android:textColor="#000000"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:visibility="gone" 
                 android:textAppearance="?android:attr/textAppearanceLarge" />
             <Button
@@ -167,7 +172,7 @@
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
                 android:background="@drawable/palette7press"
-                android:drawableStart="@drawable/ic_action_list_2"
+                android:drawableStart="@drawable/ic_action_list_2_black"
                 android:drawablePadding="5dp"
                 android:minHeight="58dp"
                 android:gravity="start|center_vertical"
@@ -181,7 +186,7 @@
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
                 android:background="@drawable/palette7press"
-                android:drawableStart="@drawable/ic_action_list_2"
+                android:drawableStart="@drawable/ic_action_list_2_black"
                 android:drawablePadding="5dp"
                 android:minHeight="58dp"
                 android:gravity="start|center_vertical"
@@ -194,7 +199,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/palette5"
                 android:gravity="center"
-                android:textColor="#000000"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:text="@string/compras"
                 android:visibility="gone" 
                 android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -206,7 +212,7 @@
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
                 android:background="@drawable/palette7press"
-                android:drawableStart="@drawable/ic_action_list_2"
+                android:drawableStart="@drawable/ic_action_list_2_black"
                 android:drawablePadding="5dp"
                 android:gravity="start|center_vertical"
                 android:minHeight="58dp"
@@ -250,7 +256,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/palette5"
                 android:gravity="center"
-                android:textColor="#000000"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:text="@string/inventarios"
                 android:visibility="gone" 
                 android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -305,7 +312,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/palette5"
                 android:gravity="center"
-                android:textColor="#000000"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:text="@string/cartera"
                 android:visibility="gone" 
                 android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -317,7 +325,7 @@
                 android:layout_weight="1"
                 android:minHeight="58dp"
                 android:background="@drawable/palette7press"
-                android:drawableStart="@drawable/ic_action_business"
+                android:drawableStart="@drawable/ic_action_business_black"
                 android:drawablePadding="5dp"
                 android:gravity="start|center_vertical"
                 android:text="@string/abono_cartera"
@@ -346,7 +354,8 @@
                 android:background="@drawable/palette5"
                 android:gravity="center"
                 android:text="@string/cxp"
-                android:textColor="#000000"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:visibility="gone" 
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -357,7 +366,7 @@
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
                 android:background="@drawable/palette7press"
-                android:drawableStart="@drawable/ic_action_business"
+                android:drawableStart="@drawable/ic_action_business_black"
                 android:drawablePadding="5dp"
                 android:gravity="start|center_vertical"
                 android:minHeight="58dp"
@@ -385,7 +394,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/palette5"
                 android:gravity="center"
-                android:textColor="#000000"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:text="@string/documentos"
                 android:visibility="gone" 
                 android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -397,7 +407,7 @@
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
                 android:background="@drawable/palette7press"
-                android:drawableStart="@drawable/ic_action_cut"
+                android:drawableStart="@drawable/ic_action_cut_black"
                 android:drawablePadding="5dp"
                 android:gravity="start|center_vertical"
                 android:minHeight="58dp"

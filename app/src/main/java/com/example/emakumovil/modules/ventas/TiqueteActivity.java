@@ -53,9 +53,9 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
     // etiqueta que recibe descripcion punto origen
     private TextView tv_origen_value;
     // lupa buscar destino
-    //private ImageButton ib_buscar_destino;
+    private ImageButton ib_buscar_destino;
     //lupa buscar bus
-    //private ImageButton ib_buscar_bus;
+    private ImageButton ib_buscar_bus;
     private SelectedDataDialog selected;
     // etiqueta que recibe descripcion destino
     private EditText et_destino;
@@ -118,8 +118,8 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         // consulta el punto origen basado en el usuario
         new SearchQuery(this,"MVSEL0082",args).start();
         // boton lupa buscar destino
-        //ib_buscar_destino = (ImageButton) findViewById(R.id.ib_buscar_destino);
-        //ib_buscar_bus = (ImageButton) findViewById(R.id.ib_buscar_bus);
+        ib_buscar_destino = (ImageButton) findViewById(R.id.ib_buscar_destino);
+        ib_buscar_bus = (ImageButton) findViewById(R.id.ib_buscar_bus);
         et_destino = (EditText) findViewById(R.id.et_destino);
         et_numero_bus = (EditText) findViewById(R.id.et_numero_bus);
         //et_descripcion_punto = (EditText) findViewById(R.id.et_descripcion_punto);
@@ -140,15 +140,14 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
         // se agrega listener al boton para ejecutar lo que se ponga en onClick
         et_destino.setOnClickListener(this);
         et_numero_bus.setOnClickListener(this);
-        //ib_buscar_bus.setOnClickListener(this);
-        //ib_buscar_destino.setOnClickListener(this);
-
+        ib_buscar_destino.setOnClickListener(this);
+        ib_buscar_bus.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.et_destino) {
+        if (v.getId() == R.id.et_destino || v.getId() == R.id.ib_buscar_destino) {
             // se instancia el dialogo para buscar por palabra clave, el titulo se pone al componente
             // consulta punto destino a partir de punto origen
             selected = new SelectedDataDialog(R.id.et_destino,"Seleccione Destino",
@@ -157,7 +156,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
             selected.addDialogClickListener(this);
             // se hace visible el dialogo, el tag solo es una marca
             selected.show(getFragmentManager(), "Buscar punto destino");
-        } else if (v.getId() == R.id.et_numero_bus) {
+        } else if (v.getId() == R.id.et_numero_bus || v.getId() == R.id.ib_buscar_bus) {
             // se instancia el dialogo para buscar por palabra clave, el titulo se pone al componente
             String[] args_buscar_bus = {id_punto_origen,id_punto_destino};
             selected = new SelectedDataDialog(R.id.et_numero_bus,"Vehículos disponibles",
@@ -265,12 +264,13 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                             Drawable back_of_bus = ContextCompat.getDrawable(appContext,bus_trasera_160x70_v);
                             Drawable seat_v = ContextCompat.getDrawable(appContext, seat_free);
                             Drawable conductor_v = ContextCompat.getDrawable(appContext, driver01);
-                            Drawable grada_v = ContextCompat.getDrawable(appContext, stairs);
+                            Drawable grada_v = ContextCompat.getDrawable(appContext, stairs_9_64);
                             Drawable water_v = ContextCompat.getDrawable(appContext, ico_water_v);
                             Drawable tele_v = ContextCompat.getDrawable(appContext, ico_tele_v);
                             Drawable panel = ContextCompat.getDrawable(appContext, ico_panel);
                             Drawable puesto_facturado_v = ContextCompat.getDrawable(appContext, seat_busy);
                             Drawable puesto_reservado_v = ContextCompat.getDrawable(appContext, seat_reserved);
+                            Drawable puesto_selected_v = ContextCompat.getDrawable(appContext, seat_selected);
                             Drawable pasillo_v = ContextCompat.getDrawable(appContext, hallway);
                             
 
@@ -374,7 +374,7 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                                             if (puestos_seleccionados_tiquete.isEmpty()){
                                                 valor_unitario = 0.0;
                                                 bt_continuar.setEnabled(false);
-                                                bt_continuar.setBackgroundColor(Color.parseColor("#B2DFDB"));
+                                                bt_continuar.setBackgroundColor(Color.parseColor("#FFE3F2FD"));
                                             }
                                             et_valor_unitario.setText(Double.toString(valor_unitario));
                                             et_cantidad_puestos.setText(Integer.toString(puestos_seleccionados_tiquete.size()));
@@ -382,12 +382,12 @@ public class TiqueteActivity extends Activity implements View.OnClickListener, D
                                             System.out.println("Click por segunda vez en un puesto");
                                         } else {
                                             System.out.println("aqui voy, tipo puesto: " + puesto_seleccionado.getIdTipoPuesto());
-                                            seat.setBackground(puesto_facturado_v);
+                                            seat.setBackground(puesto_selected_v);
                                             puestos_seleccionados_tiquete.put(puesto_seleccionado.getPuesto(),puesto_seleccionado);
                                             System.out.println("Tamaño hashmap: " + puestos_seleccionados_tiquete.size());
                                             Integer cantidad_puestos_tiquete = puestos_seleccionados_tiquete.size();
                                             bt_continuar.setEnabled(true);
-                                            bt_continuar.setBackgroundColor(Color.parseColor("#009688"));
+                                            bt_continuar.setBackgroundColor(Color.parseColor("#FF0D47A1"));
                                             valor_unitario = Double.valueOf(puesto_seleccionado.getValor());
                                             total_venta = cantidad_puestos_tiquete * valor_unitario;
                                             et_valor_unitario.setText(Double.toString(valor_unitario));

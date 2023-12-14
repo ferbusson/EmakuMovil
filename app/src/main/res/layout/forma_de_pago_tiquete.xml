@@ -299,8 +299,7 @@
                     android:id="@+id/editTexCash"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:hint="Efectivo"
-                    android:text="0.0"
+                    android:hint="0.0"
                     android:inputType="numberDecimal"
                     android:padding="8dp"/>
 

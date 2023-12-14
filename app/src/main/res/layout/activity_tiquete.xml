@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/teal_700"
+        android:background="@color/blue"
 
         android:orientation="horizontal"
         android:paddingTop="0dp">
@@ -103,7 +103,7 @@
                 android:minHeight="48dp"
                 android:minWidth="48dp"
                 android:layout_weight="0.1"
-                android:background="@color/teal_700"
+                android:background="@color/blue"
                 android:contentDescription="@string/bt_buscar_destino"
                 android:paddingLeft="6dp"
                 android:paddingRight="6dp"
@@ -184,7 +184,7 @@
             android:layout_weight="0.1"
             android:minWidth="48dp"
             android:minHeight="48dp"
-            android:background="@color/teal_700"
+            android:background="@color/blue"
             android:contentDescription="@string/bt_buscar_bus"
             android:paddingLeft="6dp"
             android:paddingRight="6dp"
@@ -299,7 +299,7 @@
                     android:id="@+id/bt_continuar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#B2DFDB"
+                    android:background="@color/light_blue"
                     android:enabled="false"
                     android:onClick="openFormaPago"
                     android:shadowColor="#CDDC39"
