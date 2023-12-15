@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_titulo_despacho_vehiculo"
+        android:layout_width="275dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_rounded_boton01"
+        android:text="Despacho de Vehículos"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+    <Button
+        android:id="@+id/bt_despachar"
+        android:layout_width="188dp"
+        android:layout_height="47dp"
+        android:layout_marginBottom="36dp"
+        android:background="@drawable/palette5"
+        android:text="Despachar"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_programacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="C. Programación"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/et_programacion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.052"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_titulo_despacho_vehiculo" />
+
+    <EditText
+        android:id="@+id/et_programacion"
+        android:layout_width="363dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="72dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Bus: 9999 15:00:00"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.312"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_titulo_despacho_vehiculo" />
+
+    <TextView
+        android:id="@+id/tv_conductor_pri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:text="Conductor Pri."
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/et_conductor_pri"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_programacion"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/et_conductor_pri"
+        android:layout_width="368dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="56dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Conducto 1 Pepe Perez"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.372"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_programacion" />
+
+    <TextView
+        android:id="@+id/tv_conductor_sec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="Conductor Sec."
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_conductor_pri" />
+
+    <EditText
+        android:id="@+id/et_conductor_sec"
+        android:layout_width="358dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="48dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Conductor 2 Juan Perez"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.301"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_conductor_pri" />
+
+    <TextView
+        android:id="@+id/tv_total_sillas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="80dp"
+        android:text="Total Sillas"
+        android:textSize="16sp"
+
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_conductor_sec" />
+
+    <TextView
+        android:id="@+id/tv_total_ventas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:text="Total Ventas"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_total_sillas" />
+
+    <TextView
+        android:id="@+id/tv_cupo_disponible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:text="Cupo Disponible"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_total_ventas" />
+
+    <TextView
+        android:id="@+id/tv_anticipo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:text="Anticipo"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_cupo_disponible"
+        app:layout_constraintVertical_bias="0.219" />
+
+    <EditText
+        android:id="@+id/et_total_sillas"
+        android:layout_width="199dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="10"
+        app:layout_constraintEnd_toEndOf="@+id/et_total_ventas"
+        app:layout_constraintTop_toBottomOf="@+id/et_conductor_sec" />
+
+    <EditText
+        android:id="@+id/et_anticipo"
+        android:layout_width="199dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="36dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="0.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tv_anticipo"
+        app:layout_constraintTop_toBottomOf="@+id/et_cupo_disponible" />
+
+    <EditText
+        android:id="@+id/et_cupo_disponible"
+        android:layout_width="199dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="300.000"
+        app:layout_constraintEnd_toEndOf="@+id/et_anticipo"
+        app:layout_constraintTop_toBottomOf="@+id/et_total_ventas" />
+
+    <EditText
+        android:id="@+id/et_total_ventas"
+        android:layout_width="199dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="100.000"
+        app:layout_constraintEnd_toEndOf="@+id/et_cupo_disponible"
+        app:layout_constraintTop_toBottomOf="@+id/et_total_sillas" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

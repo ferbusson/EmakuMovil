@@ -328,6 +328,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#BBB8BF"
+                android:visibility="gone"
                 android:text="Printer Setup"
                 android:textColor="@color/white" />
 
@@ -336,6 +337,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#BBB8BF"
+                android:visibility="gone"
                 android:text="Print Logo"
                 android:textColor="@color/white" />
 
@@ -344,6 +346,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#BBB8BF"
+                android:visibility="gone"
                 android:text="Print Text"
                 android:textColor="@color/white" />
 
