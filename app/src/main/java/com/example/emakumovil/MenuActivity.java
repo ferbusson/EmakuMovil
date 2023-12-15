@@ -24,6 +24,7 @@ import com.example.emakumovil.modules.inventario.SearchCollectorActivity;
 import com.example.emakumovil.modules.inventario.UploadPhotoActivity;
 import com.example.emakumovil.modules.terceros.PersonsActivity;
 import com.example.emakumovil.modules.ventas.ChangeResolutionActivity;
+import com.example.emakumovil.modules.ventas.DespachoVehiculos;
 import com.example.emakumovil.modules.ventas.TRMActivity;
 import com.example.emakumovil.modules.ventas.TiqueteActivity;
 
@@ -74,9 +75,13 @@ public class MenuActivity extends Activity implements OnClickListener {
     private Button bt_resolucion_facturacion;
 
     private Button bt_venta_tiquetes;
+
+    private Button bt_despacho_vehiculos;
     private static final String RESOLUCION = "MVTR00020";
 
-    private static final String TIQUETES = "MVTR00020";
+    private static final String TIQUETES = "MVTR00021";
+
+    private static final String DESPACHOS = "MVTR00022";
 
     /*
      * COMPRAS
@@ -230,6 +235,12 @@ public class MenuActivity extends Activity implements OnClickListener {
             bt_venta_tiquetes = (Button)findViewById(R.id.bt_venta_tiquetes);
             bt_venta_tiquetes.setVisibility(View.VISIBLE);
             bt_venta_tiquetes.setOnClickListener(this);
+        }
+
+        if (ACPHandler.isContenedTransaction(DESPACHOS)){
+            bt_despacho_vehiculos = (Button)findViewById(R.id.bt_despacho_vehiculos);
+            bt_despacho_vehiculos.setVisibility(View.VISIBLE);
+            bt_despacho_vehiculos.setOnClickListener(this);
         }
 
         /*
@@ -410,7 +421,12 @@ public class MenuActivity extends Activity implements OnClickListener {
         } else if (arg0.getId() == R.id.bt_venta_tiquetes) {
             Intent i = new Intent(this, TiqueteActivity.class);
             this.startActivity(i);
-        }
+        } else if (arg0.getId() == R.id.bt_despacho_vehiculos) {
+        Intent i = new Intent(this, DespachoVehiculos.class);
+        this.startActivity(i);
+    }
+
+
 
         /*
          * COMPRAS

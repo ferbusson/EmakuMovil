@@ -191,6 +191,10 @@
             android:label="Venta de tiquetes" >
         </activity>
         <activity
+            android:name="com.example.emakumovil.modules.ventas.DespachoVehiculos"
+            android:label="Despacho Vehículos" >
+        </activity>
+        <activity
             android:name="com.example.emakumovil.modules.ventas.ChangeResolutionActivity"
             android:label="@string/changeresolution"
             android:theme="@android:style/Theme.Dialog" >
