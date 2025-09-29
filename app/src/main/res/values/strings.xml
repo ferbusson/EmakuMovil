@@ -411,5 +411,11 @@
     <string name="tv_destino">Destino</string>
     <string name="bt_buscar_destino">Buscar Destino de Viaje</string>
     <string name="bt_buscar_bus">Buscar bus disponible en la ruta</string>
+    <string name="ir_a">Ir a</string>
+    <string name="leer_barcode">Leer barcode</string>
+    <string name="_0">0</string>
+    <string name="enter_or_scann_barcode">Enter or Scann barcode</string>
+    <string name="limpia_texto_a_buscar">Limpia texto a buscar</string>
+    <string name="tv_buscar_item">Buscar Item</string>
 
 </resources>

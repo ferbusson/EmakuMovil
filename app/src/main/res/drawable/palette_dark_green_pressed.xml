@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- You can use a slightly darker color or a different shape for the pressed effect -->
+    <solid android:color="#00695C" /> <!-- Example of a darker green -->
+    <corners android:radius="8dp" /> <!-- Make sure the corners match your original drawable -->
+</shape>

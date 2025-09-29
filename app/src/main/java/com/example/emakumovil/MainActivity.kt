@@ -50,6 +50,13 @@ class MainActivity : androidx.activity.ComponentActivity() {
     private var Bingresar: Button? = null
     private var packageXML: PackageToXML? = null
 
+    // Define constants for SharedPreferences
+    companion object {
+        private const val PREFS_NAME = "LoginPrefs"
+        private const val PREF_EMPRESA = "empresa"
+        private const val PREF_LOGIN = "login"
+    }
+
     fun isOnline(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -113,6 +120,15 @@ class MainActivity : androidx.activity.ComponentActivity() {
                     ETusuario =  findViewById(R.id.login)
                     ETpassword = findViewById(R.id.password)
 
+                    // Load saved preferences
+                    val loginPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+
+                    val savedEmpresa = loginPreferences.getString(PREF_EMPRESA, "")
+                    val savedLogin = loginPreferences.getString(PREF_LOGIN, "")
+
+                    ETempresa?.setText(savedEmpresa)
+                    ETusuario?.setText(savedLogin)
+
                     if (isOnline(applicationContext)){
                         NotificationText("We are Online!")
                     try {
@@ -151,13 +167,19 @@ class MainActivity : androidx.activity.ComponentActivity() {
         val empresa = ETempresa!!.text.toString()
         val usuario = ETusuario!!.text.toString()
         val password = ETpassword!!.text.toString()
-        if (empresa == "" || usuario == "" || password == "") {
+        if (empresa.isEmpty() || usuario.isEmpty() || password.isEmpty()) {
             Toast.makeText(
                 this@MainActivity,
                 "Error: Uno de los campos requeridos esta vacio",
                 Toast.LENGTH_LONG
             ).show()
         } else {
+            // --- SAVE THE DATA HERE ---
+            val loginPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+            val editor = loginPreferences.edit()
+            editor.putString(PREF_EMPRESA, empresa)
+            editor.putString(PREF_LOGIN, usuario)
+            editor.apply() // Use apply() for asynchronous saving
             conect(empresa, usuario, password)
             /*ProgressDialogManager.show(
                 this, MainActivity.handler,

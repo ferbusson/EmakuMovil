@@ -1,201 +1,155 @@
 package com.example.emakumovil.modules.inventario;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.jdom2.Document;
-import org.jdom2.Element;
-
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.view.LayoutInflater;import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.emakumovil.R;
-import com.example.emakumovil.components.AnswerEvent;
-import com.example.emakumovil.components.AnswerListener;
 import com.example.emakumovil.components.FieldsDDV;
-import com.example.emakumovil.components.GlobalData;
-import com.example.emakumovil.components.SearchQuery;
+import com.example.emakumovil.databinding.ActivitySearchDataDialogBinding;
 
-@SuppressLint("ValidFragment")
-public class SearchProdDialogFrame extends DialogFragment implements OnClickListener, AnswerListener, OnItemClickListener {
+/*
+ * Modernized DialogFragment for searching products.
+ *
+ * This class now uses:
+ * - androidx.fragment.app.DialogFragment: The modern, supported DialogFragment.
+ * - View Binding: To safely access views without findViewById.
+ * - ViewModel: To separate data logic from the UI.
+ * - LiveData: To observe data changes from the ViewModel.
+ * - RecyclerView: To efficiently display the list of products.
+ */
+public class SearchProdDialogFrame extends DialogFragment {
 
-	private LayoutInflater inflater;
-	private TextView tv_titulo;
-	private EditText et_query;
-	private ImageButton ib_buscar;
-	private DataAdapterProd adapter;
-	private ListView lv_sprod;
-	private ProgressBar progress1;
-	private String barra;
-	
-	public SearchProdDialogFrame(String titulo,String query) {
-		Bundle bundle = new Bundle();
-		bundle.putString("titulo",titulo);
-		bundle.putString("query",query);
-		setArguments(bundle);
+	private ActivitySearchDataDialogBinding binding; // View Binding instance
+	private SearchProdViewModel viewModel; // ViewModel for UI logic and data
+	private ProductsAdapter adapter; // Adapter for the RecyclerView
+	private OnProductSelectedListener listener; // Callback listener
+
+	String barra;
+
+	// Callback to send the selected barcode back to the calling activity/fragment
+	public interface OnProductSelectedListener {
+		void onProductSelected(String barcode);
 	}
-	
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-	    inflater = getActivity().getLayoutInflater();
-	    Bundle bundle = getArguments();
-	    View v = inflater.inflate(R.layout.activity_search_data_dialog, null);
-	    builder.setView(v)
-        .setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-            }
-        });      
-	    if (bundle!=null) {
-	    	String titulo = bundle.getString("titulo");
-	    	tv_titulo = (TextView)v.findViewById(R.id.tv_titulo);
-	    	tv_titulo.setText(titulo);
-	    }
-	    
-    	et_query = (EditText)v.findViewById(R.id.et_query);
-    	lv_sprod = (ListView)v.findViewById(R.id.lv_sprod);
-    	lv_sprod.setOnItemClickListener(this);
-    	ib_buscar = (ImageButton)v.findViewById(R.id.ib_buscar);
-    	progress1 = (ProgressBar)v.findViewById(R.id.progressBar1);
-		progress1.setVisibility(View.INVISIBLE);
-    	ib_buscar.setOnClickListener(this);
-    	GlobalData.items_sprod.clear();
-		adapter = new DataAdapterProd(
-		getActivity(), R.layout.sprodrecorddata,
-		GlobalData.items_sprod);
-		lv_sprod.setAdapter(adapter);
-		adapter.notifyDataSetChanged();
-	    Dialog d = builder.create();
-	    return d;
 
+	// It's better practice to set the listener via a method or onAttach
+	public void setOnProductSelectedListener(OnProductSelectedListener listener) {
+		this.listener = listener;
+	}
+
+	// Use a static newInstance method for safe argument passing
+	/*public static SearchProdDialogFrame newInstance(String titulo) {
+		SearchProdDialogFrame fragment = new SearchProdDialogFrame();
+		Bundle args = new Bundle();
+		args.putString("titulo", titulo);
+		fragment.setArguments(args);
+		return fragment;
+	}*/
+
+	public static SearchProdDialogFrame newInstance(String titulo, String query) {
+		SearchProdDialogFrame fragment = new SearchProdDialogFrame();
+		Bundle args = new Bundle();
+		args.putString("titulo", titulo);
+		args.putString("queryCode", query);
+		fragment.setArguments(args);
+		return fragment;
 	}
 
 	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		new SearchQuery(SearchProdDialogFrame.this,"MVSEL0033",new String[]{et_query.getText().toString()}).start(); 
-		GlobalData.items_sprod.clear();
-		adapter.notifyDataSetChanged();
-		progress1.setVisibility(View.VISIBLE);
+	public void onAttach(@NonNull Context context) {
+		super.onAttach(context);
+		// Automatically attach the listener if the parent fragment/activity implements it
+		if (getParentFragment() instanceof OnProductSelectedListener) {
+			this.listener = (OnProductSelectedListener) getParentFragment();
+		} else if (context instanceof OnProductSelectedListener) {
+			this.listener = (OnProductSelectedListener) context;
+		}
+	}
 
+	@NonNull
+	@Override
+	public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+		// Inflate the layout using View Binding
+		binding = ActivitySearchDataDialogBinding.inflate(LayoutInflater.from(getContext()));
+
+		// Get the ViewModel
+		viewModel = new ViewModelProvider(this).get(SearchProdViewModel.class);
+
+		// Retrieve the queryCode from arguments
+		String queryCode = "MVSEL0033"; // Default value
+		if (getArguments() != null) {
+			queryCode = getArguments().getString("queryCode", "MVSEL0033");
+			String titulo = getArguments().getString("titulo", "Buscar Producto");
+			binding.tvTitulo.setText(titulo);
+		}
+		// Set up the RecyclerView
+		setupRecyclerView();
+
+		// Observe LiveData for product list changes
+		viewModel.getProducts().observe(this, products -> {
+			adapter.submitList(products); // Use submitList for DiffUtil
+		});
+
+		// Observe LiveData for loading state changes
+		viewModel.isLoading().observe(this, isLoading -> {
+			binding.progressBar1.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+		});
+
+		// Set the title from arguments
+		if (getArguments() != null) {
+			String titulo = getArguments().getString("titulo", "Buscar Producto");
+			binding.tvTitulo.setText(titulo);
+		}
+
+
+		// --- CONSOLIDATED AND CORRECTED CLICK LISTENER ---
+		final String finalQueryCode = queryCode; // Make it final for the lambda
+		binding.ibBuscar.setOnClickListener(v -> {
+			String query = binding.etQuery.getText().toString();
+			if (!query.isEmpty()) {
+				viewModel.clearProducts();
+				viewModel.searchProducts(query, finalQueryCode);
+			}
+		});
+
+		// Build the dialog
+		AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+		builder.setView(binding.getRoot())
+				.setNegativeButton(R.string.cancelar, (dialog, id) -> dismiss());
+
+		return builder.create();
+	}
+
+	private void setupRecyclerView() {
+		// Initialize the adapter with a lambda for item clicks
+		adapter = new ProductsAdapter(product -> {
+			if (listener != null) {
+				// Assuming descripcion1 is the barcode you want to return
+				listener.onProductSelected(product.getDescripcion1());
+			}
+			dismiss(); // Close the dialog after selection
+		});
+
+		binding.lvSprod.setLayoutManager(new LinearLayoutManager(getContext()));
+		binding.lvSprod.setAdapter(adapter);
 	}
 
 	@Override
-	public void arriveAnswerEvent(AnswerEvent e) {
-		// TODO Auto-generated method stub
-		Document doc = e.getDocument();
-		final Element elm = doc.getRootElement();
-		if (e.getSqlCode()=="MVSEL0033") {
-			getActivity().runOnUiThread(new Runnable() {
-				public void run() {
-					progress1.setVisibility(View.GONE);
-					List<Element> listRows = elm.getChildren("row");
-					System.out.println("cargando kardex");
-					for (int i = 0; i < listRows.size(); i++) {
-						Element Erow = (Element) listRows.get(i);
-						List<Element> Lcol = Erow.getChildren();
-						String descripcion1 = ((Element) Lcol.get(0)).getText();
-						String descripcion2 = ((Element) Lcol.get(1)).getText();
-						GlobalData.items_sprod.add(new FieldsDDV(descripcion1,descripcion2,""));
-					}
-					adapter.notifyDataSetChanged();
-				}
-			});
-		}
+	public void onDestroyView() {
+		super.onDestroyView();
+		binding = null; // Avoid memory leaks with View Binding
 	}
 
-	@Override
-	public boolean containSqlCode(String sqlCode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	private class DataAdapterProd extends ArrayAdapter<FieldsDDV> {
-
-		private LayoutInflater vi;
-
-		public DataAdapterProd(Context context, int textViewResourceId,
-				ArrayList<FieldsDDV> items) {
-			super(context, textViewResourceId, items);
-			GlobalData.items_sprod = items;
-			Log.d("EMAKU ","EMAKU instanciando adaptador");
-			vi = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View v = convertView;
-			ViewHolderProd holder;
-			
-			if (v == null) {
-				v = vi.inflate(R.layout.sprodrecorddata, null);
-				TextView tv_descripcion1 = (TextView) v
-						.findViewById(R.id.tv_descripcion1);
-				TextView tv_descripcion2 = (TextView) v
-						.findViewById(R.id.tv_descripcion2);
-				
-				holder = new ViewHolderProd(tv_descripcion1,
-						tv_descripcion2);
-				
-				v.setTag(holder);
-			}
-			else {
-				holder = (ViewHolderProd)v.getTag();
-			}
-
-			
-			FieldsDDV myData = GlobalData.items_sprod.get(position);
-			if (myData != null) {
-				if (holder.tv_descripcion1 != null) {
-					holder.tv_descripcion1.setText(myData.getDescripcion1());
-				}
-				if (holder.tv_descripcion2 != null) {
-					holder.tv_descripcion2.setText(myData.getDescripcion2());
-				}
-			}
-			return v;
-		}
-
-	}
-
-
-	private class ViewHolderProd {
- 		public TextView tv_descripcion1;
- 		public TextView tv_descripcion2;
- 		
- 		public ViewHolderProd(TextView tv_descripcion1,TextView tv_descripcion2) {
- 			this.tv_descripcion1=tv_descripcion1;
- 			this.tv_descripcion2=tv_descripcion2;
- 		}
- 		
- 	}
-
-	public String getBarra() {
+	protected String getBarra() {
 		return barra;
 	}
-	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		// TODO Auto-generated method stub
-		barra = GlobalData.items_sprod.get(arg2).getDescripcion1();
-		System.out.println("barra: "+barra);
-		dismiss();
-	}
-
 }

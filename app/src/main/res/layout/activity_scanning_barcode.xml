@@ -13,7 +13,7 @@
         android:background="@drawable/palette2" >
 
         <FrameLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="15"
             android:background="@drawable/palette5" >
@@ -24,9 +24,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="10dp"
-                android:layout_weight="15"
+                android:autofillHints="0000"
                 android:background="@drawable/palette2"
                 android:ems="10"
+                android:hint="@string/enter_or_scann_barcode"
+                android:inputType="textNoSuggestions"
                 android:singleLine="true" />
 
         </FrameLayout>
@@ -39,28 +41,24 @@
 		    android:layout_marginLeft="1dp"
 		    android:layout_marginRight="1dp"
 		    android:background="@drawable/palette9press"
-		    android:src="@drawable/ic_action_exportw" />
+            android:contentDescription="@string/ir_a"
+            android:src="@drawable/ic_action_exportw" />
 
         <ImageButton
             android:id="@+id/ib_limpiar"
             android:layout_width="42dp"
             android:layout_height="wrap_content"
             android:background="@drawable/palette9press"
+            android:contentDescription="@string/leer_barcode"
             android:src="@drawable/ic_action_documentw" />
 
     </LinearLayout>
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/tv_document"
@@ -75,7 +73,7 @@
             <ListView
                 android:id="@+id/lv_listbarras"
                 android:layout_width="match_parent"
-                android:layout_height="178dp"
+                android:layout_height="0dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="0.62" >
             </ListView>
@@ -103,13 +101,13 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="0.74"
-                    android:gravity="right"
-                    android:text="0"
+                    android:gravity="end"
+                    android:text="@string/_0"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#ffffff" />
             </LinearLayout>
 
-        </LinearLayout>
+
 
     </LinearLayout>
 

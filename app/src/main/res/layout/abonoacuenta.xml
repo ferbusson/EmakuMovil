@@ -21,7 +21,7 @@
         android:orientation="vertical" >
 
         <LinearLayout
-            android:id="@+id/LinerLayout"
+            android:id="@+id/LinerLayoutBaseCuenta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
@@ -52,7 +52,7 @@
 
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/LinerLayout"
+            android:id="@+id/LinerLayoutTotalCuenta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
@@ -84,7 +84,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/LinerLayout"
+            android:id="@+id/LinerLayoutDescuento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
@@ -115,7 +115,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/LinerLayout"
+            android:id="@+id/LinerLayoutAbono"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/palette3" >
@@ -147,7 +147,7 @@
 
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/LinerLayout"
+            android:id="@+id/LinerLayoutSaldo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 

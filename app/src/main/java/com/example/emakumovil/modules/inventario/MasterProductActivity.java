@@ -1,18 +1,6 @@
 package com.example.emakumovil.modules.inventario;
 
-import java.io.IOException;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import org.jdom2.Document;
-import org.jdom2.Element;
-
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,7 +8,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,9 +22,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+
+
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.emakumovil.R;
 import com.example.emakumovil.components.AnswerEvent;
@@ -47,8 +42,20 @@ import com.example.emakumovil.components.FieldsKardex;
 import com.example.emakumovil.components.GlobalData;
 import com.example.emakumovil.components.SearchQuery;
 import com.example.emakumovil.misc.utils.ZipHandler;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
-public class MasterProductActivity extends Activity implements TextWatcher, OnClickListener, AnswerListener, OnTouchListener {
+import org.jdom2.Document;
+import org.jdom2.Element;
+
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+public class MasterProductActivity extends AppCompatActivity implements TextWatcher, OnClickListener,
+		AnswerListener, OnTouchListener,SearchProdDialogFrame.OnProductSelectedListener {
 
 	private TextView tv_descripcion;
 	private TextView tv_ucompra;
@@ -83,6 +90,14 @@ public class MasterProductActivity extends Activity implements TextWatcher, OnCl
 	
 	private DecimalFormat df = new DecimalFormat("##,###,##0");
 
+	private ActivityResultLauncher<ScanOptions> barcodeLauncher;
+	//
+	// You MUST provide a public, no-argument constructor
+	public MasterProductActivity() {
+	}
+
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -90,7 +105,35 @@ public class MasterProductActivity extends Activity implements TextWatcher, OnCl
 		
 		et_barcode = (EditText)findViewById(R.id.et_barcode);
 		et_barcode.addTextChangedListener(this);
-	
+
+		et_barcode.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				// Check if the action is the "Done", "Search", or "Enter" key
+				if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+						actionId == EditorInfo.IME_ACTION_DONE ||
+						(event != null && event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+
+					// Get the text from the EditText
+					String barcode = et_barcode.getText().toString();
+
+					// Only search if the field is not empty
+					if (!barcode.isEmpty()) {
+						// Trigger the same search routine
+						searchMaster(barcode);
+
+						// Hide the keyboard
+						InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+						imm.hideSoftInputFromWindow(et_barcode.getWindowToken(), 0);
+
+						return true; // We handled the event
+					}
+				}
+				return false; // We did not handle the event
+			}
+		});
+
+
 		tv_descripcion = (TextView)findViewById(R.id.tv_descripcion);
 		tv_ucompra = (TextView)findViewById(R.id.tv_ucompra);
 		tv_promedio = (TextView)findViewById(R.id.tv_cpromedio);
@@ -149,6 +192,19 @@ public class MasterProductActivity extends Activity implements TextWatcher, OnCl
 		    res.getDrawable(android.R.drawable.ic_dialog_alert));
 		tabs.addTab(spec4);
 
+		for (int i = 0; i < tabs.getTabWidget().getChildCount(); i++) {
+			// Get the view for each tab
+			View tabView = tabs.getTabWidget().getChildAt(i);
+
+			// The title is inside a TextView. Find it by its default Android ID.
+			TextView tv = (TextView) tabView.findViewById(android.R.id.title);
+
+			// Set the text color to white
+			if (tv != null) {
+				tv.setTextColor(getResources().getColor(android.R.color.white));
+			}
+		}
+
 		adapter_kardex = new DataAdapterKardex(
 				MasterProductActivity.this, R.layout.inventoryrecorddata,
 				GlobalData.items_kardex);
@@ -199,6 +255,21 @@ public class MasterProductActivity extends Activity implements TextWatcher, OnCl
 			image[i].setOnClickListener(this);
 		}
 
+		barcodeLauncher = registerForActivityResult(new ScanContract(), result -> {
+			if (result.getContents() != null) {
+				// Barcode was successfully scanned
+				String barcode = result.getContents();
+				Log.d("MasterProductActivity", "Barcode Scanned: " + barcode);
+				// Call your existing searchMaster method to process the result
+				searchMaster(barcode);
+			} else {
+				// Scan was cancelled by the user
+				Toast.makeText(this, "Scan cancelled", Toast.LENGTH_LONG).show();
+			}
+		});
+
+		ib_camera.setOnClickListener(this);
+
 	}
 
 
@@ -213,13 +284,14 @@ public class MasterProductActivity extends Activity implements TextWatcher, OnCl
 		}
 		else if (v.getId()==R.id.ib_buscar) {
 			System.out.println("buscando...");
-	    		sprod = new SearchProdDialogFrame(getString(R.string.buscar_producto),"MVSEL0033") {
-					public void onDismiss(DialogInterface arg0) {
-						// TODO Auto-generated method stub
-							searchMaster(sprod.getBarra());
-			            }	
-		            };
-			sprod.show(getFragmentManager(),getString(R.string.buscar_producto));
+			SearchProdDialogFrame dialog = SearchProdDialogFrame.newInstance(
+					getString(R.string.buscar_producto), //Titulo del componente que llama la busqueda
+					"MVSEL0033"); // query que el componente debe ejecutar
+			// The Activity is the listener, so the dialog will call onProductSelected() automatically
+			// No need for an anonymous class here
+
+			// Use getSupportFragmentManager() for AndroidX DialogFragment
+			dialog.show(getSupportFragmentManager(), "SearchProdDialog");
 		}
 		
 	}
@@ -238,12 +310,17 @@ public class MasterProductActivity extends Activity implements TextWatcher, OnCl
 	}
 	
 	private void getCamBarcode() {
-		Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-		intent.putExtra("SCAN_MODE", "PRODUCT_MODE");
-		startActivityForResult(intent, 0);
+		ScanOptions options = new ScanOptions();
+		options.setPrompt("Scan a barcode");
+		options.setBeepEnabled(true);
+		options.setOrientationLocked(false);
+		// Set the desired barcode formats (optional)
+		// options.setDesiredBarcodeFormats(ScanOptions.PRODUCT_CODE_TYPES);
+
+		barcodeLauncher.launch(options);
 
 	}
-	
+	/* Esta seccion pertenecia al viejo codigo de lectura de barcode desde la camara
 	 public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
 		Log.d("EMAKU"," ResultCode: "+resultCode+" requestCode: "+requestCode);
@@ -252,10 +329,15 @@ public class MasterProductActivity extends Activity implements TextWatcher, OnCl
 		        String contents = intent.getStringExtra("SCAN_RESULT");
 		        // Handle successful scan
 		        et_barcode.setText(contents);
-				new SearchQuery(this,"MVSEL0028",new String[]{contents}).start(); 
-				new SearchQuery(this,"MVSEL0038",new String[]{contents}).start(); 
-				new SearchQuery(this,"MVSEL0030",new String[]{contents}).start(); 
-				new SearchQuery(this,"MVSEL0031",new String[]{contents}).start(); 
+				// info general del producto
+				new SearchQuery(this,"MVSEL0028",new String[]{contents}).start();
+				// foto
+				new SearchQuery(this,"MVSEL0038",new String[]{contents}).start();
+				// ventas
+				new SearchQuery(this,"MVSEL0030",new String[]{contents}).start();
+				// compras
+				new SearchQuery(this,"MVSEL0031",new String[]{contents}).start();
+				// kardex
 				new SearchQuery(this,"MVSEL0032",new String[]{contents}).start(); 
 		    } else if (resultCode == RESULT_CANCELED) {
 		        // Handle cancel
@@ -264,7 +346,7 @@ public class MasterProductActivity extends Activity implements TextWatcher, OnCl
 		        toast.show();
 		    }
 		}
-   } 
+   } */
 
 	 @Override
 	public void arriveAnswerEvent(AnswerEvent e) {
@@ -404,7 +486,17 @@ public class MasterProductActivity extends Activity implements TextWatcher, OnCl
 		}
 	}
 
-		private class DataAdapterKardex extends ArrayAdapter<FieldsKardex> {
+	@Override
+	public void onProductSelected(String barcode) {
+		// This method is called when a product is selected in the dialog.
+		// The 'barcode' parameter contains the value from the first TextView of the selected item.
+		Log.d("MasterProductActivity", "Product selected with barcode: " + barcode);
+
+		// Now, call your existing searchMaster function with the received barcode.
+		searchMaster(barcode);
+	}
+
+	private class DataAdapterKardex extends ArrayAdapter<FieldsKardex> {
 
 			private LayoutInflater vi;
 

@@ -7,14 +7,15 @@
 
     <TextView
         android:id="@+id/tv_titulo"
-        android:textIsSelectable="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:background="@drawable/palette5"
         android:gravity="center_horizontal|center_vertical"
         android:minHeight="35dp"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="@string/tv_buscar_item"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textIsSelectable="true" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -34,8 +35,8 @@
                 android:id="@+id/ib_limpiar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/image"
-                android:layout_marginRight="1dp"
+                android:contentDescription="@string/limpia_texto_a_buscar"
+                android:layout_marginEnd="1dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="0.1"
                 android:background="@drawable/palette9press"
@@ -47,14 +48,17 @@
                 android:id="@+id/et_query"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_weight="0.7"
+                android:autofillHints="Cod o Texto"
                 android:ems="10"
                 android:hint="@string/clave"
-                android:singleLine="true" >
+                android:inputType="textAutoComplete"
+                android:singleLine="true"
+                android:textColorHint="#212121">
 
                 <requestFocus />
             </EditText>
@@ -75,28 +79,26 @@
         </LinearLayout>
     </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/progressLayout"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/palette2"
-        android:orientation="vertical" >
+        android:background="@drawable/palette2">
 
-        <ProgressBar
-            android:id="@+id/progressBar1"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="@drawable/palette2"
-            android:visibility="invisible" />
-    </LinearLayout>
-
-    <ListView
+    <!-- The RecyclerView now correctly fills this container -->
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lv_sprod"
         android:layout_width="match_parent"
+        android:layout_height="match_parent" /> <!-- Use match_parent to fill the FrameLayout -->
+
+    <!-- The ProgressBar will now appear centered ON TOP of the list when visible -->
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/palette2" >
-    </ListView>
+        android:layout_gravity="center"
+        android:visibility="gone" /> <!-- Use 'gone' so it takes up no space when invisible -->
+
+</FrameLayout>
 
 </LinearLayout>

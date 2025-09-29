@@ -8,7 +8,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/palette5" >
+        android:background="@drawable/palette_dark_green_new_logo" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-            android:background="@drawable/palette5" >
+            android:background="@drawable/palette_dark_green_new_logo" >
 
             <ImageButton
                 android:id="@+id/ib_limpiar"
@@ -40,9 +40,14 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="0.8"
+                android:textColor="@color/silver"
+                android:textColorHint="@color/white"
                 android:ems="10"
                 android:hint="@string/barcode"
-                android:singleLine="true" >
+                android:singleLine="true"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                >
 
                 <requestFocus />
             </EditText>
@@ -92,7 +97,7 @@
             android:layout_weight="1"
             android:text="@string/descripcion"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#ffffff" />
+            android:textColor="@color/black" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -109,7 +114,7 @@
                 android:layout_weight="1"
                 android:text="@string/vucompra"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/tv_cpromedio"
@@ -121,7 +126,7 @@
                 android:layout_weight="1"
                 android:text="@string/cpromedio"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
         </LinearLayout>
 
         <LinearLayout
@@ -139,7 +144,7 @@
                 android:layout_weight="1"
                 android:text="@string/pventa1"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/tv_pventa2"
@@ -151,7 +156,7 @@
                 android:layout_weight="1"
                 android:text="@string/pventa2"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
         </LinearLayout>
 
         <TextView
@@ -164,7 +169,7 @@
             android:layout_weight="1"
             android:text="@string/seccion"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#ffffff" />
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/tv_grupo"
@@ -176,7 +181,7 @@
             android:layout_weight="1"
             android:text="@string/grupo"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#ffffff" />
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/tv_sgrupo"
@@ -188,7 +193,7 @@
             android:layout_weight="1"
             android:text="@string/sgrupo"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#ffffff" />
+            android:textColor="@color/black" />
     </LinearLayout>
 
     <TabHost
@@ -207,7 +212,7 @@
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/palette5" >
+                android:background="@drawable/palette_dark_green_new_logo" >
             </TabWidget>
 
             <FrameLayout

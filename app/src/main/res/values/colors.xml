@@ -10,4 +10,21 @@
     <color name="blue">#FF2196F3</color>
     <color name="dark_blue">#FF0D47A1</color>
     <color name="light_blue">#FFE3F2FD</color>
+    <color name="gray">#787373</color>
+
+    <!--Palette of colors based on the last emaku logo-->
+    <color name="pale_leaf">#c3d1be</color>
+    <color name="abbey">#434447</color>
+    <color name="stack">#7f8680</color>
+    <color name="bud">#a2aca0</color>
+    <color name="desert_storm">#fbfbfa</color>
+    <color name="silver">#c2c2c2</color>
+    <color name="green_spring">#b3c0b0</color>
+    <!--Olive greens 1 darker...5 lighter -->
+    <color name="olive_green_1">#445626</color>
+    <color name="olive_green_2">#52682d</color>
+    <color name="olive_green_3">#6e8b3d</color>
+    <color name="olive_green_4">#7c9d45</color>
+    <color name="olive_green_5">#96b85d</color>
+
 </resources>
