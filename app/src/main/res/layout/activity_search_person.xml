@@ -17,7 +17,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/palette5" >
+            android:background="@drawable/palette_dark_green_new_logo" >
 
             <ImageButton
                 android:id="@+id/ib_limpiar"
@@ -42,6 +42,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_weight="0.7"
                 android:ems="10"
+                android:textColorHint="@color/white"
                 android:hint="@string/clave"
                 android:singleLine="true" >
 

@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:background="@drawable/palette5" >
+            android:background="@drawable/palette_dark_green_new_logo" >
 
             <EditText
                 android:id="@+id/et_id_char"
@@ -25,6 +25,8 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/identificacion"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
                 android:includeFontPadding="true"
                 android:maxLength="14"
                 android:singleLine="true" >
@@ -37,6 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:textColor="@color/white"
                 android:layout_weight="1"
                 android:text="@string/guion" />
 
@@ -44,6 +47,7 @@
                 android:id="@+id/tv_dv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1" />
 
@@ -106,9 +110,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/palette5"
+                android:background="@drawable/palette_dark_green_new_logo"
                 android:paddingLeft="5dp"
                 android:text="@string/info_general"
+                android:textColor="@color/white"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Button
@@ -118,9 +123,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/tipo_tercero"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/bt_clasificacion"
@@ -129,9 +134,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/clasificacion"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -154,7 +159,7 @@
                     android:layout_marginRight="2dp"
                     android:layout_marginTop="5dp"
                     android:layout_weight="0.1"
-                    android:background="@drawable/palette7press"
+                    android:background="@drawable/palette_light_green_new_logo"
                     android:contentDescription="TODO"
                     android:paddingLeft="6dp"
                     android:paddingRight="6dp"
@@ -163,6 +168,7 @@
 
             <EditText
                 android:id="@+id/et_primern"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -174,6 +180,7 @@
 
             <EditText
                 android:id="@+id/et_segundon"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -185,6 +192,7 @@
 
             <EditText
                 android:id="@+id/et_primera"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -196,6 +204,7 @@
 
             <EditText
                 android:id="@+id/et_segundoa"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -207,6 +216,7 @@
 
             <EditText
                 android:id="@+id/et_razon_social"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -218,17 +228,19 @@
 
             <TextView
                 android:id="@+id/tv_correo_electronico"
+                android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/palette5"
+                android:background="@drawable/palette_dark_green_new_logo"
                 android:paddingLeft="5dp"
                 android:text="@string/correo_electronico"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText
                 android:id="@+id/et_correo_electronico"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -238,6 +250,7 @@
 
             <EditText
                 android:id="@+id/et_correo_electronico_dos"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -247,6 +260,7 @@
 
             <EditText
                 android:id="@+id/et_correo_electronico_tres"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -256,6 +270,7 @@
 
             <EditText
                 android:id="@+id/et_correo_electronico_cuatro"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -265,6 +280,7 @@
 
             <EditText
                 android:id="@+id/et_correo_electronico_cinco"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -274,11 +290,12 @@
 
             <TextView
                 android:id="@+id/tv_info_direccion"
+                android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/palette5"
+                android:background="@drawable/palette_dark_green_new_logo"
                 android:paddingLeft="5dp"
                 android:text="@string/info_direccion"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -297,10 +314,10 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="0.5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/palette7press"
+                    android:background="@drawable/palette_light_green_new_logo"
                     android:hint="@string/regimen"
                     android:text="@string/departamento"
-                    android:textColor="#ffffff" />
+                    android:textColor="@color/black" />
 
                 <Button
                     android:id="@+id/bt_ciudad"
@@ -309,14 +326,15 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="0.5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/palette7press"
+                    android:background="@drawable/palette_light_green_new_logo"
                     android:hint="@string/regimen"
                     android:text="@string/ciudad"
-                    android:textColor="#ffffff" />
+                    android:textColor="@color/black" />
             </LinearLayout>
 
             <EditText
                 android:id="@+id/et_direccion"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -341,10 +359,10 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="0.5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/palette7press"
+                    android:background="@drawable/palette_light_green_new_logo"
                     android:hint="@string/departamento_dos"
                     android:text="@string/departamento_dos"
-                    android:textColor="#ffffff" />
+                    android:textColor="@color/black" />
 
                 <Button
                     android:id="@+id/bt_ciudad_dos"
@@ -353,10 +371,10 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="0.5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/palette7press"
+                    android:background="@drawable/palette_light_green_new_logo"
                     android:hint="@string/ciudad_dos"
                     android:text="@string/ciudad_dos"
-                    android:textColor="#ffffff" />
+                    android:textColor="@color/black" />
             </LinearLayout>
 
             <EditText
@@ -387,10 +405,10 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="0.5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/palette7press"
+                    android:background="@drawable/palette_light_green_new_logo"
                     android:hint="@string/departamento_tres"
                     android:text="@string/departamento_tres"
-                    android:textColor="#ffffff" />
+                    android:textColor="@color/black" />
 
                 <Button
                     android:id="@+id/bt_ciudad_tres"
@@ -399,10 +417,10 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="0.5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/palette7press"
+                    android:background="@drawable/palette_light_green_new_logo"
                     android:hint="@string/ciudad_tres"
                     android:text="@string/ciudad_tres"
-                    android:textColor="#ffffff" />
+                    android:textColor="@color/black" />
             </LinearLayout>
 
             <EditText
@@ -422,11 +440,12 @@
 
             <TextView
                 android:id="@+id/tv_info_telefono"
+                android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/palette5"
+                android:background="@drawable/palette_dark_green_new_logo"
                 android:paddingLeft="5dp"
                 android:text="@string/info_telefono"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -443,10 +462,10 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="0.5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/palette7press"
+                    android:background="@drawable/palette_light_green_new_logo"
                     android:hint="@string/tipo_tel"
                     android:text="@string/tipo_tel"
-                    android:textColor="#ffffff" />
+                    android:textColor="@color/black" />
 
                 <EditText
                     android:id="@+id/et_numero"
@@ -471,7 +490,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/palette5"
+                android:background="@drawable/palette_dark_green_new_logo"
                 android:paddingLeft="5dp"
                 android:text="@string/info_telefono_dos"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -490,10 +509,10 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="0.5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/palette7press"
+                    android:background="@drawable/palette_light_green_new_logo"
                     android:hint="@string/tipo_tel_dos"
                     android:text="@string/tipo_tel_dos"
-                    android:textColor="#ffffff" />
+                    android:textColor="@color/black" />
 
                 <EditText
                     android:id="@+id/et_numero_dos"
@@ -516,7 +535,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/palette5"
+                android:background="@drawable/palette_dark_green_new_logo"
                 android:paddingLeft="5dp"
                 android:text="@string/info_telefono_tres"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -535,10 +554,10 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="0.5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/palette7press"
+                    android:background="@drawable/palette_light_green_new_logo"
                     android:hint="@string/tipo_tel_tres"
                     android:text="@string/tipo_tel_tres"
-                    android:textColor="#ffffff" />
+                    android:textColor="@color/black" />
 
                 <EditText
                     android:id="@+id/et_numero_tres"
@@ -555,10 +574,11 @@
             <TextView
                 android:id="@+id/tv_info_contable"
                 android:layout_width="match_parent"
+                android:textColor="@color/white"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/palette5"
+                android:background="@drawable/palette_dark_green_new_logo"
                 android:paddingLeft="5dp"
                 android:text="@string/info_contable"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -570,10 +590,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:hint="@string/regimen"
                 android:text="@string/regimen"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/bt_actividad"
@@ -582,17 +602,18 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/actividad"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/tv_info_comercial"
                 android:layout_width="match_parent"
+                android:textColor="@color/white"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/palette5"
+                android:background="@drawable/palette_dark_green_new_logo"
                 android:paddingLeft="5dp"
                 android:text="@string/info_comercial"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -602,10 +623,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:hint="@string/lista_precios"
                 android:text="@string/lista_precios"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
 
             <EditText
                 android:id="@+id/et_dias_credito"
@@ -634,19 +655,20 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/estado_tercero"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
 
             <!-- Informacion Bancaria -->
 
             <TextView
                 android:id="@+id/tv_info_bancaria"
+                android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/palette5"
+                android:background="@drawable/palette_dark_green_new_logo"
                 android:paddingLeft="5dp"
                 android:text="@string/info_bancaria"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -678,9 +700,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/tipo_cuenta"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/bt_banco"
@@ -689,9 +711,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/banco_tercero"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/bt_departamento_banco"
@@ -700,9 +722,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/departamento_banco"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/bt_ciudad_banco"
@@ -711,9 +733,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/ciudad_banco"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
 
             <EditText
                 android:id="@+id/et_descripcion_banco_dos"
@@ -740,9 +762,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/tipo_cuenta_dos"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/bt_banco_dos"
@@ -751,9 +773,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/banco_tercero_dos"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/bt_departamento_banco_dos"
@@ -762,9 +784,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/departamento_banco_dos"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/bt_ciudad_banco_dos"
@@ -773,9 +795,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/ciudad_banco_dos"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
 
             <EditText
                 android:id="@+id/et_descripcion_banco_tres"
@@ -802,9 +824,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/tipo_cuenta_tres"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/bt_banco_tres"
@@ -813,9 +835,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/banco_tercero_tres"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/bt_departamento_banco_tres"
@@ -824,9 +846,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/departamento_banco_tres"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/bt_ciudad_banco_tres"
@@ -835,9 +857,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/ciudad_banco_tres"
-                android:textColor="#ffffff" />
+                android:textColor="@color/black" />
 
             <!-- Fin Informacion Bancaria -->
 
@@ -847,10 +869,11 @@
             <TextView
                 android:id="@+id/tv_info_aso_marcas"
                 android:layout_width="match_parent"
+                android:textColor="@color/white"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/palette5"
+                android:background="@drawable/palette_dark_green_new_logo"
                 android:paddingLeft="5dp"
                 android:text="@string/info_aso_marcas"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -863,9 +886,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/marcas"
-                android:textColor="#ffffff"
+                android:textColor="@color/black"
                 android:visibility="gone" />
 
             <Button
@@ -875,9 +898,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/marcas_dos"
-                android:textColor="#ffffff"
+                android:textColor="@color/black"
                 android:visibility="gone" />
 
             <Button
@@ -887,9 +910,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/marcas_tres"
-                android:textColor="#ffffff"
+                android:textColor="@color/black"
                 android:visibility="gone" />
 
             <Button
@@ -899,9 +922,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/marcas_tres"
-                android:textColor="#ffffff"
+                android:textColor="@color/black"
                 android:visibility="gone" />
 
             <Button
@@ -911,9 +934,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/marcas_tres"
-                android:textColor="#ffffff"
+                android:textColor="@color/black"
                 android:visibility="gone" />
 
             <Button
@@ -923,9 +946,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/marcas_tres"
-                android:textColor="#ffffff"
+                android:textColor="@color/black"
                 android:visibility="gone" />
 
             <Button
@@ -935,9 +958,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/marcas_tres"
-                android:textColor="#ffffff"
+                android:textColor="@color/black"
                 android:visibility="gone" />
 
             <Button
@@ -947,9 +970,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/marcas_tres"
-                android:textColor="#ffffff"
+                android:textColor="@color/black"
                 android:visibility="gone" />
 
             <Button
@@ -959,9 +982,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/marcas_tres"
-                android:textColor="#ffffff"
+                android:textColor="@color/black"
                 android:visibility="gone" />
 
             <Button
@@ -971,9 +994,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="@drawable/palette7press"
+                android:background="@drawable/palette_light_green_new_logo"
                 android:text="@string/marcas_tres"
-                android:textColor="#ffffff"
+                android:textColor="@color/black"
                 android:visibility="gone" />
 
             <!-- Fina Asociacion de marcas -->

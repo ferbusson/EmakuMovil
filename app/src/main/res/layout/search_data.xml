@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:background="@drawable/palette5"
+        android:background="@drawable/palette_dark_green_new_logo"
         android:gravity="center_horizontal|center_vertical"
         android:minHeight="35dp"
         android:text="titulo"
